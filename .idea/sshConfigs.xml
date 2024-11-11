@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SshConfigs">
-    <configs>
-      <sshConfig host="webdev.incus" id="0188fe92-4824-4ea5-bc17-52119a19c5e8" keyPath="$USER_HOME$/.ssh/keys/webdevhttp" port="22022" nameFormat="DESCRIPTIVE" username="webdev" useOpenSSHConfig="true" />
-    </configs>
-  </component>
-</project>
