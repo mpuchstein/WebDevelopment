@@ -238,7 +238,6 @@
 <section>
 
     <h1>About this page</h1>
-    <p> TestZeile ..... </p>
 
     <p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
 
