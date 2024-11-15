@@ -225,7 +225,7 @@
 
     <div class="heroe">
 
-        <h1 style="background-color: tomato">Welcome to <s>CodeIgniter <?= CodeIgniter\CodeIgniter::CI_VERSION ?></h1></s>
+        <h1 style="background-color: tomato">Welcome to <s>CodeIgniter <?= CodeIgniter\CodeIgniter::CI_VERSION ?></s> <b> team 17</b></h1>
 
         <h2>The small framework with powerful features</h2>
 
