@@ -225,7 +225,7 @@
 
     <div class="heroe">
 
-        <h1>Welcome to CodeIgniter <?= CodeIgniter\CodeIgniter::CI_VERSION ?></h1>
+        <h1>Welcome to CodeIgniter<?= CodeIgniter\CodeIgniter::CI_VERSION ?> <b>team 17</b></h1>
 
         <h2>The small framework with powerful features</h2>
 
@@ -239,7 +239,7 @@
 
     <h1>About this page</h1>
 
-    <p>(A) The page you are looking at is being generated dynamically by CodeIgniter.</p>
+    <p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
 
     <p>If you would like to edit this page you will find it located at:</p>
 
