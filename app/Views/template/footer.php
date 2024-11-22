@@ -2,10 +2,10 @@
 
 <footer class="footer mt-auto py-3 bg-footer text-white">
     <div class="container">
-        <span class="text-white">©Web-Entwicklung Team 2024</span>
-        <span class="text-white">Impressum</span>
-        <span class="text-white">Datenschutz</span>
-        <span class="text-white">Kontakt</span>
+        <span class="text-white ft">©Web-Entwicklung Team 2024</span>
+        <span class="text-white ft">Impressum</span>
+        <span class="text-white ft">Datenschutz</span>
+        <span class="text-white ft">Kontakt</span>
     </div>
 </footer>
 <!-- SCRIPTS -->
