@@ -5,3 +5,12 @@
 .bg-footer {
     background-color: #002060;
 }
+
+.navbar { /* hinzugefügt um text an zu passen muss ich besser noch anders machen */
+    padding: 11px;
+}
+
+.text-white { /*macht den Text weiß */
+    color: white;
+}
+

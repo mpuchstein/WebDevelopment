@@ -6,6 +6,6 @@
         <img src="<?= base_url('assets/images/07_-_WE-Logo.svg')?>" alt="Webentwicklung" width="125"  class="logo"/>
     </div>
     <nav class="navbar container bg-header text-white pt-3 pb-3 mt-2">
-Menü 1 | Menü 2 | Menü 3
+Tasks | Boards | Spalten
 </nav>
 </header>
