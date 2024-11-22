@@ -1,6 +1,4 @@
-<body class="d-flex flex-column h-100"> <!-- keine Ahnung ob richtig müsste ich hinzu fügen damit style funtkioirt-->
-
-<footer class="footer mt-auto py-3 bg-footer text-white">
+<footer class="footer mt-auto py-3 bg-footer text-white pt-3 pb-3 mt-2">
     <div class="container">
         <span class="text-white ft">©Web-Entwicklung Team 2024</span>
         <span class="text-white ft">Impressum</span>
@@ -8,9 +6,5 @@
         <span class="text-white ft">Kontakt</span>
     </div>
 </footer>
-<!-- SCRIPTS -->
-
-<!-- -->
-
 </body>
-<!--</html>
+</html>
