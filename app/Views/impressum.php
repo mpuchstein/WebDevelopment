@@ -1,5 +1,5 @@
 <!-- Vorlage für Impressum, TODO: mit sinnvollen Inhalten füllen -->
-<main class="flex-shrink-0 bg-body mb-2 p-2">
+<main class="container-fluid flex-shrink-0 bg-body mb-2 p-2">
     <div class="card h-100">
         <div class="card-header bg-dark text-light">
             <p>Impressum</p>
