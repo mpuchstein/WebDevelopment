@@ -9,4 +9,5 @@ use CodeIgniter\Router\RouteCollection;
  * TODO: Add routes for all href
  */
 $routes->get('/', 'Home::index');
+$routes->get('spalten', 'Columns::index');
 $routes->get('impressum', 'Impressum::index');

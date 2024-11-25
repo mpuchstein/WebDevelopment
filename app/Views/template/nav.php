@@ -8,8 +8,8 @@
         </a>
     </div>
     <nav class="navbar-toggler bg-light-subtle m-1 p-2 ps-3">
-        <a href="<?=base_url('index.php/tasks')?>" class="btn btn-outline-dark">Tasks</a>
-        <a href="<?=base_url('index.php/tasks')?>" class="btn btn-outline-dark">Boards</a>
-        <a href="<?=base_url('index.php/tasks')?>" class="btn btn-outline-dark">Spalten</a>
+        <a href="<?=base_url('index.php')?>" class="btn btn-outline-dark">Tasks</a>
+        <a href="<?=base_url('index.php/boards')?>" class="btn btn-outline-dark">Boards</a>
+        <a href="<?=base_url('index.php/spalten')?>" class="btn btn-outline-dark">Spalten</a>
     </nav>
 </header>
