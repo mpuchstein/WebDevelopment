@@ -11,7 +11,7 @@ A KanBan board with CodeIgniter 4 as backend
   3. [x] Place logo in nav
   4. [x] Add Tasks, Spalten, Boards to nav
   5. [x] Let nav have a color
-  6. [ ] Tasks:
+  6. [x] Tasks:
      - As startpage it will contain the future KanBan board
      - for now:
        - [x] contain 1 container element

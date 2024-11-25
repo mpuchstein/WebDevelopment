@@ -1,7 +1,7 @@
-<footer class="footer sticky-bottom container-fluid mt-auto bg-footer text-light pb-1 mt-2">
+<footer class="footer sticky-bottom container mt-auto bg-footer text-light pb-1 mt-2">
     <div class="row">
         <div class="col text-start ps-3">
-            ©Web-Entwicklung Team 2024
+            ©Web-Entwicklung Team 17 2024
         </div>
         <div class="col text-end pe-3">
             <!-- TODO: figure out why index.php is necessary in links -->
