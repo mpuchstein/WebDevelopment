@@ -10,4 +10,5 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 $routes->get('spalten', 'Columns::index');
+$routes->get('spalten/formular', 'Columns::form');
 $routes->get('impressum', 'Impressum::index');

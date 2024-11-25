@@ -6,7 +6,7 @@ A KanBan board with CodeIgniter 4 as backend
 
 ## ToDos:
 - ### Aufgabe 1: Die erste statische Webseite
-  1. [ ] Integrate Bootstrap CSS and JS
+  1. [x] Integrate Bootstrap CSS and JS
   2. [x] Implement own CSS
   3. [x] Place logo in nav
   4. [x] Add Tasks, Spalten, Boards to nav
@@ -14,8 +14,8 @@ A KanBan board with CodeIgniter 4 as backend
   6. [ ] Tasks:
      - As startpage it will contain the future KanBan board
      - for now:
-       - [ ] contain 1 container element
-       - [ ] contain 1 card element
+       - [x] contain 1 container element
+       - [x] contain 1 card element
   7. [x] Footer:
      - [x] contain Copyright Web-Entwicklung Team 2024
      - [x] contain Impressum
@@ -23,24 +23,24 @@ A KanBan board with CodeIgniter 4 as backend
      - [x] contain Kontakt
      - [x] get styled
 - ### 2. Aufgabe 3: Bootstrap Tables
-  - [ ] create new webpage, referenced by Spalten in nav
-  - [ ] create a table containing:
-    - [ ] ID
-    - [ ] Board
-    - [ ] Sortid
-    - [ ] Spalte
-    - [ ] Spaltenbeschreibung
-    - [ ] Bearbeiten
-  - [ ] create 2 example rows
-  - [ ] place button "Erstellen" above the table
+  - [x] create new webpage, referenced by Spalten in nav
+  - [x] create a table containing:
+    - [x] ID
+    - [x] Board
+    - [x] Sortid
+    - [x] Spalte
+    - [x] Spaltenbeschreibung
+    - [x] Bearbeiten
+  - [x] create 2 example rows
+  - [x] place button "Erstellen" above the table
 - ### 3. Aufgabe 4: Formulare
-  - [ ] aim the button from the previous assignment towards a new webpage
-  - [ ] add following elements to the page using bootstrap:
-    - [ ] field type text for Spaltenbezeichnung
-    - [ ] textarea for Spaltenbezeichnung
-    - [ ] field type text for Sortid
-    - [ ] dropdown
-    - [ ] buttons for save and abort
-  - [ ] pair every element with an label
-  - [ ] make button "Speichern" visual different to "Abbrechen" 
-  - [ ] give the formular a heading
+  - [x] aim the button from the previous assignment towards a new webpage
+  - [x] add following elements to the page using bootstrap:
+    - [x] field type text for Spaltenbezeichnung
+    - [x] textarea for Spaltenbezeichnung
+    - [x] field type text for Sortid
+    - [x] dropdown
+    - [x] buttons for save and reset
+  - [x] pair every element with an label
+  - [x] make button "Speichern" visual different to "Abbrechen" 
+  - [x] give the formular a heading
