@@ -1,4 +1,4 @@
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-100 bg-black text-light">
 <!-- HEADER: MENU + HEROE SECTION -->
 <header class="container bg-black sticky-top">
     <div class="bg-header m-1 p-1 ps-3">

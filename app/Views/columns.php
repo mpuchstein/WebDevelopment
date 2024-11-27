@@ -1,6 +1,6 @@
 <main class="container mt-2">
-    <div class="card">
-        <div class="card-header bg-black text-light">
+    <div class="card border-primary">
+        <div class="card-header bg-black text-light border-primary">
             <h1>Spalten</h1>
         </div>
         <div class="card-body bg-dark text-light">
