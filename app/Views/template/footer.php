@@ -4,10 +4,9 @@
             ©Web-Entwicklung Team 17 2024
         </div>
         <div class="col text-end pe-3">
-            <!-- TODO: figure out why index.php is necessary in links -->
-            <a href="<?=base_url('index.php/impressum')?>">Impressum</a>
-            <a href="<?=base_url('index.php/datenschutz')?>">Datenschutz</a>
-            <a href="<?=base_url('index.php/kontakt')?>">Kontakt</a>
+            <a href="<?=base_url('impressum')?>">Impressum</a>
+            <a href="<?=base_url('datenschutz')?>">Datenschutz</a>
+            <a href="<?=base_url('kontakt')?>">Kontakt</a>
         </div>
     </div>
 </footer>
