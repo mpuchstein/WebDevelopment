@@ -4,6 +4,13 @@ A KanBan board with CodeIgniter 4 as backend
 
 //TODO: explain what a KanBan is
 
+### How to remove index.php from URLs in CodeIgniter 4 and Apache
+https://codeigniter.com/user_guide/general/urls.html#removing-the-index-php-file
+#### httpd.conf:=
+1. Enable rewrite_module
+2. Allow override for the DocumentRoot or add a own directory configuration for the project
+3. Add .htaccess to /public
+
 ## ToDos:
 - ### Aufgabe 1: Die erste statische Webseite
   1. [x] Integrate Bootstrap CSS and JS
