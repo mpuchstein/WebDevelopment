@@ -1,8 +1,8 @@
-<body class="d-flex flex-column h-100 w-100">
+<body class="container-fluid d-flex flex-column h-100">
 <!-- HEADER: MENU + HEROE SECTION -->
-<header class="container sticky-top w-100">
-    <div class="container row bg-header">
-        <div class="container-fluid rounded m-1 col-md-2">
+<header class="container-fluid sticky-top">
+    <div class="container-fluid bg-header">
+        <div class="container-fluid m-1 col-md-2">
             <a href="<?=base_url('/')?>">
                 <img src="<?= base_url('assets/images/07_-_WE-Logo.svg')?>" alt="Webentwicklung" style="width: 128px;height: 64px;"  class="logo"/>
             </a>

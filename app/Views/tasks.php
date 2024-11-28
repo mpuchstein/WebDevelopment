@@ -1,4 +1,4 @@
-<main class="container mt-2 mb-2">
+<main class="container-fluid mt-2 mb-2">
     <div class="card h-100 border-primary">
         <div class="card-header  bg-black text-light border-primary">
             <h1>Tasks</h1>
