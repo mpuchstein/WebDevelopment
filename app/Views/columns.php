@@ -4,7 +4,7 @@
             <h1>Spalten</h1>
         </div>
         <div class="card-body bg-dark text-light">
-<!--            <button type="button" class="" onclick="location.href='<?=base_url('index.php/spalten/formular')?>'">Erstellen</button>
+<!--            <button type="button" class="" onclick="location.href='<?=base_url('spalten/formular')?>'">Erstellen</button>
 -->
             <a href="<?=base_url('index.php/spalten/formular')?>" class="btn btn-outline-light mb-2">Erstellen</a>
 <!--        </div>
