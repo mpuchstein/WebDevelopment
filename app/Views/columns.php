@@ -10,7 +10,8 @@
 <!--        </div>
         <div class="card-footer">
 -->
-            <table class="table table-bordered rounded">
+            <div class="table-responsive">
+            <table class="table table-bordered rounded table-dark">
                 <tr>
                     <th>ID</th>
                     <th>Board</th>
@@ -36,6 +37,7 @@
                     <td><i class="fa-solid fa-pen-to-square" title="Bearbeiten"></i> <i class="fa-solid fa-eraser" title="Löschen"></i></td>
                 </tr>
             </table>
+            </div>
         </div>
     </div>
 </main>
