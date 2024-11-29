@@ -51,3 +51,6 @@ https://codeigniter.com/user_guide/general/urls.html#removing-the-index-php-file
   - [x] pair every element with an label
   - [x] make button "Speichern" visual different to "Abbrechen" 
   - [x] give the formular a heading
+- ### Extra:
+ - table dark color
+ - Formulare dark color?

@@ -18,3 +18,39 @@
     font-size: 11pt;
 }
 
+.body {
+    background-color: #222222;
+}
+
+/*Extperiment um flotad label Fabe zu ändern / funktionirt nicht sonderlich gut
+/* Dunkles Design für das Label und helle Schrift
+.form-floating label {
+    background-color: #333; /* Dunkler Hintergrund für das Label
+    color: #fff; /* Helle Schriftfarbe
+    padding: 0 5px; /* Padding um das Label von den Rändern des Input-Feldes abzusetzen
+    font-size: 16px;
+    transition: 0.3s ease;
+}
+
+/* Wenn das Eingabefeld fokussiert ist oder Text eingegeben wurde
+.form-control:focus + label,
+.form-control:not(:placeholder-shown) + label {
+    color: #fff; /* Helle Schriftfarbe
+    background-color: #333; /* Dunkler Hintergrund bleibt beim Fokussieren
+    top: -10px; /* Label nach oben verschieben
+    font-size: 12px; /* Kleinere Schriftgröße
+}
+
+/* Standardmäßiger Stil für das Eingabefeld
+.form-control {
+    background-color: #222; /* Dunkler Hintergrund für das Eingabefeld
+    color: #fff; /* Helle Schriftfarbe
+    border: 1px solid #002060; /* Blauer Rand
+}
+
+/* Fokussierter Zustand für das Eingabefeld
+.form-control:focus {
+    border-color: #fff; /* Weißer Rand beim Fokussieren
+    outline: none; /* Entfernt die Standard-Konturen
+} */
+
