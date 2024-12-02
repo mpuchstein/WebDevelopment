@@ -8,24 +8,24 @@
                 <div class="form-floating mb-3">
                     <!--<label for="columnlabel" class="col-3">Spaltenbezeichnung:</label>-->
                     <!--<input type="text" id="columnlabel" class="col-4">-->
-                    <input type="text" id="columnlabel" class="form-control bg-black text-white" placeholder="Spaltenbezeichnung">
-                    <label for="columnlabel">Spaltenbezeichnung</label>
+                    <input type="text" id="columnlabel" class="form-control bg-dark text-white" placeholder="Spaltenbezeichnung">
+                    <label for="columnlabel bg-black text-white">Spaltenbezeichnung</label>
                 </div>
                 <div class="form-floating mb-3">
                     <!--<label for="columndesc" class="col-3">Spaltenbeschreibung:</label>-->
                     <!--<textarea id="columndesc" class="col-4"></textarea>-->
-                    <textarea id="columndesc" class="form-control bg-black text-white" placeholder="Spaltenbeschreibung" style="height: 100px"></textarea>
+                    <textarea id="columndesc" class="form-control bg-dark text-white" placeholder="Spaltenbeschreibung" style="height: 100px"></textarea>
                     <label for="columndesc">Spaltenbeschreibung</label>
                 </div>
                 <div class="form-floating mb-3">
                     <!--<label for="sortid" class="col-3">Spaltenbezeichnung:</label>-->
                     <!--<input type="text" id="sortid" class="col-4">-->
-                    <input type="text" id="sortid" class="form-control bg-black text-white" placeholder="Sortier-ID">
+                    <input type="text" id="sortid" class="form-control bg-dark text-white" placeholder="Sortier-ID">
                     <label for="sortid">Sortier-ID</label>
                 </div>
                 <div class="row">
                     <label for="board" class="col-3 text-light rounded">Board auswählen:</label>
-                    <select id="board" name="board" class="col-4 bg-black text-white">
+                    <select id="board" name="board" class="col-4 bg-dark text-white">
                         <option value="general">Allgemeine Todos</option>
                         <option value="special">Spezielle Todos</option>
                     </select>
