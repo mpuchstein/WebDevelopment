@@ -10,33 +10,33 @@
 <!--        </div>
         <div class="card-footer">
 -->
-            <div class="table-responsive">
-            <table class="table table-bordered rounded table-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>Board</th>
-                    <th>Sortid</th>
-                    <th>Spalte</th>
-                    <th>Spaltenbeschreibung</th>
-                    <th>Bearbeiten</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Allgemeine Todos</td>
-                    <td>100</td>
-                    <td>Zu Besprechen</td>
-                    <td>Noch zu besprechende Todos</td>
-                    <td><i class="fa-solid fa-pen-to-square" title="Bearbeiten"></i> <i class="fa-solid fa-eraser" title="Löschen"></i></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Allgemeine Todos</td>
-                    <td>200</td>
-                    <td>In Bearbeitung</td>
-                    <td>Todos die aktuell bearbeitet werden</td>
-                    <td><i class="fa-solid fa-pen-to-square" title="Bearbeiten"></i> <i class="fa-solid fa-eraser" title="Löschen"></i></td>
-                </tr>
-            </table>
+            <div class="card-footer table-responsive">
+                <table class="table table-dark table-bordered rounded">
+                    <tr>
+                        <th>ID</th>
+                        <th>Board</th>
+                        <th>Sortid</th>
+                        <th>Spalte</th>
+                        <th class="d-none d-sm-block">Spaltenbeschreibung</th>
+                        <th>Bearbeiten</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Allgemeine Todos</td>
+                        <td>100</td>
+                        <td>Zu Besprechen</td>
+                        <td>Noch zu besprechende Todos</td>
+                        <td><i class="fa-solid fa-pen-to-square" title="Bearbeiten"></i> <i class="fa-solid fa-eraser" title="Löschen"></i></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Allgemeine Todos</td>
+                        <td>200</td>
+                        <td>In Bearbeitung</td>
+                        <td>Todos die aktuell bearbeitet werden</td>
+                        <td><i class="fa-solid fa-pen-to-square" title="Bearbeiten"></i> <i class="fa-solid fa-eraser" title="Löschen"></i></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

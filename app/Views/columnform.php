@@ -9,19 +9,19 @@
                     <!--<label for="columnlabel" class="col-3">Spaltenbezeichnung:</label>-->
                     <!--<input type="text" id="columnlabel" class="col-4">-->
                     <input type="text" id="columnlabel" class="form-control bg-dark text-white" placeholder="Spaltenbezeichnung">
-                    <label for="columnlabel bg-black text-white">Spaltenbezeichnung</label>
+                    <label for="columnlabel" class="">Spaltenbezeichnung</label>
                 </div>
                 <div class="form-floating mb-3">
                     <!--<label for="columndesc" class="col-3">Spaltenbeschreibung:</label>-->
                     <!--<textarea id="columndesc" class="col-4"></textarea>-->
                     <textarea id="columndesc" class="form-control bg-dark text-white" placeholder="Spaltenbeschreibung" style="height: 100px"></textarea>
-                    <label for="columndesc">Spaltenbeschreibung</label>
+                    <label for="columndesc" class="">Spaltenbeschreibung</label>
                 </div>
                 <div class="form-floating mb-3">
                     <!--<label for="sortid" class="col-3">Spaltenbezeichnung:</label>-->
                     <!--<input type="text" id="sortid" class="col-4">-->
                     <input type="text" id="sortid" class="form-control bg-dark text-white" placeholder="Sortier-ID">
-                    <label for="sortid">Sortier-ID</label>
+                    <label for="sortid" class="">Sortier-ID</label>
                 </div>
                 <div class="row">
                     <label for="board" class="col-3 text-light rounded">Board auswählen:</label>
