@@ -1,8 +1,10 @@
+<!-- Formulare from task 4 -->
 <main class="container mt-2 mb-2">
     <div class="card border-primary">
         <div class="card-header bg-black text-light border-primary">
             <h1>Spalte erstellen</h1>
         </div>
+        <!-- Form elements with floating labels -->
         <div class="card-body bg-dark text-light">
             <form class="">
                 <div class="form-floating mb-3">
@@ -24,6 +26,7 @@
                         <option value="special">Spezielle Todos</option>
                     </select>
                 </div>
+                <!-- Two buttons for saving and canceling the form -->
                 <div class="row mt-3">
                     <div class="col-5"></div>
                     <div class="col-auto"><button type="reset" class="bg-danger rounded"><i class="fa-solid fa-broom"></i> Reset</button></div>

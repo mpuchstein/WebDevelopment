@@ -1,22 +1,14 @@
-.bg-header {
+.bg-header { /* Farbe der Navigation wird festgelegt */
     background-color: #002060 !important;
 }
-.bg-footer {
+.bg-footer { /* Farbe des Footers wird festgelegt */
     background-color: #002060; !important;
 }
 
-.navbar { /* hinzugefügt um text an zu passen muss ich besser noch anders machen */
-    padding: 11px;
-}
-
-.text-white { /*macht den Text weiß */
+.text-white { /* Färbt Text weiß */
     color: white;
 }
 
-.ft {
-    font-size: 11pt;
-}
-
-.table-dark i:hover { /*farbe der Icons beim blauen überfaren ändern*/
+.table-dark i:hover { /* Icons färben sich blau beim überfahren mit Cursor */
     color: lightskyblue;
 }

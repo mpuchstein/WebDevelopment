@@ -1,9 +1,11 @@
+<!-- Navigation to task 1 -->
 <body class="container d-flex flex-column h-100 bg-dark bg-light">
 <!-- HEADER: MENU + HEROE SECTION -->
 <header class="container-fluid sticky-top">
     <div class="container-fluid bg-header">
         <div class="container-fluid m-1 col-md-2">
             <a href="<?=base_url('/')?>">
+                <!-- Logo is included -->
                 <img src="<?= base_url('assets/images/07_-_WE-Logo.svg')?>" alt="Webentwicklung" style="width: 128px;height: 64px;"  class="logo"/>
             </a>
         </div>

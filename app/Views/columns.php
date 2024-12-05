@@ -1,3 +1,4 @@
+<!-- Bootstrap tables from task 3 -->
 <main class="container mt-2">
     <div class="card border-primary">
         <div class="card-header bg-black text-light border-primary">
@@ -17,6 +18,7 @@
                     <th>Bearbeiten</th>
                 </tr>
                 <tr>
+                    <!-- one row -->
                     <td>1</td>
                     <td>Allgemeine Todos</td>
                     <td>100</td>
@@ -25,6 +27,7 @@
                     <td><i class="fa-solid fa-pen-to-square" title="Bearbeiten"></i> <i class="fa-solid fa-eraser" title="Löschen"></i></td>
                 </tr>
                 <tr>
+                    <!-- two row -->
                     <td>3</td>
                     <td>Allgemeine Todos</td>
                     <td>200</td>

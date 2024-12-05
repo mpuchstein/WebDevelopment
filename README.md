@@ -51,3 +51,40 @@ https://codeigniter.com/user_guide/general/urls.html#removing-the-index-php-file
   - [x] pair every element with an label
   - [x] make button "Speichern" visual different to "Abbrechen" 
   - [x] give the formular a heading
+- ### Uebung 3: Datenbankmodellierung in phpMyAdmin
+  - Deadline: 11.12.2024
+  1. [ ] create new database
+  2. [ ] create 'boards' table:
+      - [ ] id
+      - [ ] board
+  3. [ ] create 'personen' table:
+      - [ ] id
+      - [ ] vorname
+      - [ ] name
+      - [ ] email
+      - [ ] passwort
+  4. [ ] create 'spalten' table:
+      - [ ] id
+      - [ ] boardsid
+      - [ ] spalte
+      - [ ] spaltenbeschreibung
+      - [ ] adding foreign keys
+  5. [ ] create 'taskarten' table:
+      - [ ] id
+      - [ ] taskart
+      - [ ] taskartenicon
+  6. [ ] create 'tasks' table:
+      - [ ] id
+      - [ ] personenid
+      - [ ] taskartenid
+      - [ ] spaltenid
+      - [ ] sortid
+      - [ ] tasks
+      - [ ] erstelldatum
+      - [ ] erinnerung
+      - [ ] notizen
+      - [ ] erledigt
+      - [ ] geloescht
+      - [ ] adding foreign keys
+  7. [ ] adding constaints
+  8. [ ] test the database
