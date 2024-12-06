@@ -63,12 +63,12 @@ https://codeigniter.com/user_guide/general/urls.html#removing-the-index-php-file
       - [X] name
       - [X] email
       - [X] passwort
-  4. [ ] create 'spalten' table:
-      - [ ] id
-      - [ ] boardsid
-      - [ ] spalte
-      - [ ] spaltenbeschreibung
-      - [ ] adding foreign keys
+  4. [X] create 'spalten' table:
+      - [X] id
+      - [X] boardsid
+      - [X] spalte
+      - [X] spaltenbeschreibung
+      - [X] adding foreign keys
   5. [ ] create 'taskarten' table:
       - [ ] id
       - [ ] taskart
