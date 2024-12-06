@@ -53,10 +53,10 @@ https://codeigniter.com/user_guide/general/urls.html#removing-the-index-php-file
   - [x] give the formular a heading
 - ### Uebung 3: Datenbankmodellierung in phpMyAdmin
   - Deadline: 11.12.2024
-  1. [X] create new database
-  2. [X] create 'boards' table:
-      - [X] id
-      - [X] board
+  1. [ ] create new database
+  2. [ ] create 'boards' table:
+      - [ ] id
+      - [ ] board
   3. [ ] create 'personen' table:
       - [ ] id
       - [ ] vorname
