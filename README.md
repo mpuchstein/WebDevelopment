@@ -57,12 +57,12 @@ https://codeigniter.com/user_guide/general/urls.html#removing-the-index-php-file
   2. [X] create 'boards' table:
       - [X] id
       - [X] board
-  3. [ ] create 'personen' table:
-      - [ ] id
-      - [ ] vorname
-      - [ ] name
-      - [ ] email
-      - [ ] passwort
+  3. [X] create 'personen' table:
+      - [X] id
+      - [X] vorname
+      - [X] name
+      - [X] email
+      - [X] passwort
   4. [ ] create 'spalten' table:
       - [ ] id
       - [ ] boardsid
