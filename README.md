@@ -73,18 +73,18 @@ https://codeigniter.com/user_guide/general/urls.html#removing-the-index-php-file
       - [X] id
       - [X] taskart
       - [X] taskartenicon
-  6. [ ] create 'tasks' table:
-      - [ ] id
-      - [ ] personenid
-      - [ ] taskartenid
-      - [ ] spaltenid
-      - [ ] sortid
-      - [ ] tasks
-      - [ ] erstelldatum
-      - [ ] erinnerung
-      - [ ] notizen
-      - [ ] erledigt
-      - [ ] geloescht
-      - [ ] adding foreign keys
-  7. [ ] adding constaints
+  6. [X] create 'tasks' table:
+      - [X] id
+      - [X] personenid
+      - [X] taskartenid
+      - [X] spaltenid
+      - [X] sortid
+      - [X] tasks
+      - [X] erstelldatum
+      - [X] erinnerung
+      - [X] notizen
+      - [X] erledigt
+      - [X] geloescht
+      - [X] adding foreign keys
+  7. [X] adding constaints
   8. [ ] test the database
