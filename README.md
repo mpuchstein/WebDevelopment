@@ -69,10 +69,10 @@ https://codeigniter.com/user_guide/general/urls.html#removing-the-index-php-file
       - [X] spalte
       - [X] spaltenbeschreibung
       - [X] adding foreign keys
-  5. [ ] create 'taskarten' table:
-      - [ ] id
-      - [ ] taskart
-      - [ ] taskartenicon
+  5. [X] create 'taskarten' table:
+      - [X] id
+      - [X] taskart
+      - [X] taskartenicon
   6. [ ] create 'tasks' table:
       - [ ] id
       - [ ] personenid
