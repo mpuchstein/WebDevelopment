@@ -87,4 +87,5 @@ https://codeigniter.com/user_guide/general/urls.html#removing-the-index-php-file
       - [X] geloescht
       - [X] adding foreign keys
   7. [X] adding constaints
-  8. [ ] test the database
+  8. [X] export database
+  9.[ ] test the database
