@@ -1,17 +1,60 @@
 # Übungsblatt 3
+
 ---
+
 ## Aufgabe 1: Datenbankmodellierung in phpMyAdmin
+
 - ### Relation Boards
+
+| Field     | Type      | Description       |
+|-----------|-----------|-------------------|
+| id        | int       | primary, autoinc  |
+| board     | varchar   | name des boards   | 
+
+[ ]
+
+- ### Relation Personen
+
+| Field     | Type      | Description       |
+|-----------|-----------|-------------------|
+| id        | int       | primary, autoinc  |
+| name      | varchar   | name der person   | 
+| email     | varchar   | email adress      | 
+| passwort  | varchar   | passwort          | 
+
+[ ]
+
+- ### Relation Spalten
+
+| Field                 | Type      | Description       |
+|-----------------------|-----------|-------------------|
+| id                    | int       | primary, autoinc  |
+| boardsid              | int       | foreignkey board  | 
+| sortid                | int       | ???               | 
+| spalte                | varchar   | name der spalte   | 
+| spalteneschreibung    | varchar   | beschreibung      | 
+
+[ ]
+
+- ### Relation Taskarten
+
+| Field         | Type      | Description       |
+|---------------|-----------|-------------------|
+| id            | int       | primary, autoinc  |
+| taskart       | varchar   | Name der taskart  | 
+| taskartenicon | varchar   | Icon der taskart  | 
+
+[ ]
+
+- ### Relation Tasks
+
 | Field     | Type      | Description       |
 |-----------|-----------|-------------------|
 | id        | int       | primary, autoinc  |
 | board     | varchar   | Name des boards   | 
-|-----------|-----------|-------------------|
--
-- ### Relation Personen
-- ### Relation Spalten
-- ### Relation Taskarten
-- ### Relation Tasks
+
+[ ]
+
 ---
 ## Aufgabe 2: Referenzintegritäten
 ### Constraints der Table Spalten:
