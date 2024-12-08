@@ -3,9 +3,10 @@
 ## Aufgabe 1: Datenbankmodellierung in phpMyAdmin
 - ### Relation Boards
 | Field     | Type      | Description       |
--
+|-----------|-----------|-------------------|
 | id        | int       | primary, autoinc  |
 | board     | varchar   | Name des boards   | 
+|-----------|-----------|-------------------|
 -
 - ### Relation Personen
 - ### Relation Spalten
