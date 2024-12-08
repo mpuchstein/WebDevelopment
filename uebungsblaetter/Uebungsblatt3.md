@@ -1,13 +1,18 @@
 # Übungsblatt 3
 ---
-1. ## Aufgabe 1: Datenbankmodellierung in phpMyAdmin
+## Aufgabe 1: Datenbankmodellierung in phpMyAdmin
 - ### Relation Boards
+| Field     | Type      | Description       |
+-
+| id        | int       | primary, autoinc  |
+| board     | varchar   | Name des boards   | 
+-
 - ### Relation Personen
 - ### Relation Spalten
 - ### Relation Taskarten
 - ### Relation Tasks
 ---
-2. ## Aufgabe 2: Referenzintegritäten
+## Aufgabe 2: Referenzintegritäten
 ### Constraints der Table Spalten:
  - [ ] Boards.id aktualisiert | del(b Board) mit Spalten > b => repell
 ### Constraints der Table Tasks:
