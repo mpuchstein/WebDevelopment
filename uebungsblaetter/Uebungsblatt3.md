@@ -4,16 +4,14 @@
 
 ## Aufgabe 1: Datenbankmodellierung in phpMyAdmin
 
-- ### Relation Boards
+- ### Relation Boards [ ]
 
 | Field     | Type      | Description       |
 |-----------|-----------|-------------------|
 | id        | int       | primary, autoinc  |
 | board     | varchar   | name des boards   | 
 
-[ ]
-
-- ### Relation Personen
+- ### Relation Personen [ ]
 
 | Field     | Type      | Description       |
 |-----------|-----------|-------------------|
@@ -22,9 +20,7 @@
 | email     | varchar   | email adress      | 
 | passwort  | varchar   | passwort          | 
 
-[ ]
-
-- ### Relation Spalten
+- ### Relation Spalten [ ]
 
 | Field                 | Type      | Description       |
 |-----------------------|-----------|-------------------|
@@ -34,9 +30,7 @@
 | spalte                | varchar   | name der spalte   | 
 | spalteneschreibung    | varchar   | beschreibung      | 
 
-[ ]
-
-- ### Relation Taskarten
+- ### Relation Taskarten [ ]
 
 | Field         | Type      | Description       |
 |---------------|-----------|-------------------|
@@ -44,16 +38,12 @@
 | taskart       | varchar   | Name der taskart  | 
 | taskartenicon | varchar   | Icon der taskart  | 
 
-[ ]
-
-- ### Relation Tasks
+- ### Relation Tasks [ ]
 
 | Field     | Type      | Description       |
 |-----------|-----------|-------------------|
 | id        | int       | primary, autoinc  |
 | board     | varchar   | Name des boards   | 
-
-[ ]
 
 ---
 ## Aufgabe 2: Referenzintegritäten
