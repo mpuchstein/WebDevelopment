@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 class Impressum extends BaseController
 {
-    public function index()
+    public function getIndex()
     {
         echo view('template/head');
         echo view('template/nav');
