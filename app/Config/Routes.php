@@ -7,6 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 /**
  * TODO: Add routes for all href
+ * TODO: make routes autoroutable
  */
 $routes->get('/', 'Home::index');
 $routes->get('spalten', 'Columns::getIndex');
