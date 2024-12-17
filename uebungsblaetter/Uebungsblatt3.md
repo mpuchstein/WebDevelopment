@@ -4,14 +4,14 @@
 
 ## Aufgabe 1: Datenbankmodellierung in phpMyAdmin
 
-- ### Relation Boards [ ]
+- ### Relation Boards [x]
 
 | Field     | Type      | Description       |
 |-----------|-----------|-------------------|
 | id        | int       | primary, autoinc  |
 | board     | varchar   | name des boards   | 
 
-- ### Relation Personen [ ]
+- ### Relation Personen [x]
 
 | Field     | Type      | Description       |
 |-----------|-----------|-------------------|
@@ -20,7 +20,7 @@
 | email     | varchar   | email adress      | 
 | passwort  | varchar   | passwort          | 
 
-- ### Relation Spalten [ ]
+- ### Relation Spalten [x]
 
 | Field                 | Type      | Description       |
 |-----------------------|-----------|-------------------|
@@ -30,7 +30,7 @@
 | spalte                | varchar   | name der spalte   | 
 | spalteneschreibung    | varchar   | beschreibung      | 
 
-- ### Relation Taskarten [ ]
+- ### Relation Taskarten [x]
 
 | Field         | Type      | Description       |
 |---------------|-----------|-------------------|
@@ -38,23 +38,33 @@
 | taskart       | varchar   | Name der taskart  | 
 | taskartenicon | varchar   | Icon der taskart  | 
 
-- ### Relation Tasks [ ]
+- ### Relation Tasks [x]
 
-| Field     | Type      | Description       |
-|-----------|-----------|-------------------|
-| id        | int       | primary, autoinc  |
-| board     | varchar   | Name des boards   | 
+| Field            | Type     | Description      |
+|------------------|----------|------------------|
+| id               | int      | primary, autoinc |
+| personenid       | int      | | 
+| taskartenid      | int      | | 
+| spaltenid        | int      | | 
+| sortid           | int      | | 
+| tasks            | varchar  | | 
+| erstelldatum     | date     | | 
+| erinnerungsdatum | datetime | | 
+| erinnerung       | smallint | | 
+| notizen          | text     | | 
+| erledigt         | smallint | | 
+| geloescht        | smallint | | 
 
 ---
 ## Aufgabe 2: Referenzintegritäten
 ### Constraints der Table Spalten:
- - [ ] Boards.id aktualisiert | del(b Board) mit Spalten > b => repell
+ - [x] Boards.id aktualisiert | del(b Board) mit Spalten > b => repell
 ### Constraints der Table Tasks:
- - [ ] upd(Spalte.id) | del(s Spalte) mit Tasks > s => repell
- - [ ] upd(Person.id) => upd(tasks.pid = Person.id)
- - [ ] del(p Person) => del(tasks.fid = p.id)
- - [ ] upd(Taskart.id) => upd(task.taid = Taskart.id)
- - [ ] del(ta Taskart) => del(task.taid = ta.id)
+ - [x] upd(Spalte.id) | del(s Spalte) mit Tasks > s => repell
+ - [x] upd(Person.id) => upd(tasks.pid = Person.id)
+ - [x] del(p Person) => del(tasks.fid = p.id)
+ - [x] upd(Taskart.id) => upd(task.taid = Taskart.id)
+ - [x] del(ta Taskart) => del(task.taid = ta.id)
 
 - ## Uebung 3: Datenbankmodellierung in phpMyAdmin
   - Deadline: 11.12.2024
@@ -93,4 +103,4 @@
       - [X] adding foreign keys
   7. [X] adding constaints
   8. [X] export database
-  9.[ ] test the database
+  9.[x] test the database
