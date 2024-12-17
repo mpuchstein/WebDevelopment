@@ -5,7 +5,7 @@
             <h1>Spalten</h1>
         </div>
         <div class="card-body bg-dark text-light">
-            <a href="<?=base_url('spalten/formular')?>" class="btn btn-outline-light">Erstellen</a>
+            <a href="<?=base_url('columns/form')?>" class="btn btn-outline-light">Erstellen</a>
         </div>
         <div class="card-footer table-responsive bg-dark text-light">
             <table class="table table-dark table-bordered rounded">

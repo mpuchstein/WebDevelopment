@@ -6,16 +6,16 @@ class Columns extends BaseController
 {
     public function getIndex()
     {
-        echo view('template/head');
-        echo view('template/nav');
+        echo view('templates/head');
+        echo view('templates/nav');
         echo view('columns');
-        echo view('template/footer');
+        echo view('templates/footer');
     }
     public function getForm()
     {
-        echo view('template/head');
-        echo view('template/nav');
+        echo view('templates/head');
+        echo view('templates/nav');
         echo view('columnform');
-        echo view('template/footer');
+        echo view('templates/footer');
     }
 }

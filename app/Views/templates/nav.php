@@ -1,5 +1,5 @@
 <!-- Navigation to task 1 -->
-<body class="container d-flex flex-column h-100 bg-dark bg-light">
+<body class="container d-flex flex-column h-100 bg-dark bg-light" data-bs-theme="dark">
 <!-- HEADER: MENU + HEROE SECTION -->
 <header class="container-fluid sticky-top">
     <div class="container-fluid bg-header">
@@ -13,7 +13,8 @@
             <nav class="navbar-toggler p-md-3 p-1">
                 <a href="<?=base_url('')?>" class="btn btn-outline-light btn-dark">Tasks</a>
                 <a href="<?=base_url('boards')?>" class="btn btn-outline-light btn-dark">Boards</a>
-                <a href="<?=base_url('spalten')?>" class="btn btn-outline-light dark btn-dark">Spalten</a>
+                <a href="<?=base_url('columns')?>" class="btn btn-outline-light dark btn-dark">Spalten</a>
+                <a href="<?=base_url('personen')?>" class="btn btn-outline-light dark btn-dark">Personen</a>
             </nav>
         </div>
     </div>
