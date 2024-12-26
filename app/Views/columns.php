@@ -1,13 +1,13 @@
 <!-- Bootstrap tables from task 3 -->
 <main class="container mt-2">
     <div class="card border-primary">
-        <div class="card-header bg-black text-light border-primary">
+        <div class="card-header border-primary bg-black">
             <h1>Spalten</h1>
         </div>
-        <div class="card-body bg-dark text-light">
+        <div class="card-body ">
             <a href="<?=base_url('columns/form')?>" class="btn btn-outline-light">Erstellen</a>
         </div>
-        <div class="card-footer table-responsive bg-dark text-light">
+        <div class="card-footer table-responsive">
             <table class="table table-dark table-bordered rounded">
                 <tr>
                     <th>ID</th>

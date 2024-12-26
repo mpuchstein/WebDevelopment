@@ -1,7 +1,7 @@
 <!-- Template for imprint,, TODO: mit sinnvollen Inhalten füllen -->
 <main class="container-fluid flex-shrink-0 bg-body mb-2 p-2">
     <div class="card h-100">
-        <div class="card-header bg-dark text-light">
+        <div class="card-header bg-black">
             <p>Impressum</p>
         </div>
         <div class="card-body bg-dark-subtle text-dark">

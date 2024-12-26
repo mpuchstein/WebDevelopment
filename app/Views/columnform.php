@@ -1,27 +1,27 @@
 <!-- Formulare from task 4 -->
 <main class="container mt-2 mb-2">
     <div class="card border-primary">
-        <div class="card-header bg-black text-light border-primary">
+        <div class="card-header border-primary bg-black">
             <h1>Spalte erstellen</h1>
         </div>
         <!-- Form elements with floating labels -->
-        <div class="card-body bg-dark text-light">
+        <div class="card-body">
             <form class="">
                 <div class="form-floating mb-3">
-                    <input type="text" id="columnlabel" class="form-control bg-dark text-white" placeholder="Spaltenbezeichnung">
+                    <input type="text" id="columnlabel" class="form-control" placeholder="Spaltenbezeichnung">
                     <label for="columnlabel" class="">Spaltenbezeichnung</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <textarea id="columndesc" class="form-control bg-dark text-white" placeholder="Spaltenbeschreibung" style="height: 100px"></textarea>
+                    <textarea id="columndesc" class="form-control" placeholder="Spaltenbeschreibung" style="height: 100px"></textarea>
                     <label for="columndesc" class="">Spaltenbeschreibung</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" id="sortid" class="form-control bg-dark text-white" placeholder="Sortier-ID">
+                    <input type="text" id="sortid" class="form-control" placeholder="Sortier-ID">
                     <label for="sortid" class="">Sortid</label>
                 </div>
                 <div class="row">
-                    <label for="board" class="col-3 text-light rounded">Board auswählen:</label>
-                    <select id="board" name="board" class="col-4 bg-dark text-white">
+                    <label for="board" class="col-3 rounded">Board auswählen:</label>
+                    <select id="board" name="board" class="col-4">
                         <option value="general">Allgemeine Todos</option>
                         <option value="special">Spezielle Todos</option>
                     </select>

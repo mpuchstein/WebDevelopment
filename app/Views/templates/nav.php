@@ -1,5 +1,5 @@
 <!-- Navigation to task 1 -->
-<body class="container d-flex flex-column h-100 bg-dark bg-light" data-bs-theme="dark">
+<body class="container d-flex flex-column h-100" data-bs-theme="dark">
 <!-- HEADER: MENU + HEROE SECTION -->
 <header class="container-fluid sticky-top">
     <div class="container-fluid bg-header">
