@@ -6,6 +6,7 @@
         </div>
         <div class="card-body ">
             <a href="<?=base_url('columns/form')?>" class="btn btn-outline-light">Erstellen</a>
+            <!-- Altenative zu Erstellen -> "Neu", "Neue Spalte" -->
         </div>
         <div class="card-footer table-responsive">
             <table class="table table-dark table-bordered rounded">

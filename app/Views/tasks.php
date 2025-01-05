@@ -5,7 +5,8 @@
             <h1>Tasks</h1> <!-- Headline -->
         </div>
         <div class="card-body  border-primary">
-        <p> Beispieltext </p> <!-- Content -->
+            <a href="<?=base_url('tasks/form')?>" class="btn btn-outline-light">Neu</a>
+            <!-- Alternative zu Neu -> "neu Task", "Erstellen" -->
         </div>
     </div>
 </main>
