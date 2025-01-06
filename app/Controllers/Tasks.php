@@ -8,7 +8,13 @@ class Tasks extends BaseController
 {
     public function getIndex()
     {
-        var_dump("team17");
+        $taskModel = new TasksModel();
+        $data['headline'] = 'Tasks';
+        $data['tasks'] = $taskModel->getTasks();
+        echo view('template/head');
+        echo view('template/nav');
+        echo view('pages/tasks', $data);
+        echo view('template/footer');
     }
 
     public function getDmp(){
