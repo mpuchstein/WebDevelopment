@@ -130,3 +130,8 @@ nb-configuration.xml
 /public/.htaccess
 /.htaccess
 /app/Config/Database.php
+/.bash_history
+/.bash_logout
+/.bash_profile
+/.bashrc
+/.viminfo
