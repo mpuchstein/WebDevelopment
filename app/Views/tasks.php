@@ -20,15 +20,24 @@
                 </tr>
                 </thead>
                 <tbody>
+                <tr>
+                    <!-- one row -->
+                    <td> test</td>
+                    <td> 2024-12-12 00:00:00</td>
+                    <td> test</td>
+                    <td> <a href="<?=base_url('tasks/form')?>" class="btn"><i class="fa-solid fa-pen-to-square" title="Bearbeiten"></i></a>
+                         <a href="<?=base_url('tasks/form')?>" class="btn"><i class="fa-solid fa-eraser" title="Löschen"></i></a></td>
+                </tr>
                 <!--<?php foreach ($tabele as $tabele): ?>
                     <tr>
                         <td> <?= esc($tabele['']) ?>      </td>
                         <td> <?= esc($tabele['']) ?> </td> -->
-                        <!-- <td> <?= esc($tabele['']) ?> </td> -->
-                        <!-- <td> <?= esc($tabele['']) ?> </td> --> <!--
+                <!-- <td> <?= esc($tabele['']) ?> </td> -->
+                <!-- <td> <?= esc($tabele['']) ?> </td> --> <!--
                         <td> <?= esc($tabele['']) ?>    </td>
                         <td> <?= esc($tabele['']) ?>   </td>
-                        <td><i class="fa-solid fa-pen-to-square" title="Bearbeiten"></i> <i class="fa-solid fa-eraser" title="Löschen"></i></td>
+                        <td> <a href="<?=base_url('tasks/form')?>" class="btn"><i class="fa-solid fa-pen-to-square" title="Bearbeiten"></i></a>
+                             <a href="<?=base_url('tasks/form')?>" class="btn"><i class="fa-solid fa-eraser" title="Löschen"></i></a></td>
                     </tr
                 <?php endforeach; ?> -->
                 </tbody>
