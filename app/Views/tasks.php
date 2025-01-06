@@ -7,6 +7,32 @@
         <div class="card-body  border-primary">
             <a href="<?=base_url('tasks/form')?>" class="btn btn-outline-light">Neu</a>
             <!-- Alternative zu Neu -> "neu Task", "Erstellen" -->
+            <p></p>
+            <table class="table-dark table-striped table-bordered w-100">
+                <thead>
+                <tr>
+                    <th scope="col">Task Name</th>
+                    <!-- <th scope="col">Person</th> -->
+                    <!-- <th scope="col">board</th> -->
+                    <th scope="col">Erinnerungsdatum</th>
+                    <th scope="col">Notiz </th>
+                    <th>Bearbeiten</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--<?php foreach ($tabele as $tabele): ?>
+                    <tr>
+                        <td> <?= esc($tabele['']) ?>      </td>
+                        <td> <?= esc($tabele['']) ?> </td> -->
+                        <!-- <td> <?= esc($tabele['']) ?> </td> -->
+                        <!-- <td> <?= esc($tabele['']) ?> </td> --> <!--
+                        <td> <?= esc($tabele['']) ?>    </td>
+                        <td> <?= esc($tabele['']) ?>   </td>
+                        <td><i class="fa-solid fa-pen-to-square" title="Bearbeiten"></i> <i class="fa-solid fa-eraser" title="Löschen"></i></td>
+                    </tr
+                <?php endforeach; ?> -->
+                </tbody>
+            </table>
         </div>
     </div>
 </main>
