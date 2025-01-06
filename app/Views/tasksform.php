@@ -35,7 +35,7 @@
                 <!-- Two buttons for saving and canceling the form -->
                 <div class="row mt-3">
                     <div class="col-5"></div>
-                    <div class="col-auto"><button type="reset" class="bg-danger rounded"><i class="fa-solid fa-broom"></i> Reset</button></div>
+                    <div class="col-auto"><button type="reset" class="bg-danger rounded"><i class="fa-solid fa-broom"></i> Abrechen</button></div>
                     <div class="col-auto"><button type="submit" class="bg-success rounded"><i class="fa-solid fa-floppy-disk"></i> Speichern</button></div>
                 </div>
             </form>
