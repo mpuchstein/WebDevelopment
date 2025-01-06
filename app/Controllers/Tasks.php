@@ -17,6 +17,26 @@ class Tasks extends BaseController
         echo view('template/footer');
     }
 
+   /*public function form($id = null) {
+        $data['task'] = $id ? $this->Task_model->get($id) : null;
+        $this->load->view('tasks/form', $data);
+    }
+
+    public function create() {
+        $this->Task_model->insert($this->input->post());
+        redirect('tasks');
+    }
+
+    public function update($id) {
+        $this->Task_model->update($id, $this->input->post());
+        redirect('tasks');
+    }
+
+    public function delete($id) {
+        $this->Task_model->delete($id);
+        redirect('tasks');
+    }*/
+
     public function getDmp(){
         $tasksModelInstance = new TasksModel();
         $data['tasks'] = $tasksModelInstance->getTasks();

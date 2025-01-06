@@ -19,4 +19,17 @@ class TasksModel extends Model
             ->get()->getResultArray();
     }
 
+    /*public function insert($data) {
+        $data['completed'] = 0;
+        $data['deleted'] = 0;
+        $this->db->insert('tasks', $data);
+    }
+
+    public function update($id, $data) {
+        $this->db->where('id', $id)->update('tasks', $data);
+    }
+
+    public function delete($id) {
+        $this->db->where('id', $id)->update('tasks', ['deleted' => 1]);
+    } */
 }
