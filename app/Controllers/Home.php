@@ -6,9 +6,9 @@ class Home extends BaseController
 {
     public function getIndex()
     {
-        echo view('templates/head');
-        echo view('templates/nav');
-        echo view('tasks');
-        echo view('templates/footer');
+        echo view('template/head');
+        echo view('template/nav');
+        #echo view('tasks');
+        echo view('template/footer');
     }
 }

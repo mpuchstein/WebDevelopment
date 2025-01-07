@@ -7,11 +7,11 @@
     <p></p>
     <table class="table-dark table-striped table-bordered w-100">
         <thead>
-        <tr>
-            <?php foreach ($tasks[0] as $key => $value) : ?>
-                <th scope="col"><?= esc($key) ?></th>
-            <?php endforeach ?>
-        </tr>
+            <tr>
+                <?php foreach ($tasks[0] as $key => $value) : ?>
+                    <th scope="col"><?= esc($key) ?></th>
+                <?php endforeach ?>
+            </tr>
         </thead>
         <tbody>
         <?php foreach ($tasks as $task): ?>

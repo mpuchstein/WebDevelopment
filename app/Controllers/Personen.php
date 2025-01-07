@@ -13,10 +13,10 @@ class Personen extends BaseController
         #$data['test'] = 'Ich teste gerade';
         $data['headline'] = 'Personen';
         $data['personen'] = $personenModelInstance -> getSecureData();
-        echo view('templates/head');
-        echo view('templates/nav');
+        echo view('template/head');
+        echo view('template/nav');
         echo view('pages/Personen', $data);
-        echo view('templates/footer');
+        echo view('template/footer');
 
     }
 
