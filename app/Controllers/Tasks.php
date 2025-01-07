@@ -13,7 +13,7 @@ class Tasks extends BaseController
         $data['tasks'] = $taskModel->getTasks();
         echo view('template/head');
         echo view('template/nav');
-        echo view('pages/tasksTab', $data);
+        echo view('tasks', $data);
         echo view('template/footer');
     }
 
@@ -36,6 +36,16 @@ class Tasks extends BaseController
         echo view('template/head');
         echo view('template/nav');
         echo view('pages/tasksCards', $data);
+        echo view('template/footer');
+    }
+
+    public function getForm(){
+        $taskModel = new TasksModel();
+        $data['headline'] = 'TasksForm';
+        $data['tasks'] = $taskModel->getTasks();
+        echo view('template/head');
+        echo view('template/nav');
+        echo view('tasksform', $data);
         echo view('template/footer');
     }
    /*public function form($id = null) {
