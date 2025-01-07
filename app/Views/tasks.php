@@ -42,7 +42,7 @@
                         <td><?= esc($task['erinnerung']) ?></td>
                         <td><?= esc($task['deadline']) ?></td>
                         <td><?= esc($task['erledigt']) ?></td>
-                        <td><?= esc($task['geloeschte']) ?></td>
+                        <td><?= esc($task['geloescht']) ?></td>
                         <td>
                             <a href="<?=base_url('tasks/form/' . esc($task['id']))?>" class="fa-solid fa-pen-to-square" title="Bearbeiten"></a>
                             <a href="<?=base_url('tasks/delete/' . esc($task['id']))?>" class="fa-solid fa-eraser" title="Löschen"></a>
