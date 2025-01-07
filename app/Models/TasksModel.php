@@ -19,6 +19,14 @@ class TasksModel extends Model
             ->get()->getResultArray();
     }
 
+    public function getTask(int $id): array
+    {
+        return $this->db->table($this->table)
+            ->select("*")
+            ->where('id', $id)
+            ->get()->getRowArray();
+    }
+
     /*public function insert($data) {
         $data['completed'] = 0;
         $data['deleted'] = 0;

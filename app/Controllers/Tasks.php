@@ -39,13 +39,22 @@ class Tasks extends BaseController
         echo view('template/footer');
     }
 
-    public function getForm(){
+    public function getCrud($type = 'new', $id = null)
+    {
+        $data['mode'] = $type;
         $taskModel = new TasksModel();
-        $data['headline'] = 'TasksForm';
-        $data['tasks'] = $taskModel->getTasks();
+        if ($type == 'new' && $id == null) {
+            $data['headline'] = 'New Task';
+        } elseif ($type == 'edit' && $id != null) {
+            $data['headline'] = 'Edit Task';
+            $data['tasks'] = $taskModel->getTask($id);
+        } elseif ($type == 'delete' && $id != null) {
+            $data['headline'] = 'Delete Task';
+            $data['tasks'] = $taskModel->getTask($id);
+        }
         echo view('template/head');
         echo view('template/nav');
-        echo view('tasksform', $data);
+        echo view('pages/tasksCrud', $data);
         echo view('template/footer');
     }
    /*public function form($id = null) {

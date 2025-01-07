@@ -4,7 +4,7 @@
             <h1><?= esc($headline) ?></h1> <!-- Headline -->
         </div>
         <div class="card-body border-primary">
-            <a href="<?=base_url('tasks/form')?>" class="btn btn-primary">Neu</a>
+            <a href="<?=base_url('tasks/crud/new')?>" class="btn btn-primary">Neu</a>
         </div>
         <div class="card-body bg-dark text-light border-primary table-responsive">
             <p></p>
@@ -44,8 +44,8 @@
                         <td><?= esc($task['erledigt']) ?></td>
                         <td><?= esc($task['geloescht']) ?></td>
                         <td>
-                            <a href="<?=base_url('tasks/form/' . esc($task['id']))?>" class="fa-solid fa-pen-to-square" title="Bearbeiten"></a>
-                            <a href="<?=base_url('tasks/delete/' . esc($task['id']))?>" class="fa-solid fa-eraser" title="Löschen"></a>
+                            <a href="<?=base_url('tasks/crud/edit/' . esc($task['id']))?>" class="fa-solid fa-pen-to-square" title="Bearbeiten"></a>
+                            <a href="<?=base_url('tasks/crud/delete/' . esc($task['id']))?>" class="fa-solid fa-eraser" title="Löschen"></a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
