@@ -43,7 +43,7 @@
                 <div class="form-check form-switch mb-3">
                     <input type="checkbox" id="erinnerung"
                            class="form-check-input" <?= isset($tasks) && ($tasks['erinnerung'] == 1) ? 'checked' : '' ?>
-                           required>
+                           <?= $mode == 'delete' ? 'disabled' : '' ?> required>
                     <label class="form-check-label" for="erinnerung">Erinnerung</label>
                 </div>
                 <div class="form-floating mb-3">
@@ -60,7 +60,7 @@
                 <div class="form-check form-switch mb-3">
                     <input type="checkbox" id="erledigt"
                            class="form-check-input" <?= isset($tasks) && ($tasks['erledigt'] == 1) ? 'checked' : '' ?>
-                           required>
+                           <?= $mode=='delete' ? 'disabled' : '' ?> required>
                     <label class="form-check-label" for="erledigt">erledigt</label>
                 </div>
                 <div class="form-check form-switch mb-3">
