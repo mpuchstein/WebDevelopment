@@ -6,9 +6,9 @@ class Impressum extends BaseController
 {
     public function getIndex()
     {
-        echo view('templates/head');
-        echo view('templates/nav');
+        echo view('template/head');
+        echo view('template/nav');
         echo view('impressum');
-        echo view('templates/footer');
+        echo view('template/footer');
     }
 }

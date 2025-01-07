@@ -13,10 +13,31 @@ class Tasks extends BaseController
         $data['tasks'] = $taskModel->getTasks();
         echo view('template/head');
         echo view('template/nav');
-        echo view('pages/tasks', $data);
+        echo view('pages/tasksTab', $data);
         echo view('template/footer');
     }
 
+    public function getTable()
+    {
+        $taskModel = new TasksModel();
+        $data['headline'] = 'TasksTable';
+        $data['tasks'] = $taskModel->getTasks();
+        echo view('template/head');
+        echo view('template/nav');
+        echo view('pages/tasksTab', $data);
+        echo view('template/footer');
+    }
+
+    public function getCards()
+    {
+        $taskModel = new TasksModel();
+        $data['headline'] = 'TasksCards';
+        $data['tasks'] = $taskModel->getTasks();
+        echo view('template/head');
+        echo view('template/nav');
+        echo view('pages/tasksCards', $data);
+        echo view('template/footer');
+    }
    /*public function form($id = null) {
         $data['task'] = $id ? $this->Task_model->get($id) : null;
         $this->load->view('tasks/form', $data);
