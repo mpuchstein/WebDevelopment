@@ -8,14 +8,14 @@ class Columns extends BaseController
     {
         echo view('template/head');
         echo view('template/nav');
-        echo view('columns');
+        echo view('pages/columns');
         echo view('template/footer');
     }
     public function getForm()
     {
         echo view('template/head');
         echo view('template/nav');
-        echo view('columnform');
+        echo view('pages/columnform');
         echo view('template/footer');
     }
 }

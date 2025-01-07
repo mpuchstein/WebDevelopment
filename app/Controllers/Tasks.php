@@ -13,7 +13,7 @@ class Tasks extends BaseController
         $data['tasks'] = $taskModel->getTasks();
         echo view('template/head');
         echo view('template/nav');
-        echo view('pages/tasksTab', $data);
+        echo view('tasks', $data);
         echo view('template/footer');
     }
 
