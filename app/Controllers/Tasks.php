@@ -20,11 +20,22 @@ class Tasks extends BaseController
     public function getTable()
     {
         $taskModel = new TasksModel();
-        $data['headline'] = 'Tasks';
+        $data['headline'] = 'TasksTable';
         $data['tasks'] = $taskModel->getTasks();
         echo view('template/head');
         echo view('template/nav');
         echo view('pages/tasksTab', $data);
+        echo view('template/footer');
+    }
+
+    public function getCards()
+    {
+        $taskModel = new TasksModel();
+        $data['headline'] = 'TasksCards';
+        $data['tasks'] = $taskModel->getTasks();
+        echo view('template/head');
+        echo view('template/nav');
+        echo view('pages/tasksCards', $data);
         echo view('template/footer');
     }
    /*public function form($id = null) {

@@ -13,6 +13,7 @@
             <nav class="navbar-toggler p-md-3 p-1">
                 <a href="<?=base_url('')?>" class="btn btn-outline-light btn-dark">Tasks</a>
                 <a href="<?=base_url('tasks/table')?>" class="btn btn-outline-light btn-dark">TasksTable</a>
+                <a href="<?=base_url('tasks/cards')?>" class="btn btn-outline-light btn-dark">TasksCards</a>
                 <a href="<?=base_url('boards')?>" class="btn btn-outline-light btn-dark">Boards</a>
                 <a href="<?=base_url('columns')?>" class="btn btn-outline-light dark btn-dark">Spalten</a>
                 <a href="<?=base_url('personen')?>" class="btn btn-outline-light dark btn-dark">Personen</a>
