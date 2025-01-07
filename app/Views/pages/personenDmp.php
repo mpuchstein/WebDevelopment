@@ -1,2 +1,3 @@
-<?php
-var_dump($personen);
+<pre>
+<?php var_dump($personen); ?>
+</pre>

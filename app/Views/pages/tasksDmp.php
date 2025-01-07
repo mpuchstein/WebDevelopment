@@ -1,2 +1,3 @@
-<?php
-var_dump($tasks);
+<pre>
+<?= var_dump($tasks); ?>
+</pre>
