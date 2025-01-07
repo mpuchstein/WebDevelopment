@@ -38,6 +38,16 @@ class Tasks extends BaseController
         echo view('pages/tasksCards', $data);
         echo view('template/footer');
     }
+
+    public function getForm(){
+        $taskModel = new TasksModel();
+        $data['headline'] = 'TasksForm';
+        $data['tasks'] = $taskModel->getTasks();
+        echo view('template/head');
+        echo view('template/nav');
+        echo view('tasksform', $data);
+        echo view('template/footer');
+    }
    /*public function form($id = null) {
         $data['task'] = $id ? $this->Task_model->get($id) : null;
         $this->load->view('tasks/form', $data);
