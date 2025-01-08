@@ -57,29 +57,33 @@ class Tasks extends BaseController
         echo view('pages/tasksCrud', $data);
         echo view('template/footer');
     }
-   /*public function form($id = null) {
-        $data['task'] = $id ? $this->Task_model->get($id) : null;
-        $this->load->view('tasks/form', $data);
+    public function postNew(){
+        $data = $this -> request -> getPost();
+        $taskModel = new TasksModel();
+        $taskModel->insertTask($data);
+        return redirect() -> to(base_url('tasks'));
     }
 
-    public function create() {
-        $this->Task_model->insert($this->input->post());
-        redirect('tasks');
+    public function postEdit(){
+        $data = $this -> request -> getPost();
+        $taskModel = new TasksModel();
+        $taskModel->updateTask($data['id'], $data);
+        return redirect() -> to(base_url('tasks'));
     }
 
-    public function update($id) {
-        $this->Task_model->update($id, $this->input->post());
-        redirect('tasks');
+    public function postDelete(){
+        $data = $this -> request -> getPost();
+        $taskModel = new TasksModel();
+        $taskModel->deleteTask($data['id']);
+        return redirect() -> to(base_url('tasks'));
     }
-
-    public function delete($id) {
-        $this->Task_model->delete($id);
-        redirect('tasks');
-    }*/
 
     public function getDmp(){
         $tasksModelInstance = new TasksModel();
         $data['tasks'] = $tasksModelInstance->getTasks();
+        echo view('template/head');
+        echo view('template/nav');
         echo view('pages/tasksDmp', $data);
+        echo view('template/footer');
     }
 }
