@@ -10,10 +10,10 @@ class Tasks extends BaseController
     {
         $taskModel = new TasksModel();
         $data['headline'] = 'Tasks';
-        $data['tasks'] = $taskModel->getTasks();
+        $data['tasks'] = $taskModel->getActiveTasks();
         echo view('template/head');
         echo view('template/nav');
-        echo view('tasks', $data);
+        echo view('pages/tasksCards', $data);
         echo view('template/footer');
     }
 
@@ -32,13 +32,14 @@ class Tasks extends BaseController
     {
         $taskModel = new TasksModel();
         $data['headline'] = 'TasksCards';
-        $data['tasks'] = $taskModel->getTasks();
+        $data['tasks'] = $taskModel->getActiveTasks();
         echo view('template/head');
         echo view('template/nav');
         echo view('pages/tasksCards', $data);
         echo view('template/footer');
     }
 
+    //TODO catch $ID not in database
     public function getCrud($type = 'new', $id = null)
     {
         $data['mode'] = $type;
@@ -51,6 +52,10 @@ class Tasks extends BaseController
         } elseif ($type == 'delete' && $id != null) {
             $data['headline'] = 'Delete Task';
             $data['tasks'] = $taskModel->getTask($id);
+        } elseif(($type == 'edit' || $type == 'delete') && $id == null){
+            return redirect()->to('/tasks/table');  //cannot edit or del without $id
+        } elseif($type == 'new' && $id != null){
+            return redirect()->to('/tasks/crud/edit/'.$id);  //not allowed to add a new item with $id set
         }
         echo view('template/head');
         echo view('template/nav');
@@ -60,22 +65,22 @@ class Tasks extends BaseController
     public function postNew(){
         $data = $this -> request -> getPost();
         $taskModel = new TasksModel();
-        $taskModel->insertTask($data);
-        return redirect() -> to(base_url('tasks'));
+        $id = $taskModel->insertTask($data);
+        return redirect() -> to(base_url('tasks/success/new/').$id);
     }
 
     public function postEdit(){
         $data = $this -> request -> getPost();
         $taskModel = new TasksModel();
         $taskModel->updateTask($data['id'], $data);
-        return redirect() -> to(base_url('tasks'));
+        return redirect() -> to(base_url('tasks/success/edit/'.$data['id']));
     }
 
     public function postDelete(){
         $data = $this -> request -> getPost();
         $taskModel = new TasksModel();
         $taskModel->deleteTask($data['id']);
-        return redirect() -> to(base_url('tasks'));
+        return redirect() -> to(base_url('tasks/success/delete/'.$data['id']));
     }
 
     public function getDmp(){
@@ -84,6 +89,20 @@ class Tasks extends BaseController
         echo view('template/head');
         echo view('template/nav');
         echo view('pages/tasksDmp', $data);
+        echo view('template/footer');
+    }
+
+    //TODO maybe rewrite getIndex with get Parameters?
+    public function getSuccess($type, $id){
+        $dataSuc['type'] = $type;
+        $dataSuc['id'] = $id;
+        $taskModel = new TasksModel();
+        $data['headline'] = 'Tasks';
+        $data['tasks'] = $taskModel->getActiveTasks();
+        echo view('template/head');
+        echo view('pages/tasksSuccess', $dataSuc);
+        echo view('template/nav');
+        echo view('pages/tasks', $data);
         echo view('template/footer');
     }
 }

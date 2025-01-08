@@ -7,8 +7,8 @@
         <!-- redirection to other pages -->
         <div class="col text-end pe-3">
             <a href="<?= base_url('impressum') ?>">Impressum</a>
-            <a href="<?= base_url('datenschutz') ?>">Datenschutz</a>
-            <a href="<?= base_url('kontakt') ?>">Kontakt</a>
+            <a href="<?= base_url('') ?>">Datenschutz</a>
+            <a href="<?= base_url('') ?>">Kontakt</a>
         </div>
     </div>
 </footer>
