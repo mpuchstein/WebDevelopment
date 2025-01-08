@@ -66,7 +66,7 @@
                 <div class="form-check form-switch mb-3">
                     <input type="checkbox" name="erledigt" id="erledigt"
                            class="form-check-input" <?= isset($tasks) && ($tasks['erledigt'] == 1) ? 'checked' : '' ?>
-                           <?= $mode=='delete' ? 'disabled' : '' ?>>
+                           <?= $mode=='delete' || $mode=='new' ? 'disabled' : '' ?>>
                     <label class="form-check-label" for="erledigt">erledigt</label>
                 </div>
                 <div class="form-check form-switch mb-3">
@@ -78,17 +78,21 @@
                 <div class="row mt-3">
                     <div class="col-5"></div>
                     <div class="col-auto">
-                        <button type="reset" class="bg-dark-subtle rounded"><i class="fa-solid fa-broom"></i> Reset
+                        <button type="reset" class="btn bg-dark-subtle rounded"><i class="fa-solid fa-broom"></i> Reset
                         </button>
+                    </div>
+                    <div class="col-auto">
+                        <a href="<?=base_url()?>" class="btn bg-dark-subtle rounded"><i class="fa-solid fa-x"></i> Abbrechen
+                        </a>
                     </div>
                     <?= $mode == 'delete' ?
                         '<div class="col-auto">
-                            <button type="submit" class="bg-danger rounded"><i class="fa-solid fa-floppy-disk"></i>
+                            <button type="submit" class="btn bg-danger rounded"><i class="fa-solid fa-floppy-disk"></i>
                                 Löschen
                             </button>
                         </div>' :
                         '<div class="col-auto">
-                            <button type="submit" class="bg-success rounded"><i class="fa-solid fa-floppy-disk"></i>
+                            <button type="submit" class="btn bg-success rounded"><i class="fa-solid fa-floppy-disk"></i>
                                 Speichern
                             </button>
                         </div>'
