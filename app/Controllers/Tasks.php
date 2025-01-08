@@ -100,8 +100,8 @@ class Tasks extends BaseController
         $data['headline'] = 'Tasks';
         $data['tasks'] = $taskModel->getActiveTasks();
         echo view('template/head');
-        echo view('pages/tasksSuccess', $dataSuc);
         echo view('template/nav');
+        echo view('pages/tasksSuccess', $dataSuc);
         echo view('pages/tasks', $data);
         echo view('template/footer');
     }

@@ -6,15 +6,16 @@
         <div class="card-body">
             <form action="<?= base_url('tasks/') . $mode ?>" method="post">
                 <div class="form-floating mb-3">
-                    <input type="number" name="id" id="id" class="form-control" placeholder="Task ID"
-                           value="<?= isset($tasks) ? $tasks['id'] : '' ?>" readonly>
-                    <label for="taskid" class="">Task ID</label>
-                </div>
-                <div class="form-floating mb-3">
                     <input type="text" name="task" id="task" class="form-control" placeholder="Task Name"
                            value="<?= isset($tasks) ? $tasks['task'] : '' ?>"
                            <?= $mode=='delete' ? 'readonly' : '' ?> required>
                     <label for="task" class="">Task Name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="number" name="taskartenid" id="taskartenid" class="form-control" placeholder="Taskarten ID"
+                           value="<?= isset($tasks) ? $tasks['taskartenid'] : '' ?>"
+                        <?= $mode=='delete' ? 'readonly' : '' ?> required>
+                    <label for="taskartenid">Tasktyp ID</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="number" name="personenid" id="personenid" class="form-control" placeholder="Person ID"
@@ -27,18 +28,6 @@
                            value="<?= isset($tasks) ? $tasks['spaltenid'] : '' ?>"
                            <?= $mode=='delete' ? 'readonly' : '' ?> required>
                     <label for="spaltenid">Column ID</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="number" name="taskartenid" id="taskartenid" class="form-control" placeholder="Taskarten ID"
-                           value="<?= isset($tasks) ? $tasks['taskartenid'] : '' ?>"
-                        <?= $mode=='delete' ? 'readonly' : '' ?> required>
-                    <label for="taskartenid">Taskarten ID</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="number" name="sortid" id="sortid" class="form-control" placeholder="Sort ID"
-                           value="<?= isset($tasks) ? $tasks['sortid'] : '' ?>"
-                        <?= $mode=='delete' ? 'readonly' : '' ?> required>
-                    <label for="sortid">Sort ID</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="datetime-local" name="deadline" id="deadline" class="form-control"
