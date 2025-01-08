@@ -27,6 +27,20 @@ class TasksModel extends Model
             ->get()->getRowArray();
     }
 
+    public function insertTask(array $data): bool
+    {
+        return $this->db->table($this->table)->insert($data);
+    }
+
+    public function updateTask(int $id, array $data): bool
+    {
+        return $this->db->table($this->table)->update($data, ['id' => $id]);
+    }
+
+    public function deleteTask(int $id): bool
+    {
+        return $this->db->table($this->table)->delete(['id' => $id]);
+    }
     /*public function insert($data) {
         $data['completed'] = 0;
         $data['deleted'] = 0;
