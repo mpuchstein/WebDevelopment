@@ -6,7 +6,7 @@
         <div class="card-body border-primary">
             <a href="<?=base_url('tasks/crud/new')?>" class="btn btn-primary">Neu</a>
         </div>
-        <div class="card-body bg-dark text-light border-primary table-responsive">
+        <div class="card-footer bg-dark text-light border-primary table-responsive">
             <p></p>
             <table class="table table-dark table-striped table-bordered w-100">
                 <thead>

@@ -22,7 +22,8 @@
                     <td>100</td>
                     <td>Zu besprechen</td>
                     <td>Noch zu besprechende Todos</td>
-                    <td><i class="fa-light fa-pen-to-square" title="Bearbeiten"></i> <i class="fa-solid fa-eraser" title="Löschen"></i></td>
+                    <td><i class="fa-light fa-pen-to-square" title="Bearbeiten"></i> <i class="fa-solid fa-eraser"
+                                                                                        title="Löschen"></i></td>
                 </tr>
                 <tr>
                     <td>3</td>
@@ -30,7 +31,8 @@
                     <td>200</td>
                     <td>In Bearbeitung</td>
                     <td>Todos die aktuell bearbeitet werden</td>
-                    <td><i class="fa-light fa-pen-to-square" title="Bearbeiten"></i> <i class="fa-solid fa-eraser" title="Löschen"></i></td>
+                    <td><i class="fa-light fa-pen-to-square" title="Bearbeiten"></i> <i class="fa-solid fa-eraser"
+                                                                                        title="Löschen"></i></td>
                 </tr>
             </table>
         </div>
