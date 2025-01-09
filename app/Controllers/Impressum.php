@@ -8,7 +8,7 @@ class Impressum extends BaseController
     {
         echo view('template/head');
         echo view('template/nav');
-        echo view('impressum');
+        echo view('pages/impressum');
         echo view('template/footer');
     }
 }
