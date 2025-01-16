@@ -39,6 +39,18 @@ class Tasks extends BaseController
         echo view('template/footer');
     }
 
+    public function getModal(){
+        $taskModel = new TasksModel();
+        $data['headline'] = 'TasksCardsModalCrud';
+        $data['tasks'] = $taskModel->getTask();
+        echo view('template/head');
+        echo view('template/nav');
+        echo view('pages/tasksmodalcrud', $data);
+        echo view('scripts/modalcrudscript');
+        echo view('template/footer');
+
+    }
+
     //TODO catch $ID not in database
     public function getCrud($type = 'new', $id = null)
     {
