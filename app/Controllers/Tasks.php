@@ -10,7 +10,7 @@ class Tasks extends BaseController
     {
         $taskModel = new TasksModel();
         $data['headline'] = 'Tasks';
-        $data['tasks'] = $taskModel->getActiveTasks();
+        $data['tasks'] = $taskModel->getTask();
         echo view('template/head');
         echo view('template/nav');
         echo view('pages/tasksCards', $data);
@@ -21,7 +21,7 @@ class Tasks extends BaseController
     {
         $taskModel = new TasksModel();
         $data['headline'] = 'TasksTable';
-        $data['tasks'] = $taskModel->getTasks();
+        $data['tasks'] = $taskModel->getAllTask();
         echo view('template/head');
         echo view('template/nav');
         echo view('pages/tasksTab', $data);
@@ -32,7 +32,7 @@ class Tasks extends BaseController
     {
         $taskModel = new TasksModel();
         $data['headline'] = 'TasksCards';
-        $data['tasks'] = $taskModel->getActiveTasks();
+        $data['tasks'] = $taskModel->getTask();
         echo view('template/head');
         echo view('template/nav');
         echo view('pages/tasksCards', $data);
@@ -48,10 +48,10 @@ class Tasks extends BaseController
             $data['headline'] = 'New Task';
         } elseif ($type == 'edit' && $id != null) {
             $data['headline'] = 'Edit Task';
-            $data['tasks'] = $taskModel->getTask($id);
+            $data['tasks'] = $taskModel->getAllTask($id);
         } elseif ($type == 'delete' && $id != null) {
             $data['headline'] = 'Delete Task';
-            $data['tasks'] = $taskModel->getTask($id);
+            $data['tasks'] = $taskModel->getAllTask($id);
         } elseif(($type == 'edit' || $type == 'delete') && $id == null){
             return redirect()->to('/tasks/table');  //cannot edit or del without $id
         } elseif($type == 'new' && $id != null){
@@ -80,12 +80,13 @@ class Tasks extends BaseController
         $data = $this -> request -> getPost();
         $taskModel = new TasksModel();
         $taskModel->deleteTask($data['id']);
+//        $taskModel->setTaskDeleted($data['id']);
         return redirect() -> to(base_url('tasks/success/delete/'.$data['id']));
     }
 
     public function getDmp(){
         $tasksModelInstance = new TasksModel();
-        $data['tasks'] = $tasksModelInstance->getTasks();
+        $data['tasks'] = $tasksModelInstance->getAllTask();
         echo view('template/head');
         echo view('template/nav');
         echo view('pages/tasksDmp', $data);
@@ -98,7 +99,7 @@ class Tasks extends BaseController
         $dataSuc['id'] = $id;
         $taskModel = new TasksModel();
         $data['headline'] = 'Tasks';
-        $data['tasks'] = $taskModel->getActiveTasks();
+        $data['tasks'] = $taskModel->getTask();
         echo view('template/head');
         echo view('template/nav');
         echo view('pages/tasksSuccess', $dataSuc);

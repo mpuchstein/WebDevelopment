@@ -5,6 +5,7 @@
         </div>
         <div class="card-body">
             <form action="<?= base_url('tasks/') . $mode ?>" method="post">
+                <input type="hidden" name="id" id="id" value="<?= isset($tasks) ? $tasks['id'] : '' ?>">
                 <div class="form-floating mb-3">
                     <input type="text" name="task" id="task" class="form-control" placeholder="Task Name"
                            value="<?= isset($tasks) ? $tasks['task'] : '' ?>"
