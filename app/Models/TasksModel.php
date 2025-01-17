@@ -12,30 +12,30 @@ class TasksModel extends Model
         'erinnerungsdatum', 'erinnerung', 'deadline', 'erledigt', 'geloescht'];
 
     // getTasks returns all tasks ordered by task
-    public function getTasks(): array //return Tasks
+    public function getAllTask(int $id = null): array //return Tasks
     {
-        return $this->db->table($this->table)
+        $query = $this->db->table($this->table)
             ->select("*")
-            ->orderBy('task', 'ASC')
-            ->get()->getResultArray();
+            ->orderBy('task', 'ASC');
+        if ($id !== null) {
+            $query->where("id", $id);
+            return $query->get()->getRowArray();
+        }
+        return $query->get()->getResultArray();
+
     }
 
     // getActiveTasks returns all tasks that are not deleted
-    public function getActiveTasks(): array{
-        return $this->db->table($this->table)
+    public function getTask(int $id = null): array{
+        $query = $this->db->table($this->table)
             ->select("*")
             ->where('geloescht', 0)
-            ->orderBy('task', 'ASC')
-            ->get()->getResultArray();
-    }
-
-    // getTask returns one task identified by $id
-    public function getTask(int $id): array
-    {
-        return $this->db->table($this->table)
-            ->select("*")
-            ->where('id', $id)
-            ->get()->getRowArray();
+            ->orderBy('task', 'ASC');
+        if ($id !== null) {
+            $query->where("id", $id);
+            return $query->get()->getRowArray();
+        }
+        return $query->get()->getResultArray();
     }
 
     // insertTask adds a new Task into the database, values are given by $data
@@ -61,6 +61,6 @@ class TasksModel extends Model
     // deletes a task identified by $id but does not remove it from the database
     public function setTaskDeleted(int $id): bool
     {
-        return $this->db->table($this->table)->set(['deleted' => 1])->where(['id' => $id])->update();
+        return $this->db->table($this->table)->set(['geloescht' => 1])->where(['id' => $id])->update();
     }
 }
