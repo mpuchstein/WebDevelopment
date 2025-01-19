@@ -20,7 +20,7 @@
                        class="fa-solid fa-pen-to-square" title="Bearbeiten"></a>
                     <a href="<?= base_url('tasks/crud/delete/' . esc($task['id'])) ?>" class="fa-solid fa-eraser"
                        title="Löschen"></a>
-                    <button onclick="showCrud()">Edit!</button>
+                    <button id="<?= esc('editBtn_' . $task['id'])?>" onclick="showCrud('edit', <?= esc($task['id'])?>)">Edit!</button>
                 </div>
             </div>
         <?php endforeach; ?>
