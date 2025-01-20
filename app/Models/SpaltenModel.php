@@ -6,27 +6,12 @@ namespace App\Models;
 class SpaltenModel extends Model {
     protected $table = 'spalten';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['boardsid', 'sortid', 'spalte', 'spaltenbeschreibung', 'geloescht'];
+    protected $allowedFields = ['boardsid', 'sortid', 'spalte', 'spaltenbeschreibung'];
 
-    // getAllSpalten returns all tasks ordered by task
-    public function getAllSpalten(int $id = null): array //return Spalten
-    {
+    // getColumns returns all columns
+    public function getColumns(int $id = null): array{
         $query = $this->db->table($this->table)
             ->select("*")
-            ->orderBy('spalte', 'ASC');
-        if ($id !== null) {
-            $query->where("id", $id);
-            return $query->get()->getRowArray();
-        }
-        return $query->get()->getResultArray();
-
-    }
-
-    // getActiveSpalten returns all tasks that are not deleted
-    public function getActiveSpalten(int $id = null): array{
-        $query = $this->db->table($this->table)
-            ->select("*")
-            ->where('geloescht', 0)
             ->orderBy('spalte', 'ASC');
         if ($id !== null) {
             $query->where("id", $id);
@@ -37,20 +22,20 @@ class SpaltenModel extends Model {
 
     // insertSpalten adds a new spalten into the database, values are given by $data
     // return the $id
-    public function insertSpalten(array $data): int
+    public function insertColumn(array $data): int
     {
         $this->db->table($this->table)->insert($data);
         return $this-> db -> insertID();
     }
 
-    // updateSpalten updates an existing Spalten identified by $id with the new $data
-    public function updateSpalten(int $id, array $data): bool
+    // updateColumn updates an existing column identified by $id with the new $data
+    public function updateColumn(int $id, array $data): bool
     {
         return $this->db->table($this->table)->update($data, ['id' => $id]);
     }
 
-    // deletes and removes a spalten identified by $id unrecoverably and permanently
-    public function deleteSpalten(int $id): bool
+    // deletes and removes a column identified by $id unrecoverably and permanently
+    public function deleteColumn(int $id): bool
     {
         return $this->db->table($this->table)->delete(['id' => $id]);
     }

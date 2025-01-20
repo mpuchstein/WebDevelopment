@@ -11,7 +11,7 @@ class TasksModel extends Model
     protected $allowedFields = ['personenid', 'spaltenid', 'taskartenid', 'sortid', 'task', 'notizen', 'erstelldatum',
         'erinnerungsdatum', 'erinnerung', 'deadline', 'erledigt', 'geloescht'];
 
-    // getTasks returns all tasks ordered by task
+    // getAllTasks returns all tasks ordered by task
     public function getAllTask(int $id = null): array //return Tasks
     {
         $query = $this->db->table($this->table)
@@ -25,7 +25,7 @@ class TasksModel extends Model
 
     }
 
-    // getActiveTasks returns all tasks that are not deleted
+    // getTasks returns all tasks that are not deleted
     public function getTask(int $id = null): array{
         $query = $this->db->table($this->table)
             ->select("*")
