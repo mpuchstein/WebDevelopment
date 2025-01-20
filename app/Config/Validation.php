@@ -27,26 +27,6 @@ class Validation extends BaseConfig
         CreditCardRules::class,
     ];
 
-    // Validierungsregeln
-    public $spaltenbearbeiten = [
-        'spalte' => 'required',
-        'spaltenbeschreibung' => 'required',
-        'sortid' => 'integer',
-    ];
-
-    // Fehlermeldungen
-    public $spaltenbearbeiten_errors = [
-        'spalte' => [
-            'required' => 'Bitte tragen Sie einen Spaltebezeichnung ein.'
-        ],
-        'spaltenbeschreibung' => [
-            'required' => 'Bitte tragen Sie einen Beschreibungein.'
-        ],
-        'sortid' => [
-            'integer' => 'Die Sortid muss eine Zahl sein.',
-        ],
-    ];
-
     /**
      * Specifies the views that are used to display the
      * errors.

@@ -6,6 +6,25 @@ use old\Spalten;
 use App\Models\SpaltenModel;
 class Columns extends BaseController
 {
+    // Validierungsregeln
+    public $spaltenbearbeiten = [
+        'spalte' => 'required',
+        'spaltenbeschreibung' => 'required',
+        'sortid' => 'integer',
+    ];
+
+    // Fehlermeldungen
+    public $spaltenbearbeiten_errors = [
+        'spalte' => [
+            'required' => 'Bitte tragen Sie einen Spaltebezeichnung ein.'
+        ],
+        'spaltenbeschreibung' => [
+            'required' => 'Bitte tragen Sie einen Beschreibungein.'
+        ],
+        'sortid' => [
+            'integer' => 'Die Sortid muss eine Zahl sein.',
+        ],
+    ];
     public function getIndex()
     {
         $columnModel = new SpaltenModel();
@@ -45,6 +64,13 @@ class Columns extends BaseController
     public function postNew(){
         $data = $this -> request -> getPost();
         $columnModel = new SpaltenModel();
+        if (! $this->validateData($data, $this->$spaltenbearbeiten)) {
+            // The validation failed.
+            return view('login', [
+                'errors' => $this->validator->getErrors(),
+            ]);
+        }
+        $validData = $this->validator->getValidated();
         $id = $columnModel->insertColumn($data);
         return redirect()->to(base_url('columns'));
     }
