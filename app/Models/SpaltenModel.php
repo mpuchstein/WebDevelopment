@@ -39,4 +39,30 @@ class SpaltenModel extends Model {
     {
         return $this->db->table($this->table)->delete(['id' => $id]);
     }
+
+    // deletes a spalten identified by $id but does not remove it from the database
+    public function setSpaltenDeleted(int $id): bool
+    {
+        return $this->db->table($this->table)->set(['geloescht' => 1])->where(['id' => $id])->update();
+    }
+
+    // Validierungsregeln
+    public $spaltenbearbeiten = [
+        'spalte' => 'required',
+        'spaltenbeschreibung' => 'required',
+        'sortid' => 'integer',
+    ];
+
+    // Fehlermeldungen
+    public $spaltenbearbeiten_errors = [
+        'spalte' => [
+            'required' => 'Bitte tragen Sie einen Spaltebezeichnung ein.'
+        ],
+        'spaltenbeschreibung' => [
+            'required' => 'Bitte tragen Sie einen Beschreibungein.'
+        ],
+        'sortid' => [
+            'integer' => 'Die Sortid muss eine Zahl sein.',
+        ],
+    ];
 }
