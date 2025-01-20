@@ -33,7 +33,7 @@
                     <label for="columndesc" class="">Spaltenbeschreibung</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" name="sortid" id="sortid" class="form-control" placeholder="Sortier-ID"
+                    <input type="number" name="sortid" id="sortid" class="form-control" placeholder="Sortier-ID"
                             value="<?=isset($columns) ? $columns['sortid'] : ''?>"
                             <?= $mode=='delete' ? 'readonly' :'' ?> required>
                     <label for="sortid" class="">Sortid</label>
@@ -49,20 +49,25 @@
                 <div class="row mt-3">
                     <div class="col-5"></div>
                     <div class="col-auto">
-                        <a href="<?=base_url('/columns')?>" class="btn bg-dark-subtle rounded">
-                            <i class="fa-solid fa-x"></i> Abbrechen
+                        <button type="reset" class="btn bg-dark-subtle rounded"><i class="fa-solid fa-broom"></i> Reset
+                        </button>
+                    </div>
+                    <div class="col-auto">
+                        <a href="<?=base_url()?>" class="btn bg-dark-subtle rounded"><i class="fa-solid fa-x"></i> Abbrechen
                         </a>
                     </div>
-                    <div class="col-auto">
-                        <button type="reset" class="bg-danger rounded">
-                            <i class="fa-solid fa-broom"></i> Reset
-                        </button>
-                    </div>
-                    <div class="col-auto">
-                        <button type="submit" class="bg-success rounded">
-                            <i class="fa-solid fa-floppy-disk"></i> Speichern
-                        </button>
-                    </div>
+                    <?= $mode == 'delete' ?
+                        '<div class="col-auto">
+                            <button type="submit" class="btn bg-danger rounded"><i class="fa-solid fa-floppy-disk"></i>
+                                Löschen
+                            </button>
+                        </div>' :
+                        '<div class="col-auto">
+                            <button type="submit" class="btn bg-success rounded"><i class="fa-solid fa-floppy-disk"></i>
+                                Speichern
+                            </button>
+                        </div>'
+                    ?>
                 </div>
             </form>
         </div>
