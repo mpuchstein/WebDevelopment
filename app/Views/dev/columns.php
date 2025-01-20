@@ -5,7 +5,7 @@
             <h1>Spalten</h1>
         </div>
         <div class="card-header">
-            <a href="<?=base_url('columns/form')?>" class="btn btn-outline-light">Erstellen</a>
+            <a href="<?=base_url('columns/crud/new')?>" class="btn btn-outline-light">Erstellen</a>
             <!-- Altenative zu Erstellen -> "Neu", "Neue Spalte" -->
         </div>
         <div class="card-body table-responsive">
@@ -30,8 +30,16 @@
                     <td><?= esc($column['spaltenbeschreibung']) ?></td>
 
                     <td>
-                        <i class="fa-solid fa-pen-to-square" title="Bearbeiten"></i>
-                        <i class="fa-solid fa-eraser" title="Löschen"></i>
+                        <a
+                                href="<?=base_url('columns/crud/edit/'.$column['id'])?>"
+                                class="fa-solid fa-pen-to-square"
+                                title="Bearbeiten">
+
+                        </a>
+                        <a
+                                href="<?=base_url('columns/crud/delete/'.$column['id'])?>"
+                                class="fa-solid fa-eraser"
+                                title="Löschen"></a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
