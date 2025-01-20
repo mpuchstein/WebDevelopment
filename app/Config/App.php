@@ -16,7 +16,7 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
-    public string $baseURL = 'http://10.0.0.3:8080/webdev/public/';
+    public string $baseURL = 'https://team17.wi1cm.uni-trier.de/public/';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
@@ -180,7 +180,7 @@ class App extends BaseConfig
      *
      * @var array<string, string>
      */
-    public array $proxyIPs = ['10.0.0.3'];
+    public array $proxyIPs = [];
 
     /**
      * --------------------------------------------------------------------------
