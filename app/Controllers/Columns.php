@@ -41,4 +41,17 @@ class Columns extends BaseController
         echo view('dev/columnCrud', $data);
         echo view('template/footer');
     }
+
+    public function postNew(){
+        $data = $this -> request -> getPost();
+        $columnModel = new SpaltenModel();
+        $id = $columnModel->insertColumn($data);
+        return redirect()->to(base_url('columns'));
+    }
+
+    public function postEdit(){
+        $data = $this -> request -> getPost();
+        $columnModel = new SpaltenModel();
+        $columnModel->updateColumn($data);
+    }
 }

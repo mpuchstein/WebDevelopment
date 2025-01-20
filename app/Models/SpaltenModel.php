@@ -39,10 +39,4 @@ class SpaltenModel extends Model {
     {
         return $this->db->table($this->table)->delete(['id' => $id]);
     }
-
-    // deletes a spalten identified by $id but does not remove it from the database
-    public function setSpaltenDeleted(int $id): bool
-    {
-        return $this->db->table($this->table)->set(['geloescht' => 1])->where(['id' => $id])->update();
-    }
 }
