@@ -11,7 +11,7 @@ class Tasks extends BaseController
         $taskModel = new TasksModel();
         $data['headline'] = 'Tasks';
         $data['tasks'] = $taskModel->getTask();
-        echo view('template/head');
+        echo view('template/header');
         echo view('template/nav');
         echo view('pages/tasksCards', $data);
         echo view('template/footer');
@@ -22,7 +22,7 @@ class Tasks extends BaseController
         $taskModel = new TasksModel();
         $data['headline'] = 'TasksTable';
         $data['tasks'] = $taskModel->getAllTask();
-        echo view('template/head');
+        echo view('template/header');
         echo view('template/nav');
         echo view('pages/tasksTab', $data);
         echo view('template/footer');
@@ -33,7 +33,7 @@ class Tasks extends BaseController
         $taskModel = new TasksModel();
         $data['headline'] = 'TasksCards';
         $data['tasks'] = $taskModel->getTask();
-        echo view('template/head');
+        echo view('template/header');
         echo view('template/nav');
         echo view('pages/tasksCards', $data);
         echo view('template/footer');
@@ -43,10 +43,10 @@ class Tasks extends BaseController
         $taskModel = new TasksModel();
         $data['headline'] = 'TasksCardsModalCrud';
         $data['tasks'] = $taskModel->getTask();
-        echo view('template/head');
+        $datahead['scriptfile'] = base_url('assets/s/tasksModalCrud.js');
+        echo view('template/header', $datahead);
         echo view('template/nav');
         echo view('pages/tasksmodalcrud', $data);
-        echo view('scripts/modalcrudscript');
         echo view('template/footer');
 
     }
@@ -69,7 +69,7 @@ class Tasks extends BaseController
         } elseif($type == 'new' && $id != null){
             return redirect()->to('/tasks/crud/edit/'.$id);  //not allowed to add a new item with $id set
         }
-        echo view('template/head');
+        echo view('template/header');
         echo view('template/nav');
         echo view('pages/tasksCrud', $data);
         echo view('template/footer');
@@ -99,10 +99,17 @@ class Tasks extends BaseController
     public function getDmp(){
         $tasksModelInstance = new TasksModel();
         $data['tasks'] = $tasksModelInstance->getAllTask();
-        echo view('template/head');
+        echo view('template/header');
         echo view('template/nav');
         echo view('pages/tasksDmp', $data);
         echo view('template/footer');
+    }
+
+    public function getJson($id = null)
+    {
+        $taskModel = new TasksModel();
+        $task = $taskModel->getAllTask($id);
+        return $this->response->setJSON($task);
     }
 
     //TODO maybe rewrite getIndex with get Parameters?
@@ -112,7 +119,7 @@ class Tasks extends BaseController
         $taskModel = new TasksModel();
         $data['headline'] = 'Tasks';
         $data['tasks'] = $taskModel->getTask();
-        echo view('template/head');
+        echo view('template/header');
         echo view('template/nav');
         echo view('pages/tasksSuccess', $dataSuc);
         echo view('pages/tasks', $data);
