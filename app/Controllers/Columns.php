@@ -54,4 +54,19 @@ class Columns extends BaseController
         $columnModel = new SpaltenModel();
         $columnModel->updateColumn($data);
     }
+
+    /*public function validateData()
+    {
+        if ($this->validation->run($_POST, 'spaltenbearbeiten'))
+        {
+            //Anlegen oder ändern
+        } else {
+            // Daten zurück ans Formular übergeben
+            $data['columns'] = $_POST;
+
+            //Fehlermeldung generieren
+            $data['errors'] = $this->validation->getErrors();
+            echo view('columns/edit_val', $data);
+        }
+    }*/
 }
