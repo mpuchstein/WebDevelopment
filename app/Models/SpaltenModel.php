@@ -24,14 +24,27 @@ class SpaltenModel extends Model {
     // return the $id
     public function insertColumn(array $data): int
     {
-        $this->db->table($this->table)->insert($data);
+        $insertData = array(
+            'boardsid' => $data['boardsid'],
+            'sortid' => $data['sortid'],
+            'spalte' => $data['spalte'],
+            'spaltenbeschreibung' => $data['spaltenbeschreibung']
+        );
+        $this->db->table($this->table)->insert($insertData);
         return $this-> db -> insertID();
     }
 
     // updateColumn updates an existing column identified by $id with the new $data
     public function updateColumn(int $id, array $data): bool
     {
-        return $this->db->table($this->table)->update($data, ['id' => $id]);
+        $insertData = array(
+            'id' => $data['id'],
+            'boardsid' => $data['boardsid'],
+            'sortid' => $data['sortid'],
+            'spalte' => $data['spalte'],
+            'spaltenbeschreibung' => $data['spaltenbeschreibung']
+        );
+        return $this->db->table($this->table)->update($insertData, array('id' => $id));
     }
 
     // deletes and removes a column identified by $id unrecoverably and permanently

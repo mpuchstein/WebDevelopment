@@ -2,11 +2,11 @@
 <main class="container mt-2 mb-2">
     <div class="card border-primary">
         <div class="card-header border-primary bg-black">
-            <h1>Spalte erstellen</h1>
+            <h1><?=$headline?></h1>
         </div>
         <!-- Form elements with floating labels -->
         <div class="card-body">
-            <form action="<?=base_url('tasks/'.$mode) ?>" method="post">
+            <form action="<?=base_url('columns/'.$mode) ?>" method="post">
                 <input type="hidden" name="id" id="id" value="<?=isset($columns) ? $columns['id'] : ''?>">
                 <input type="hidden" name="boardsid" id="boardsid" value="1">
                 <div class="form-floating mb-3">

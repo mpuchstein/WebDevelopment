@@ -52,7 +52,13 @@ class Columns extends BaseController
     public function postEdit(){
         $data = $this -> request -> getPost();
         $columnModel = new SpaltenModel();
-        $columnModel->updateColumn($data);
+        $columnModel->updateColumn($data['id'], $data);
+    }
+
+    public function postDelete(){
+        $data = $this -> request -> getPost();
+        $columnModel = new SpaltenModel();
+        $columnModel->deleteColumn($data['id']);
     }
 
     /*public function validateData()
