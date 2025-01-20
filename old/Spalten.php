@@ -1,7 +1,14 @@
 <?php
 
-namespace App\Controllers;
+namespace old;
+use App\Controllers\BaseController;
 use App\Models\SpaltenModel;
+use const App\Controllers\footer;
+use const App\Controllers\head;
+use const App\Controllers\nav;
+use const App\Controllers\pages;
+use const App\Controllers\spalten;
+use const App\Controllers\template;
 
 class Spalten extends BaseController{
 
