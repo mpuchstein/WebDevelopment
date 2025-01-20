@@ -79,12 +79,14 @@ class Columns extends BaseController
         $data = $this -> request -> getPost();
         $columnModel = new SpaltenModel();
         $columnModel->updateColumn($data['id'], $data);
+        return redirect()->to(base_url('columns'));
     }
 
     public function postDelete(){
         $data = $this -> request -> getPost();
         $columnModel = new SpaltenModel();
         $columnModel->deleteColumn($data['id']);
+        return redirect()->to(base_url('columns'));
     }
 
     /*public function validateData()
