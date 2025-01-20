@@ -1,4 +1,4 @@
-<div id="crudModal" class="modal fade" tabindex="-1" role="dialog" data-bs-backdrop="static" aria-labelledby="crudModal" aria-hidden="true">
+<div id="crudModal" class="modal fade" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="true" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">

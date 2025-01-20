@@ -46,7 +46,7 @@ class Tasks extends BaseController
         $datahead['scriptfile'] = base_url('assets/s/tasksModalCrud.js');
         echo view('template/header', $datahead);
         echo view('template/nav');
-        echo view('pages/tasksmodalcrud', $data);
+        echo view('dev/tasksmodalcrud', $data);
         echo view('template/footer');
 
     }
