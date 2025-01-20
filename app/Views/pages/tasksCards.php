@@ -6,9 +6,9 @@
         </div>
         <div class="card-body bg-dark text-light border-primary">
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-auto justify-content-between align-content-center">
-               <?php foreach ($tasks as $task): ?>
+                <?php foreach ($tasks as $task): ?>
                 <div class = "card bg-dark-subtle col w-auto p-1 m-1 border-success">
-                    <h2 class="card-title text-center"> <?= esc($task['task']) ?> </h2>
+                    <h2 class="card-title"> <?= esc($task['task']) ?> </h2>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"> Notizen: <?= esc($task['notizen']) ?> </li>
                         <li class="list-group-item"> Erstellt: <?= esc($task['erstelldatum']) ?> </li>

@@ -10,7 +10,6 @@
         } else if(type === "delete"){
             document.getElementById("crudTitle").innerHTML = "Löschen";
         }
-        document.getElementById("crud").showModal();
     }
 
     function closeCrud(){

@@ -17,7 +17,7 @@ class TasksModel extends Model
         $query = $this->db->table($this->table)
             ->select("*")
             ->orderBy('task', 'ASC');
-        if ($id !== null) {
+        if ($id != null) {
             $query->where("id", $id);
             return $query->get()->getRowArray();
         }

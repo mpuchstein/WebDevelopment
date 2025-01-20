@@ -12,3 +12,8 @@
 .table-dark i:hover { /* Icons färben sich blau beim überfahren mit Cursor */
     color: lightskyblue;
 }
+
+#crudModal > .modal-content {
+    z-index: 9999;
+    background-color: #343434;
+}
