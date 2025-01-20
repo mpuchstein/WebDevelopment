@@ -45,24 +45,4 @@ class SpaltenModel extends Model {
     {
         return $this->db->table($this->table)->set(['geloescht' => 1])->where(['id' => $id])->update();
     }
-
-    // Validierungsregeln
-    public $spaltenbearbeiten = [
-        'spalte' => 'required',
-        'spaltenbeschreibung' => 'required',
-        'sortid' => 'integer',
-    ];
-
-    // Fehlermeldungen
-    public $spaltenbearbeiten_errors = [
-        'spalte' => [
-            'required' => 'Bitte tragen Sie einen Spaltebezeichnung ein.'
-        ],
-        'spaltenbeschreibung' => [
-            'required' => 'Bitte tragen Sie einen Beschreibungein.'
-        ],
-        'sortid' => [
-            'integer' => 'Die Sortid muss eine Zahl sein.',
-        ],
-    ];
 }
