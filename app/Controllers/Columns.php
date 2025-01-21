@@ -13,7 +13,7 @@ class Columns extends BaseController
         'sortid' => 'integer',
     ];
 
-    // Fehlermeldungen für die Validierung von Spalten
+    //Fehlermeldungen für die Validierung von Spalten
     public $spaltenbearbeiten_errors = [
         'spalte' => [
             'required' => 'Bitte tragen Sie einen Spaltebezeichnung ein.',
@@ -68,6 +68,14 @@ class Columns extends BaseController
     public function postNew(){
         $data = $this -> request -> getPost();
         $columnModel = new SpaltenModel();
+        /*// Validate data
+        if (!$this->validateData($data, $this->$spaltenbearbeiten)) {
+            return view('columnCrud', [
+                'errors' => $this->validator->getErrors(),
+            ]);
+        }*/
+
+        $columnModel = new SpaltenModel();
         $id = $columnModel->insertColumn($data);
         return redirect()->to(base_url('columns'));
     }
@@ -79,7 +87,7 @@ class Columns extends BaseController
         // Validierung der Daten
         if (!$this->validateData($data, $this->spaltenbearbeiten)) {
             // Wenn die Validierung fehlschlägt, das Spaltenfomular mit Fehlermeldungen anzeigen
-            return view('columnCrud', [
+            return view('dev/columnCrud.php', [
                 'errors' => $this->validator->getErrors(),
             ]);
         }
