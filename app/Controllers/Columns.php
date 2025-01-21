@@ -34,6 +34,10 @@ class Columns extends BaseController
         } elseif($type == 'delete' && $id != null){
             $data['headline'] = 'Delete Column';
             $data['columns'] = $taskModel->getColumns($id);
+        } elseif(($type == 'edit' || $type == 'delete') && $id == null) {
+            return redirect()->to(base_url('/columns'));
+        } elseif($type == 'new' && $id != null){
+            return redirect()->to(base_url('/columns/crud/edit/'.$id));
         }
         //TODO redirects for wrong call
         echo view('template/header');
