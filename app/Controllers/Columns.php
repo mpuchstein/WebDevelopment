@@ -74,8 +74,6 @@ class Columns extends BaseController
                 'errors' => $this->validator->getErrors(),
             ]);
         }*/
-
-        $columnModel = new SpaltenModel();
         $id = $columnModel->insertColumn($data);
         return redirect()->to(base_url('columns'));
     }
@@ -84,6 +82,7 @@ class Columns extends BaseController
         $data = $this -> request -> getPost();
         $columnModel = new SpaltenModel();
         $columnModel->updateColumn($data['id'], $data);
+        // Validierung der Daten
         /*// Validierung der Daten
         if (!$this->validateData($data, $this->spaltenbearbeiten)) {
             // Wenn die Validierung fehlschlägt, das Spaltenfomular mit Fehlermeldungen anzeigen
