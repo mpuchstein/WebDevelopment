@@ -6,20 +6,20 @@ use old\Spalten;
 use App\Models\SpaltenModel;
 class Columns extends BaseController
 {
-    // Validierungsregeln
+    // Validierungsregeln für die Bearbeitung von Spalten
     public $spaltenbearbeiten = [
         'spalte' => 'required',
         'spaltenbeschreibung' => 'required',
         'sortid' => 'integer',
     ];
 
-    // Fehlermeldungen
+    // Fehlermeldungen für die Validierung von Spalten
     public $spaltenbearbeiten_errors = [
         'spalte' => [
-            'required' => 'Bitte tragen Sie einen Spaltebezeichnung ein.'
+            'required' => 'Bitte tragen Sie einen Spaltebezeichnung ein.',
         ],
         'spaltenbeschreibung' => [
-            'required' => 'Bitte tragen Sie einen Beschreibungein.'
+            'required' => 'Bitte tragen Sie eine Beschreibung ein.',
         ],
         'sortid' => [
             'integer' => 'Die Sortid muss eine Zahl sein.',
@@ -53,6 +53,10 @@ class Columns extends BaseController
         } elseif($type == 'delete' && $id != null){
             $data['headline'] = 'Delete Column';
             $data['columns'] = $taskModel->getColumns($id);
+        } elseif(($type == 'edit' || $type == 'delete') && $id == null) {
+            return redirect()->to(base_url('/columns'));
+        } elseif($type == 'new' && $id != null){
+            return redirect()->to(base_url('/columns/crud/edit/'.$id));
         }
         //TODO redirects for wrong call
         echo view('template/header');
@@ -64,6 +68,14 @@ class Columns extends BaseController
     public function postNew(){
         $data = $this -> request -> getPost();
         $columnModel = new SpaltenModel();
+        $id = $columnModel->insertColumn($data);
+        return redirect()->to(base_url('columns'));
+    }
+
+    public function postEdit(){
+        $data = $this -> request -> getPost();
+        $columnModel = new SpaltenModel();
+        $columnModel->updateColumn($data['id'], $data);
         // Validierung der Daten
         if (!$this->validateData($data, $this->spaltenbearbeiten)) {
             // Wenn die Validierung fehlschlägt, Login-Seite mit Fehlermeldungen anzeigen
@@ -80,32 +92,10 @@ class Columns extends BaseController
         return redirect()->to(base_url('columns'));
     }
 
-    public function postEdit(){
-        $data = $this -> request -> getPost();
-        $columnModel = new SpaltenModel();
-        $columnModel->updateColumn($data['id'], $data);
-        return redirect()->to(base_url('columns'));
-    }
-
     public function postDelete(){
         $data = $this -> request -> getPost();
         $columnModel = new SpaltenModel();
         $columnModel->deleteColumn($data['id']);
         return redirect()->to(base_url('columns'));
     }
-
-    /*public function validateData()
-    {
-        if ($this->validation->run($_POST, 'spaltenbearbeiten'))
-        {
-            //Anlegen oder ändern
-        } else {
-            // Daten zurück ans Formular übergeben
-            $data['columns'] = $_POST;
-
-            //Fehlermeldung generieren
-            $data['errors'] = $this->validation->getErrors();
-            echo view('columns/edit_val', $data);
-        }
-    }*/
 }
