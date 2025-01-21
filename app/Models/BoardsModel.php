@@ -3,16 +3,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class SpaltenModel extends Model {
-    protected $table = 'spalten';
+class BoardsModel extends Model {
+    protected $table = 'boards';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['boardsid', 'sortid', 'spalte', 'spaltenbeschreibung'];
+    protected $allowedFields = ['boards'];
 
-    // getColumns returns all columns
-    public function getColumns(int $id = null): array{
+    // get returns all boards
+    public function getData(int $id = null): array{
         $query = $this->db->table($this->table)
             ->select("*")
-            ->orderBy('spalte', 'ASC');
+            ->orderBy('board', 'ASC');
         if ($id !== null) {
             $query->where("id", $id);
             return $query->get()->getRowArray();
@@ -22,29 +22,23 @@ class SpaltenModel extends Model {
 
     // insertSpalten adds a new spalten into the database, values are given by $data
     // return the $id
-    public function insertColumn(array $data): int
+    public function insertData(array $data): int
     {
         $insertData = array(
-            'boardsid' => $data['boardsid'],
-            'sortid' => $data['sortid'],
-            'spalte' => $data['spalte'],
-            'spaltenbeschreibung' => $data['spaltenbeschreibung']
+            'board' => $data['board']
         );
         $this->db->table($this->table)->insert($insertData);
         return $this-> db -> insertID();
     }
 
     // updateColumn updates an existing column identified by $id with the new $data
-    public function updateColumn(int $id, array $data): bool
+    public function updateData(int $id, array $data): bool
     {
-        $insertData = array(
+        $updateData = array(
             'id' => $data['id'],
-            'boardsid' => $data['boardsid'],
-            'sortid' => $data['sortid'],
-            'spalte' => $data['spalte'],
-            'spaltenbeschreibung' => $data['spaltenbeschreibung']
+            'board' => $data['board']
         );
-        return $this->db->table($this->table)->update($insertData, array('id' => $id));
+        return $this->db->table($this->table)->update($updateData, array('id' => $id));
     }
 
     // deletes and removes a column identified by $id unrecoverably and permanently
