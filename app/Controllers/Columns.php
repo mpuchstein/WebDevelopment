@@ -78,8 +78,8 @@ class Columns extends BaseController
         $columnModel->updateColumn($data['id'], $data);
         // Validierung der Daten
         if (!$this->validateData($data, $this->spaltenbearbeiten)) {
-            // Wenn die Validierung fehlschlägt, Login-Seite mit Fehlermeldungen anzeigen
-            return view('login', [
+            // Wenn die Validierung fehlschlägt, das Spaltenfomular mit Fehlermeldungen anzeigen
+            return view('columnCrud', [
                 'errors' => $this->validator->getErrors(),
             ]);
         }
