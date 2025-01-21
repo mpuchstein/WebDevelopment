@@ -84,7 +84,7 @@ class Columns extends BaseController
         $data = $this -> request -> getPost();
         $columnModel = new SpaltenModel();
         $columnModel->updateColumn($data['id'], $data);
-        // Validierung der Daten
+        /*// Validierung der Daten
         if (!$this->validateData($data, $this->spaltenbearbeiten)) {
             // Wenn die Validierung fehlschlägt, das Spaltenfomular mit Fehlermeldungen anzeigen
             return view('dev/columnCrud.php', [
@@ -96,7 +96,7 @@ class Columns extends BaseController
         $validData = $this->validator->getValidated();
 
         // Daten in die Datenbank einfügen
-        $id = $columnModel->insertColumn($validData);
+        $id = $columnModel->insertColumn($validData);*/
         return redirect()->to(base_url('columns'));
     }
 
