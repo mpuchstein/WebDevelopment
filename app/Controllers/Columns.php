@@ -64,14 +64,19 @@ class Columns extends BaseController
     public function postNew(){
         $data = $this -> request -> getPost();
         $columnModel = new SpaltenModel();
-        if (! $this->validateData($data, $this->$spaltenbearbeiten)) {
-            // The validation failed.
+        // Validierung der Daten
+        if (!$this->validateData($data, $this->spaltenbearbeiten)) {
+            // Wenn die Validierung fehlschlägt, Login-Seite mit Fehlermeldungen anzeigen
             return view('login', [
                 'errors' => $this->validator->getErrors(),
             ]);
         }
+
+        // Validierte Daten abrufen
         $validData = $this->validator->getValidated();
-        $id = $columnModel->insertColumn($data);
+
+        // Daten in die Datenbank einfügen
+        $id = $columnModel->insertColumn($validData);
         return redirect()->to(base_url('columns'));
     }
 
