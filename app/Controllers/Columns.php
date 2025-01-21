@@ -6,6 +6,25 @@ use old\Spalten;
 use App\Models\SpaltenModel;
 class Columns extends BaseController
 {
+    // Validierungsregeln für die Bearbeitung von Spalten
+    public $spaltenbearbeiten = [
+        'spalte' => 'required',
+        'spaltenbeschreibung' => 'required',
+        'sortid' => 'integer',
+    ];
+
+    // Fehlermeldungen für die Validierung von Spalten
+    public $spaltenbearbeiten_errors = [
+        'spalte' => [
+            'required' => 'Bitte tragen Sie einen Spaltebezeichnung ein.',
+        ],
+        'spaltenbeschreibung' => [
+            'required' => 'Bitte tragen Sie eine Beschreibung ein.',
+        ],
+        'sortid' => [
+            'integer' => 'Die Sortid muss eine Zahl sein.',
+        ],
+    ];
     public function getIndex()
     {
         $columnModel = new SpaltenModel();
@@ -57,6 +76,19 @@ class Columns extends BaseController
         $data = $this -> request -> getPost();
         $columnModel = new SpaltenModel();
         $columnModel->updateColumn($data['id'], $data);
+        // Validierung der Daten
+        if (!$this->validateData($data, $this->spaltenbearbeiten)) {
+            // Wenn die Validierung fehlschlägt, Login-Seite mit Fehlermeldungen anzeigen
+            return view('login', [
+                'errors' => $this->validator->getErrors(),
+            ]);
+        }
+
+        // Validierte Daten abrufen
+        $validData = $this->validator->getValidated();
+
+        // Daten in die Datenbank einfügen
+        $id = $columnModel->insertColumn($validData);
         return redirect()->to(base_url('columns'));
     }
 
@@ -66,19 +98,4 @@ class Columns extends BaseController
         $columnModel->deleteColumn($data['id']);
         return redirect()->to(base_url('columns'));
     }
-
-    /*public function validateData()
-    {
-        if ($this->validation->run($_POST, 'spaltenbearbeiten'))
-        {
-            //Anlegen oder ändern
-        } else {
-            // Daten zurück ans Formular übergeben
-            $data['columns'] = $_POST;
-
-            //Fehlermeldung generieren
-            $data['errors'] = $this->validation->getErrors();
-            echo view('columns/edit_val', $data);
-        }
-    }*/
 }
