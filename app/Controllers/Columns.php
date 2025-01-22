@@ -68,13 +68,9 @@ class Columns extends BaseController
     public function postNew(){
         $data = $this -> request -> getPost();
         $columnModel = new SpaltenModel();
-        /*// Validate data
-        if (!$this->validateData($data, $this->$spaltenbearbeiten)) {
-            return view('columnCrud', [
-                'errors' => $this->validator->getErrors(),
-            ]);
-        }*/
-        $id = $columnModel->insertColumn($data);
+        $validData = $this->validateColumn($data);
+        $id = $columnModel->insertColumn($validData);
+        //$id = $columnModel->insertColumn($data);
         return redirect()->to(base_url('columns'));
     }
 
@@ -82,20 +78,7 @@ class Columns extends BaseController
         $data = $this -> request -> getPost();
         $columnModel = new SpaltenModel();
         $columnModel->updateColumn($data['id'], $data);
-        // Validierung der Daten
-        /*// Validierung der Daten
-        if (!$this->validateData($data, $this->spaltenbearbeiten)) {
-            // Wenn die Validierung fehlschlägt, das Spaltenfomular mit Fehlermeldungen anzeigen
-            return view('dev/columnCrud.php', [
-                'errors' => $this->validator->getErrors(),
-            ]);
-        }
-
-        // Validierte Daten abrufen
-        $validData = $this->validator->getValidated();
-
-        // Daten in die Datenbank einfügen
-        $id = $columnModel->insertColumn($validData);*/
+        $validData = $this->validateColumn($data);
         return redirect()->to(base_url('columns'));
     }
 
@@ -104,5 +87,18 @@ class Columns extends BaseController
         $columnModel = new SpaltenModel();
         $columnModel->deleteColumn($data['id']);
         return redirect()->to(base_url('columns'));
+    }
+
+    public function validateColumn($data)
+    {
+        // Validierung der Daten
+        if (!$this->validateData($data, $this->spaltenbearbeiten)) {
+            // Wenn die Validierung fehlschlägt, das Spaltenfomular mit Fehlermeldungen anzeigen
+            return view('dev/columnCrud', [
+                'errors' => $this->validator->getErrors(),
+            ]);
+        }
+        // Validierte Daten abrufen
+        return $this->validator->getValidated();
     }
 }
