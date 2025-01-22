@@ -160,12 +160,15 @@ class Database extends Model{
             $builder->where($this->foreignKeyColumns[$this->boardsTable], $boardsId);
         }
         if($joinBoards) {
-            $builder->join($this->columnsTable,
+            $builder->join($this->boardsTable,
                 $this->foreignKeyColumns[$this->boardsTable]
                 . '='
-                . $this->boardsTable. '.' . $this->primaryKeyBoards
+                . $this->boardsTable. '.' . $this->primaryKeyBoards,
+                'left'
             );
         }
+//        var_dump($builder);
+//        die();
         return $builder->get()->getResultArray();
     }
     public function insertColumn(array $data): bool{

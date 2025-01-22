@@ -30,4 +30,9 @@ class Json extends BaseController
         $result = $database->getTask(userId: $id);
         return $this->response->setJSON($result);
     }
+    public function getColumnBoard($id = null){
+        $database = new Database();
+        $result = $database->getColumns(columnId: $id, joinBoards: true);
+        return $this->response->setJSON($result);
+    }
 }
