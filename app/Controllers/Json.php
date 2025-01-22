@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Database;
 use App\Models\TasksModel;
 
 class Json extends BaseController
@@ -11,10 +12,22 @@ class Json extends BaseController
         return redirect()->to(base_url() . 'tasks/');
     }
 
-    public function getTask($id = null)
-    {
-        $taskModel = new TasksModel();
-        $task = $taskModel->getAllTask($id);
-        return $this->response->setJSON($task);
+    public function getTasks($id = null){
+        $database = new Database();
+        $result = $database->getTask(taskId: $id);
+        return $this->response->setJSON($result);
+
+    }
+
+    public function getTasksColumn($id = null){
+        $database = new Database();
+        $result = $database->getTask(columnId: $id);
+        return $this->response->setJSON($result);
+    }
+
+    public function getTasksUser($id = null){
+        $database = new Database();
+        $result = $database->getTask(userId: $id);
+        return $this->response->setJSON($result);
     }
 }
