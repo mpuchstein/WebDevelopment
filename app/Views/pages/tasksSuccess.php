@@ -15,7 +15,13 @@
 </div>
 
 <script>
+    function hide(){
+        const successModal = $('#successDialog')
+        successModal.modal('hide')
+    }
     window.onload = function () {
-        $('#successDialog').modal('show')
+        const successModal = $('#successDialog')
+        successModal.modal('show')
+        setTimeout(hide, 2000)
     }
 </script>

@@ -10,7 +10,7 @@
                 <div class="form-floating mb-3">
                     <input type="text" name="task" id="task"
                            class="form-control<?= isset($error['task']) ? ' is-invalid' : '' ?>" placeholder="Task Name"
-                           value="<?= isset($tasks) ? $tasks['task'] : '' ?>"
+                           value="<?= isset($tasks) ? esc($tasks['task']) : '' ?>"
                         <?= $mode == 'delete' ? 'disabled' : '' ?>>
                     <label for="task" class="">Task Name</label>
                     <?= isset($error['task']) ? '<div class="invalid-feedback">' . $error['task'] . '</div>' : '' ?>
@@ -40,7 +40,7 @@
                             </option>
                         <?php endforeach ?>
                     </select>
-                    <label for="spaltenid" class="">Board auswählen:</label>
+                    <label for="spaltenid" class="">Spalte auswählen:</label>
                     <?= isset($error['spaltenid']) ? '<div class="invalid-feedback">' . $error['spaltenid'] . '</div>' : '' ?>
                 </div>
                 <div class="form-floating mb-3">

@@ -5,12 +5,12 @@
             <a href="<?= base_url('tasks/crud/new') ?>"><i
                         class="btn btn-primary btn-lg fs-3 p-3 pt-0 pb-0 fa-solid fa-plus"></i></a>
         </div>
-        <div class="card-body d-flex">
+        <div class="card-body d-flex gap-4">
             <?php foreach ($columns as $column) : ?>
-                <div class="col col-3">
+                <div class="col col-3 flex-fill">
                     <div class="card">
                         <div class="card-header mb-3">
-                            <p class="fs-2"><?= $column['spalte'] ?></p>
+                            <p class="fs-2"><?= esc($column['spalte']) ?></p>
                         </div>
                         <?php foreach ($tasks as $task): ?>
                             <?= $column['id'] == $task['spaltenid'] ? '<div class="card p-1 m-1' . ($task['erledigt'] == 1 ? ' border-success' : '') . '"> 
