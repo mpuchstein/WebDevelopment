@@ -5,7 +5,7 @@
             <h1>Spalten</h1>
         </div>
         <div class="card-header">
-            <a href="<?=base_url('columns/crud/new')?>" class="btn btn-outline-light">Erstellen</a>
+            <a href="<?= base_url('columns/crud/new') ?>" class="btn btn-outline-light">Erstellen</a>
             <!-- Altenative zu Erstellen -> "Neu", "Neue Spalte" -->
         </div>
         <div class="card-body table-responsive">
@@ -22,26 +22,26 @@
                 </thead>
                 <tbody>
                 <?php foreach ($columns as $column): ?>
-                <tr>
-                    <td><?= esc($column['id']) ?></td>
-                    <td><?= esc($column['spalte']) ?></td>
-                    <td><?= esc($column['spaltenbeschreibung']) ?></td>
-                    <td><?= esc($column['board']) ?></td>
-                    <td><?= esc($column['sortid']) ?></td>
+                    <tr>
+                        <td><?= esc($column['id']) ?></td>
+                        <td><?= esc($column['spalte']) ?></td>
+                        <td><?= esc($column['spaltenbeschreibung']) ?></td>
+                        <td><?= esc($column['board']) ?></td>
+                        <td><?= esc($column['sortid']) ?></td>
 
-                    <td>
-                        <a
-                                href="<?=base_url('columns/crud/edit/'.$column['id'])?>"
-                                class="fa-solid fa-pen-to-square"
-                                title="Bearbeiten">
+                        <td>
+                            <a
+                                    href="<?= base_url('columns/crud/edit/' . $column['id']) ?>"
+                                    class="fa-solid fa-pen-to-square"
+                                    title="Bearbeiten">
 
-                        </a>
-                        <a
-                                href="<?=base_url('columns/crud/delete/'.$column['id'])?>"
-                                class="fa-solid fa-eraser"
-                                title="Löschen"></a>
-                    </td>
-                </tr>
+                            </a>
+                            <a
+                                    href="<?= base_url('columns/crud/delete/' . $column['id']) ?>"
+                                    class="fa-solid fa-eraser"
+                                    title="Löschen"></a>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
                 </tbody>
             </table>

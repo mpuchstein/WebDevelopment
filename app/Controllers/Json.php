@@ -12,25 +12,30 @@ class Json extends BaseController
         return redirect()->to(base_url() . 'tasks/');
     }
 
-    public function getTasks($id = null){
+    public function getTasks($id = null)
+    {
         $database = new Database();
         $result = $database->getTask(taskId: $id);
         return $this->response->setJSON($result);
 
     }
 
-    public function getTasksColumn($id = null){
+    public function getTasksColumn($id = null)
+    {
         $database = new Database();
         $result = $database->getTask(columnId: $id);
         return $this->response->setJSON($result);
     }
 
-    public function getTasksUser($id = null){
+    public function getTasksUser($id = null)
+    {
         $database = new Database();
         $result = $database->getTask(userId: $id);
         return $this->response->setJSON($result);
     }
-    public function getColumnBoard($id = null){
+
+    public function getColumnBoard($id = null)
+    {
         $database = new Database();
         $result = $database->getColumns(columnId: $id, joinBoards: true);
         return $this->response->setJSON($result);

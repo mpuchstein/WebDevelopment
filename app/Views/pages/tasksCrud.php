@@ -5,11 +5,13 @@
         </div>
         <div class="card-body">
             <form action="<?= base_url('tasks/') . $mode ?>" method="post">
-                <input type="hidden" name="id" id="id" <?= isset($tasks['id']) ? 'value="' . $tasks['id'] . '"' : 'disabled' ?>>
+                <input type="hidden" name="id"
+                       id="id" <?= isset($tasks['id']) ? 'value="' . $tasks['id'] . '"' : 'disabled' ?>>
                 <div class="form-floating mb-3">
-                    <input type="text" name="task" id="task" class="form-control<?= isset($error['task']) ? ' is-invalid' : '' ?>" placeholder="Task Name"
+                    <input type="text" name="task" id="task"
+                           class="form-control<?= isset($error['task']) ? ' is-invalid' : '' ?>" placeholder="Task Name"
                            value="<?= isset($tasks) ? $tasks['task'] : '' ?>"
-                        <?= $mode == 'delete' ? 'readonly' : '' ?>>
+                        <?= $mode == 'delete' ? 'disabled' : '' ?>>
                     <label for="task" class="">Task Name</label>
                     <?= isset($error['task']) ? '<div class="invalid-feedback">' . $error['task'] . '</div>' : '' ?>
                 </div>
@@ -56,9 +58,10 @@
                     <?= isset($error['personenid']) ? '<div class="invalid-feedback">' . $error['personenid'] . '</div>' : '' ?>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="datetime-local" name="deadline" id="deadline" class="form-control<?= isset($error['deadline']) ? ' is-invalid' : '' ?>"
+                    <input type="datetime-local" name="deadline" id="deadline"
+                           class="form-control<?= isset($error['deadline']) ? ' is-invalid' : '' ?>"
                            value="<?= isset($tasks) ? $tasks['deadline'] : '' ?>"
-                        <?= $mode == 'delete' ? 'readonly' : '' ?>>
+                        <?= $mode == 'delete' ? 'disabled' : '' ?>>
                     <label for="deadline">Deadline</label>
                     <?= isset($error['deadline']) ? '<div class="invalid-feedback">' . $error['deadline'] . '</div>' : '' ?>
                 </div>
@@ -70,21 +73,24 @@
                     <?= isset($error['erinnerung']) ? '<div class="invalid-feedback">' . $error['erinnerung'] . '</div>' : '' ?>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="datetime-local" name="erinnerungsdatum" id="erinnerungsdatum" class="form-control<?= isset($error['erinnerungsdatum']) ? ' is-invalid' : '' ?>"
+                    <input type="datetime-local" name="erinnerungsdatum" id="erinnerungsdatum"
+                           class="form-control<?= isset($error['erinnerungsdatum']) ? ' is-invalid' : '' ?>"
                            value="<?= isset($tasks) ? $tasks['erinnerungsdatum'] : '' ?>"
-                        <?= $mode == 'delete' ? 'readonly' : '' ?>>
+                        <?= $mode == 'delete' ? 'disabled' : '' ?>>
                     <label for="erinnerungsdatum">Erinnerungsdatum</label>
                     <?= isset($error['erinnerungsdatum']) ? '<div class="invalid-feedback">' . $error['erinnerungsdatum'] . '</div>' : '' ?>
                 </div>
                 <div class="form-floating mb-3">
-                    <textarea name="notizen" id="notizen" class="form-control<?= isset($error['notizen']) ? ' is-invalid' : '' ?>"
-                              placeholder="Notiz" <?= $mode == 'delete' ? 'readonly' : '' ?>>
+                    <textarea name="notizen" id="notizen"
+                              class="form-control<?= isset($error['notizen']) ? ' is-invalid' : '' ?>"
+                              placeholder="Notiz" <?= $mode == 'delete' ? 'disabled' : '' ?>>
                         <?= isset($tasks) ? $tasks['notizen'] : '' ?></textarea>
                     <label for="notizen">Notiz</label>
                     <?= isset($error['notizen']) ? '<div class="invalid-feedback">' . $error['notizen'] . '</div>' : '' ?>
                 </div>
                 <div class="form-check form-switch mb-3">
-                    <input type="checkbox" name="erledigt" id="erledigt<?= isset($error['erledigt']) ? ' is-invalid' : '' ?>"
+                    <input type="checkbox" name="erledigt"
+                           id="erledigt<?= isset($error['erledigt']) ? ' is-invalid' : '' ?>"
                            class="form-check-input" <?= isset($tasks) && ($tasks['erledigt'] == 1) ? 'checked' : '' ?>
                         <?= $mode == 'delete' || $mode == 'new' ? 'disabled' : '' ?>>
                     <label class="form-check-label" for="erledigt">erledigt</label>
@@ -103,18 +109,15 @@
                             Abbrechen
                         </a>
                     </div>
-                    <?= $mode == 'delete' ?
-                        '<div class="col-auto">
+                    <?= $mode == 'delete' ? '<div class="col-auto">
                             <button type="submit" class="btn bg-danger rounded"><i class="fa-solid fa-floppy-disk"></i>
                                 Löschen
                             </button>
-                        </div>' :
-                        '<div class="col-auto">
+                        </div>' : '<div class="col-auto">
                             <button type="submit" class="btn bg-success rounded"><i class="fa-solid fa-floppy-disk"></i>
                                 Speichern
                             </button>
-                        </div>'
-                    ?>
+                        </div>' ?>
                 </div>
             </form>
         </div>

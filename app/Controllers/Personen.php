@@ -12,22 +12,11 @@ class Personen extends BaseController
         $personenModelInstance = new PersonenModel();
         #$data['test'] = 'Ich teste gerade';
         $data['headline'] = 'Personen';
-        $data['personen'] = $personenModelInstance -> getSecureData();
+        $data['personen'] = $personenModelInstance->getSecureData();
         echo view('template/header');
         echo view('template/nav');
         echo view('pages/Personen', $data);
         echo view('template/footer');
 
-    }
-
-    public function gettext()
-    {
-        var_dump('Test');
-    }
-
-    public function getDmp(){
-        $personenModelInstance = new PersonenModel();
-        $data['personen'] = $personenModelInstance -> getSecureData();
-        echo view('pages/personenDmp', $data);
     }
 }

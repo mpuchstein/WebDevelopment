@@ -65,7 +65,7 @@ class Tasks extends BaseController
         $data['erledigt'] = isset($data['erledigt']) ? '1' : '0';
         $data['geloescht'] = isset($data['geloescht']) ? '1' : '0';
         $validation = service('validation');
-        if(!$validation->run($data, 'tasksArray')) {
+        if (!$validation->run($data, 'tasksArray')) {
             $errorData['mode'] = 'new';
             $errorData['headline'] = 'Neuer Task';
             $errorData['columns'] = $database->getColumns();
@@ -123,7 +123,7 @@ class Tasks extends BaseController
             echo view('template/nav');
             echo view('pages/tasksCards', $data);
             echo(
-                '<script>alert("'.$validation->getErrors()['id'].'")</script>'
+                '<script>alert("' . $validation->getErrors()['id'] . '")</script>'
             );
             echo view('template/footer');
         } else {

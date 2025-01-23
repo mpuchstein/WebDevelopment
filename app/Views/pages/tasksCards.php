@@ -13,8 +13,7 @@
                             <p class="fs-2"><?= $column['spalte'] ?></p>
                         </div>
                         <?php foreach ($tasks as $task): ?>
-                            <?= $column['id'] == $task['spaltenid'] ?
-                                '<div class="card p-1 m-1' . ($task['erledigt'] == 1 ? ' border-success' : '') . '"> 
+                            <?= $column['id'] == $task['spaltenid'] ? '<div class="card p-1 m-1' . ($task['erledigt'] == 1 ? ' border-success' : '') . '"> 
                                     <div class="card-header text-center">
                                         <p class="card-title fs-3"> ' . $task['icon'] . ' ' . esc($task['task']) . '</p>
                                     </div>
@@ -23,9 +22,7 @@
                                         <li class="list-group-item">Nutzer: ' . esc($task['vorname'] . ' ' . $task['name']) . '</li>
                                         <li class="list-group-item">Email: ' . esc($task['email']) . '</li>
                                         <li class="list-group-item">Notizen: ' . esc($task['notizen']) . '</li>
-                                        <li class="list-group-item">Deadline: ' . esc($task['deadline']) . '</li>'
-                                . ($task['erinnerung'] == '1' ? '<li class="list-group-item">Erinnerung:' . esc($task['erinnerungsdatum']) . '</li>' : '')
-                                . '<li class="list-group-item">Erstellt: ' . esc($task['erstelldatum']) . ' </li>
+                                        <li class="list-group-item">Deadline: ' . esc($task['deadline']) . '</li>' . ($task['erinnerung'] == '1' ? '<li class="list-group-item">Erinnerung:' . esc($task['erinnerungsdatum']) . '</li>' : '') . '<li class="list-group-item">Erstellt: ' . esc($task['erstelldatum']) . ' </li>
                                     </ul>
                                     </div>
                                     <div class="card-footer text-center">

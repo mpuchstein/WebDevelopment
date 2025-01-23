@@ -34,10 +34,6 @@ class Columns extends BaseController
         } elseif ($type == 'new' && $id != null) {
             return redirect()->to(base_url('/columns/crud/edit/' . $id));
         }
-//        echo('<pre>');
-//        var_dump($data);
-//        echo('</pre>');
-//        die();
         echo view('template/header');
         echo view('template/nav');
         echo view('dev/columnCrud', $data);
@@ -97,9 +93,7 @@ class Columns extends BaseController
             echo view('template/header');
             echo view('template/nav');
             echo view('dev/columns', $data);
-            echo(
-                '<script>alert("'.$validation->getErrors()['id'].'")</script>'
-            );
+            echo('<script>alert("' . $validation->getErrors()['id'] . '")</script>');
             echo view('template/footer');
         } else {
             $database->deleteColumn($data['id']);
