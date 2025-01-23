@@ -2,15 +2,15 @@
 
 namespace App\Controllers;
 
-use App\Models\TasksModel;
+use App\Models\Database;
 
 class Tasks extends BaseController
 {
     public function getIndex()
     {
-        $taskModel = new TasksModel();
+        $database = new Database();
         $data['headline'] = 'Tasks';
-        $data['tasks'] = $taskModel->getTask();
+        $data['tasks'] = $database->getTask(joinTaskType: true);
         echo view('template/header');
         echo view('template/nav');
         echo view('pages/tasksCards', $data);
@@ -19,9 +19,9 @@ class Tasks extends BaseController
 
     public function getTable()
     {
-        $taskModel = new TasksModel();
+        $database = new Database();
         $data['headline'] = 'TasksTable';
-        $data['tasks'] = $taskModel->getAllTask();
+        $data['tasks'] = $database->getTask(joinTaskType: true);
         echo view('template/header');
         echo view('template/nav');
         echo view('pages/tasksTab', $data);
@@ -95,34 +95,23 @@ class Tasks extends BaseController
 //        $taskModel->setTaskDeleted($data['id']);
         return redirect() -> to(base_url('tasks/success/delete/'.$data['id']));
     }
-
-    public function getDmp(){
-        $tasksModelInstance = new TasksModel();
-        $data['tasks'] = $tasksModelInstance->getAllTask();
-        echo view('template/header');
-        echo view('template/nav');
-        echo view('pages/tasksDmp', $data);
-        echo view('template/footer');
-    }
-
     public function getJson($id = null)
     {
-        $taskModel = new TasksModel();
-        $task = $taskModel->getAllTask($id);
+        $database = new Database();
+        $task = $database->getTask($id, joinTaskType: true, joinColumns: true, joinUser: true);
         return $this->response->setJSON($task);
     }
-
     //TODO maybe rewrite getIndex with get Parameters?
     public function getSuccess($type, $id){
         $dataSuc['type'] = $type;
         $dataSuc['id'] = $id;
-        $taskModel = new TasksModel();
+        $database = new database();
         $data['headline'] = 'Tasks';
-        $data['tasks'] = $taskModel->getTask();
+        $data['tasks'] = $database->getTask();
         echo view('template/header');
         echo view('template/nav');
-        echo view('pages/tasksSuccess', $dataSuc);
         echo view('pages/tasks', $data);
+        echo view('pages/tasksSuccess', $dataSuc);
         echo view('template/footer');
     }
 }

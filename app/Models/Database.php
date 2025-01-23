@@ -16,45 +16,45 @@ class Database extends Model{
     protected $primaryKeyBoards = 'id';
     protected $primaryKeyUser = 'id';
     protected $foreignKeyTasks = [
-        'personen',
-        'spalten',
-        'taskarten'
+        'personen' => null,
+        'spalten' => null,
+        'taskarten' => null,
     ];
     protected $foreignKeyColumns= [
-        'boards'
+        'boards' => null,
     ];
     protected array $allowedFieldsTasks = [
-        'personenid',
-        'spaltenid',
-        'taskartenid',
-        'sortid',
-        'task',
-        'notizen',
-        'erstelldatum',
-        'erinnerungsdatum',
-        'erinnerung',
-        'deadline',
-        'erledigt',
-        'geloescht'
+        'personenid' => null,
+        'spaltenid' => null,
+        'taskartenid' => null,
+        'sortid' => null,
+        'task' => null,
+        'notizen' => null,
+        'erstelldatum' => null,
+        'erinnerungsdatum' => null,
+        'erinnerung' => null,
+        'deadline' => null,
+        'erledigt' => null,
+        'geloescht' => null,
     ];
     protected array $allowedFieldsTaskTypes = [
-        'taskart',
-        'icon'
+        'taskart' => null,
+        'icon' => null,
     ];
     protected array $allowedFieldsColumns = [
-        'boardsid',
-        'sortid',
-        'spalte',
-        'spaltenbeschreibung'
+        'boardsid' => null,
+        'sortid' => null,
+        'spalte' => null,
+        'spaltenbeschreibung' => null,
     ];
     protected array $allowedFieldsBoards = [
         'board' => null
     ];
 
     protected array $allowedFieldsUser = [
-        'vorname',
-        'name',
-        'email'
+        'vorname' => null,
+        'name' => null,
+        'email' => null,
     ];
 
     public function __construct()
@@ -69,8 +69,8 @@ class Database extends Model{
     public function getTask(int $taskId = null, int $columnId = null, int $userId = null,
                             bool $joinTaskType = false, bool $joinColumns = false, bool $joinUser = false): array{
         $builder = $this->db->table($this->tasksTable);
-        $builder->select('*');
-        $builder->orderBy('sortid', 'ASC');
+        $builder->select($this->tasksTable. '.*');
+        $builder->orderBy($this->tasksTable.'.'.'sortid', 'ASC');
         if($taskId != null) {
             $builder->where($this->primaryKeyTasks, $taskId);
         }
@@ -83,7 +83,7 @@ class Database extends Model{
         //join tasks with tasktypes where taskartenid = taskarten.id
         if($joinTaskType) {
             foreach($this->allowedFieldsTaskTypes as $key => $value) {
-                $builder->select($key);
+                $builder->select($this->taskTypesTable.'.'.$key);
             }
             $builder->join($this->taskTypesTable,
                 $this->foreignKeyTasks[$this->taskTypesTable]
@@ -93,19 +93,19 @@ class Database extends Model{
         }
         if($joinColumns) {
             foreach($this->allowedFieldsColumns as $key => $value) {
-                $builder->select($key);
+                $builder->select($this->columnsTable.'.'.$key);
             }
             $builder->join($this->columnsTable,
-            $this->foreignKeyColumns[$this->columnsTable]
+            $this->foreignKeyTasks[$this->columnsTable]
             . '='
             . $this->columnsTable . '.' . $this->primaryKeyColumns);
         }
         if($joinUser) {
             foreach($this->allowedFieldsUser as $key => $value) {
-                $builder->select($key);
+                $builder->select($this->userTable.'.'.$key);
             }
             $builder->join($this->userTable,
-            $this->foreignKeyColumns[$this->userTable]
+            $this->foreignKeyTasks[$this->userTable]
             . '='
             . $this->userTable . '.' . $this->primaryKeyUser);
 
@@ -113,16 +113,14 @@ class Database extends Model{
         return $builder->get()->getResultArray();
     }
     public function insertTask(array $data): int{
-        $validData = array_intersect_key($data, $this->allowedFieldsTaskTypes);
         $builder = $this->db->table($this->tasksTable);
-        $builder->insert($validData);
+        $builder->insert($data);
         return $this->db->insertID();
     }
     public function updateTask(int $taskId, array $data): bool{
-        $validData = array_intersect_key($data, $this->allowedFieldsTaskTypes);
         $builder = $this->db->table($this->tasksTable);
         $builder->where($this->primaryKeyTasks, $taskId);
-        return $builder->update($validData);
+        return $builder->update($data);
     }
     public function deleteTask(int $taskId): bool{
         $builder = $this->db->table($this->tasksTable);
@@ -133,7 +131,7 @@ class Database extends Model{
     public function getTaskTypes(int $taskTypeId = null): array{
         $builder = $this->db->table($this->taskTypesTable);
         $builder->select('*');
-        $builder->orderBy('taskart', 'ASC');
+        $builder->orderBy($this->taskTypesTable.'.'.'taskart', 'ASC');
         if($taskTypeId != null) {
             $builder->where($this->primaryKeyTaskTypes, $taskTypeId);
             return $builder->get()->getRowArray();
@@ -141,16 +139,14 @@ class Database extends Model{
         return $builder->get()->getResultArray();
     }
     public function insertTaskType(array $data): bool{
-        $validData = array_intersect_key($data, $this->allowedFieldsTaskTypes);
         $builder = $this->db->table($this->taskTypesTable);
-        $builder->insert($validData);
+        $builder->insert($data);
         return $this->db->insertID();
     }
     public function updateTaskType(int $taskTypeId, array $data): bool{
-        $validData = array_intersect_key($data, $this->allowedFieldsTaskTypes);
         $builder = $this->db->table($this->taskTypesTable);
         $builder->where($this->primaryKeyTaskTypes, $taskTypeId);
-        return $builder->update($validData);
+        return $builder->update($data);
     }
     public function deleteTaskType(int $taskTypeId): bool{
         $builder = $this->db->table($this->taskTypesTable);
@@ -161,7 +157,7 @@ class Database extends Model{
     public function getColumns(int $columnId = null, int $boardsId = null, bool $joinBoards = false): array{
         $builder = $this->db->table($this->columnsTable);
         $builder->select($this->columnsTable . '.*');
-        $builder->orderBy('sortid', 'ASC');
+        $builder->orderBy($this->columnsTable.'.'.'sortid', 'ASC');
         if($columnId != null) {
             $builder->where($this->primaryKeyColumns, $columnId);
         }
@@ -200,7 +196,7 @@ class Database extends Model{
     public function getBoards(int $boardId = null): array{
         $builder = $this->db->table($this->boardsTable);
         $builder->select('*');
-        $builder->orderBy('board', 'ASC');
+        $builder->orderBy($this->boardsTable.'.'.'board', 'ASC');
         if($boardId != null) {
             $builder->where($this->primaryKeyBoards, $boardId);
             return $builder->get()->getRowArray();
@@ -209,16 +205,14 @@ class Database extends Model{
 
     }
     public function insertBoard(array $data): bool{
-        $validData = array_intersect_key($data, $this->allowedFieldsBoards);
         $builder = $this->db->table($this->boardsTable);
-        $builder->insert($validData);
+        $builder->insert($data);
         return $this->db->insertID();
     }
     public function updateBoard(int $boardId, array $data): bool{
-        $validData = array_intersect_key($data, $this->allowedFieldsBoards);
         $builder = $this->db->table($this->boardsTable);
         $builder->where($this->primaryKeyBoards, $boardId);
-        return $builder->update($validData);
+        return $builder->update($data);
     }
     public function deleteBoard(int $boardId): bool{
         $builder = $this->db->table($this->boardsTable);
@@ -249,16 +243,14 @@ class Database extends Model{
         return password_verify($secret, $secretHash);
     }
     public function insertUser(array $data): bool{
-        $validData = array_intersect_key($data, $this->allowedFieldsUser);
         $builder = $this->db->table($this->userTable);
-        $builder->insert($validData);
+        $builder->insert($data);
         return $this->db->insertID();
     }
     public function updateUser(int $userId, array $data): bool{
-        $validData = array_intersect_key($data, $this->allowedFieldsUser);
         $builder = $this->db->table($this->userTable);
         $builder->where($this->primaryKeyUser, $userId);
-        return $builder->update($validData);
+        return $builder->update($data);
     }
     public function deleteUser(int $userId): bool{
         $builder = $this->db->table($this->userTable);
