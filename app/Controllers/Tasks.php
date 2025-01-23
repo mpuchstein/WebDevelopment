@@ -10,7 +10,12 @@ class Tasks extends BaseController
     {
         $database = new Database();
         $data['headline'] = 'Tasks';
-        $data['tasks'] = $database->getTask(joinTaskType: true);
+        $data['tasks'] = $database->getTask(joinTaskType: true, joinUser: true, sortColumn: true);
+        $data['columns'] = $database->getColumns(joinBoards: true);
+//        echo('<pre>');
+//        var_dump($data);
+//        echo('</pre>');
+//        die();
         echo view('template/header');
         echo view('template/nav');
         echo view('pages/tasksCards', $data);
@@ -21,7 +26,7 @@ class Tasks extends BaseController
     {
         $database = new Database();
         $data['headline'] = 'TasksTable';
-        $data['tasks'] = $database->getTask(joinTaskType: true);
+        $data['tasks'] = $database->getTask(joinTaskType: true, joinColumns: true, joinUser: true);
         echo view('template/header');
         echo view('template/nav');
         echo view('pages/tasksTab', $data);
@@ -98,7 +103,7 @@ class Tasks extends BaseController
     public function getJson($id = null)
     {
         $database = new Database();
-        $task = $database->getTask($id, joinTaskType: true, joinColumns: true, joinUser: true);
+        $task = $database->getTask($id, joinTaskType: true, joinColumns: true, joinUser: true, sortColumn: true);
         return $this->response->setJSON($task);
     }
     //TODO maybe rewrite getIndex with get Parameters?

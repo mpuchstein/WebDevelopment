@@ -12,18 +12,19 @@
                 <thead>
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">PersonenID</th>
-                    <th scope="col">SpaltenID</th>
-                    <th scope="col">TaskartenID</th>
-                    <th scope="col">SortID</th>
+                    <th scope="col">Icon</th>
+                    <th scope="col">Art</th>
                     <th scope="col">Task</th>
+                    <th scope="col">Spalten</th>
+                    <th scope="col">Person</th>
                     <th scope="col">Notizen</th>
-                    <th scope="col">Erstelldatum</th>
-                    <th scope="col">Erinnerungsdatum</th>
-                    <th scope="col">Erinnerung</th>
                     <th scope="col">Deadline</th>
+                    <th scope="col">Erinnerung</th>
+                    <th scope="col">Erinnerungsdatum</th>
+                    <th scope="col">Erstelldatum</th>
+                    <th scope="col">SortID</th>
                     <th scope="col">Erledigt</th>
-                    <th scope="col">Gelöschte</th>
+                    <th scope="col">Gelöscht</th>
                     <th scope="col">Bearbeiten</th>
                 </tr>
                 </thead>
@@ -31,16 +32,17 @@
                 <?php foreach ($tasks as $task): ?>
                     <tr>
                         <td><?= esc($task['id']) ?></td>
-                        <td><?= esc($task['personenid']) ?></td>
-                        <td><?= esc($task['spaltenid']) ?></td>
-                        <td><?= esc($task['taskartenid']) ?></td>
-                        <td><?= esc($task['sortid']) ?></td>
+                        <td><?= ($task['icon']) ?></td>
+                        <td><?= ($task['taskart']) ?></td>
                         <td><?= esc($task['task']) ?></td>
+                        <td><?= esc($task['spalte']) ?></td>
+                        <td><?= esc($task['name']. ' ' .$task['vorname']) ?></td>
                         <td><?= esc($task['notizen']) ?></td>
-                        <td><?= esc($task['erstelldatum']) ?></td>
-                        <td><?= esc($task['erinnerungsdatum']) ?></td>
-                        <td><?= esc($task['erinnerung']) ?></td>
                         <td><?= esc($task['deadline']) ?></td>
+                        <td><?= esc($task['erinnerung']) ?></td>
+                        <td><?= esc($task['erinnerungsdatum']) ?></td>
+                        <td><?= esc($task['erstelldatum']) ?></td>
+                        <td><?= esc($task['sortid']) ?></td>
                         <td><?= esc($task['erledigt']) ?></td>
                         <td><?= esc($task['geloescht']) ?></td>
                         <td>

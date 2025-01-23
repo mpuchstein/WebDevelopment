@@ -1,29 +1,45 @@
 <main class="container-fluid mt-2 mb-2 p-3">
     <div class="card h-100 border-primary">
-        <div class="card-header border-primary d-flex bg-black justify-content-between align-content-center">
+        <div class="card-header primary d-flex bg-black justify-content-between align-content-center">
             <h1 class="my-auto"><?= esc($headline) ?></h1>
-            <a href="<?=base_url('tasks/crud/new')?>" class="btn btn-primary my-auto fs-4 fa-solid fa-plus-square"></a>
+            <a href="<?= base_url('tasks/crud/new') ?>"><i
+                        class="btn btn-primary btn-lg fs-3 p-3 pt-0 pb-0 fa-solid fa-plus"></i></a>
         </div>
-        <div class="card-body bg-dark text-light border-primary">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-auto justify-content-between align-content-center">
-                <?php foreach ($tasks as $task): ?>
-                <div class = "card bg-dark-subtle col w-auto p-1 m-1 border-success">
-                    <h2 class="card-title"> <?= esc($task['task']) ?> </h2>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"> Notizen: <?= esc($task['notizen']) ?> </li>
-                        <li class="list-group-item"> Erstellt: <?= esc($task['erstelldatum']) ?> </li>
-                        <li class="list-group-item"> Erinnerung: <?= esc($task['erinnerungsdatum']) ?> </li>
-                        <li class="list-group-item"> Deadline: <?= esc($task['deadline']) ?> </li>
-                    </ul>
-                    <div class="card-footer text-center">
-                        <a href="<?= base_url('tasks/crud/edit/' . esc($task['id'])) ?>"
-                           class="fa-solid fa-pen-to-square" title="Bearbeiten"></a>
-                        <a href="<?= base_url('tasks/crud/delete/' . esc($task['id'])) ?>" class="fa-solid fa-eraser"
-                           title="Löschen"></a>
+        <div class="card-body d-flex">
+            <?php foreach ($columns as $column) : ?>
+                <div class="col col-3">
+                    <div class="card">
+                        <div class="card-header mb-3">
+                            <p class="fs-2"><?= $column['spalte'] ?></p>
+                        </div>
+                        <?php foreach ($tasks as $task): ?>
+                            <?= $column['id'] == $task['spaltenid'] ?
+                                '<div class="card p-1 m-1' . ($task['erledigt'] == 1 ? ' border-success' : '') . '"> 
+                                    <div class="card-header text-center">
+                                        <p class="card-title fs-3"> ' . $task['icon'] . ' ' . esc($task['task']) . '</p>
+                                    </div>
+                                    <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">Nutzer: ' . esc($task['vorname'] . ' ' . $task['name']) . '</li>
+                                        <li class="list-group-item">Email: ' . esc($task['email']) . '</li>
+                                        <li class="list-group-item">Notizen: ' . esc($task['notizen']) . '</li>
+                                        <li class="list-group-item">Deadline: ' . esc($task['deadline']) . '</li>'
+                                . ($task['erinnerung'] == '1' ? '<li class="list-group-item">Erinnerung:' . esc($task['erinnerungsdatum']) . '</li>' : '')
+                                . '<li class="list-group-item">Erstellt: ' . esc($task['erstelldatum']) . ' </li>
+                                    </ul>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <a href="' . base_url('tasks/crud/edit/' . esc($task['id'])) . '"
+                                           class="fa-solid fa-pen-to-square" title="Bearbeiten"></a>
+                                        <a href="' . base_url('tasks/crud/delete/' . esc($task['id'])) . '"
+                                           class="fa-solid fa-eraser" title="Löschen"></a>
+                                    </div>
+                                </div>
+                            ' : "" ?>
+                        <?php endforeach; ?>
                     </div>
                 </div>
-                <?php endforeach; ?>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </main>
