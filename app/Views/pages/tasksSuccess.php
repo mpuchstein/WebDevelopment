@@ -18,6 +18,7 @@
     function hide(){
         const successModal = $('#successDialog')
         successModal.modal('hide')
+        window.location.replace(BASE_URL)
     }
     window.onload = function () {
         const successModal = $('#successDialog')

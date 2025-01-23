@@ -21,10 +21,12 @@
     <!-- import bootstrap so you can use it in js -->
     <script type="module">
         import * as bootstrap from '<?=base_url('assets/s/bootstrap.js')?>'
-
         window.bootstrap = bootstrap;
     </script>
-
+    <!-- set baseurl for javascript -->
+    <script>
+        const BASE_URL = "<?= base_url() ?>"; // Set baseURL for all scripts
+    </script>
     <!-- lokale CSS Einbindung -->
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/style.css') ?>"/>
     <?= isset($scriptfile) ? '<script src="' . $scriptfile . '"></script>' : '<!-- kein Javascript File -->' ?>
