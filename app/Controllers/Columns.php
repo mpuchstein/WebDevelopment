@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use old\Spalten;
-use App\Models\SpaltenModel;
+use App\Models\Database;
 class Columns extends BaseController
 {
     // Validierungsregeln für die Bearbeitung von Spalten
@@ -27,38 +27,35 @@ class Columns extends BaseController
     ];
     public function getIndex()
     {
-        $columnModel = new SpaltenModel();
-        $data['columns'] = $columnModel->getColumns();
+        $database = new Database();
+        $data['columns'] = $database->getColumns(joinBoards: true);
         echo view('template/header');
         echo view('template/nav');
         echo view('dev/columns', $data);
         echo view('template/footer');
     }
-    public function getForm()
-    {
-        echo view('template/header');
-        echo view('template/nav');
-        echo view('pages/columnform');
-        echo view('template/footer');
-    }
 
     public function getCrud($type = 'new', $id = null){
         $data['mode'] = $type;
-        $taskModel = new SpaltenModel();
+        $database = new Database();
+        $data['boards'] = $database->getBoards();
         if($type == 'new' && $id == null){
             $data['headline'] = 'New Column';
         } elseif($type == 'edit' && $id != null){
             $data['headline'] = 'Edit Column';
-            $data['columns'] = $taskModel->getColumns($id);
+            $data['columns'] = $database->getColumns(columnId: $id)[0];
         } elseif($type == 'delete' && $id != null){
             $data['headline'] = 'Delete Column';
-            $data['columns'] = $taskModel->getColumns($id);
+            $data['columns'] = $database->getColumns(columnId: $id)[0];
         } elseif(($type == 'edit' || $type == 'delete') && $id == null) {
             return redirect()->to(base_url('/columns'));
         } elseif($type == 'new' && $id != null){
             return redirect()->to(base_url('/columns/crud/edit/'.$id));
         }
-        //TODO redirects for wrong call
+//        echo('<pre>');
+//        var_dump($data);
+//        echo('</pre>');
+//        die();
         echo view('template/header');
         echo view('template/nav');
         echo view('dev/columnCrud', $data);
@@ -67,25 +64,34 @@ class Columns extends BaseController
 
     public function postNew(){
         $data = $this -> request -> getPost();
-        $columnModel = new SpaltenModel();
-        $validData = $this->validateColumn($data);
-        $id = $columnModel->insertColumn($validData);
-        //$id = $columnModel->insertColumn($data);
+//        echo('<pre>');
+//        var_dump($data);
+//        echo('</pre>');
+//        die();
+        $database = new Database();
+        $id = $database->insertColumn($data);
         return redirect()->to(base_url('columns'));
     }
 
     public function postEdit(){
         $data = $this -> request -> getPost();
-        $columnModel = new SpaltenModel();
-        $columnModel->updateColumn($data['id'], $data);
-        $validData = $this->validateColumn($data);
+//        echo('<pre>');
+//        var_dump($data);
+//        echo('</pre>');
+//        die();
+        $database = new Database();
+        $database->updateColumn($data['id'], $data);
         return redirect()->to(base_url('columns'));
     }
 
     public function postDelete(){
         $data = $this -> request -> getPost();
-        $columnModel = new SpaltenModel();
-        $columnModel->deleteColumn($data['id']);
+//        echo('<pre>');
+//        var_dump($data);
+//        echo('</pre>');
+//        die();
+        $database = new Database();
+        $database->deleteColumn($data['id']);
         return redirect()->to(base_url('columns'));
     }
 

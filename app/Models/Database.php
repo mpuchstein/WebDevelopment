@@ -48,13 +48,13 @@ class Database extends Model{
         'spaltenbeschreibung'
     ];
     protected array $allowedFieldsBoards = [
-        'boards'
+        'board' => null
     ];
 
     protected array $allowedFieldsUser = [
         'vorname',
         'name',
-        'email',
+        'email'
     ];
 
     public function __construct()
@@ -82,6 +82,9 @@ class Database extends Model{
         }
         //join tasks with tasktypes where taskartenid = taskarten.id
         if($joinTaskType) {
+            foreach($this->allowedFieldsTaskTypes as $key => $value) {
+                $builder->select($key);
+            }
             $builder->join($this->taskTypesTable,
                 $this->foreignKeyTasks[$this->taskTypesTable]
                 . '='
@@ -89,12 +92,18 @@ class Database extends Model{
                 'left');
         }
         if($joinColumns) {
+            foreach($this->allowedFieldsColumns as $key => $value) {
+                $builder->select($key);
+            }
             $builder->join($this->columnsTable,
             $this->foreignKeyColumns[$this->columnsTable]
             . '='
             . $this->columnsTable . '.' . $this->primaryKeyColumns);
         }
         if($joinUser) {
+            foreach($this->allowedFieldsUser as $key => $value) {
+                $builder->select($key);
+            }
             $builder->join($this->userTable,
             $this->foreignKeyColumns[$this->userTable]
             . '='
@@ -151,7 +160,7 @@ class Database extends Model{
 //  CRUD functions for columns
     public function getColumns(int $columnId = null, int $boardsId = null, bool $joinBoards = false): array{
         $builder = $this->db->table($this->columnsTable);
-        $builder->select('*');
+        $builder->select($this->columnsTable . '.*');
         $builder->orderBy('sortid', 'ASC');
         if($columnId != null) {
             $builder->where($this->primaryKeyColumns, $columnId);
@@ -160,28 +169,27 @@ class Database extends Model{
             $builder->where($this->foreignKeyColumns[$this->boardsTable], $boardsId);
         }
         if($joinBoards) {
+            foreach ($this->allowedFieldsBoards as $key => $value) {
+                $builder->select($key);
+            }
             $builder->join($this->boardsTable,
-                $this->foreignKeyColumns[$this->boardsTable]
+                $this->columnsTable . '.' . $this->foreignKeyColumns[$this->boardsTable]
                 . '='
                 . $this->boardsTable. '.' . $this->primaryKeyBoards,
                 'left'
             );
         }
-//        var_dump($builder);
-//        die();
         return $builder->get()->getResultArray();
     }
     public function insertColumn(array $data): bool{
-        $validData = array_intersect_key($data, $this->allowedFieldsColumns);
         $builder = $this->db->table($this->columnsTable);
-        $builder->insert($validData);
+        $builder->insert($data);
         return $this->db->insertID();
     }
     public function updateColumn(int $columnId, array $data): bool{
-        $validData = array_intersect_key($data, $this->allowedFieldsColumns);
         $builder = $this->db->table($this->columnsTable);
         $builder->where($this->primaryKeyColumns, $columnId);
-        return $builder->update($validData);
+        return $builder->update($data);
     }
     public function deleteColumn(int $columnId): bool{
         $builder = $this->db->table($this->columnsTable);

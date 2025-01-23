@@ -7,8 +7,7 @@
         <!-- Form elements with floating labels -->
         <div class="card-body">
             <form action="<?=base_url('columns/'.$mode) ?>" method="post">
-                <input type="hidden" name="id" id="id" value="<?=isset($columns) ? $columns['id'] : ''?>">
-                <input type="hidden" name="boardsid" id="boardsid" value="1">
+                <input type="hidden" name="id" id="id" <?=isset($columns) ? 'value="'.$columns['id'].'"' : 'disabled'?>>
                 <div class="form-floating mb-3">
                     <input
                             type="text"
@@ -17,7 +16,7 @@
                             class="form-control"
                             placeholder="Spaltenbezeichnung"
                            value="<?=isset($columns) ? $columns['spalte'] : ''?>"
-                            <?= $mode=='delete' ? 'readonly' : '' ?>
+                            <?= $mode=='delete' ? 'disabled' : '' ?>
                             required>
                     <label for="spalte" class="">Spaltenbezeichnung</label>
                 </div>
@@ -28,32 +27,35 @@
                             class="form-control"
                             placeholder="Spaltenbeschreibung"
                             style="height: 100px"
-                            <?=$mode=='delete' ? 'readonly' :'' ?>
+                            <?=$mode=='delete' ? 'disabled' :'' ?>
                     ><?=isset($columns) ? $columns['spaltenbeschreibung'] : '' ?></textarea>
-                    <label for="columndesc" class="">Spaltenbeschreibung</label>
+                    <label for="spaltenbeschreibung" class="">Spaltenbeschreibung</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="number" name="sortid" id="sortid" class="form-control" placeholder="Sortier-ID"
                             value="<?=isset($columns) ? $columns['sortid'] : ''?>"
-                            <?= $mode=='delete' ? 'readonly' :'' ?> required>
+                            <?= $mode=='delete' ? 'disabled' :'' ?> required>
                     <label for="sortid" class="">Sortid</label>
                 </div>
-                <div class="row">
-                    <label for="board" class="col-3 rounded">Board auswählen:</label>
-                    <select id="board" name="board" class="col-4">
-                        <option value="general">Allgemeine Todos</option>
-                        <option value="special">Spezielle Todos</option>
+                <div class="form-floating mb-3">
+                    <select type="number" name="boardsid" id="boardsid" class="form-select"<?=($mode=='delete')?' disabled':''?>>
+                        <?=isset($columns)?'':'<option selected>Select Board</option>'?>
+                        <?php foreach($boards as $board): ?>
+                        <option value="<?=$board['id']?>" <?=isset($columns) && ($board['id']==$columns['boardsid']) ? 'selected' : ''?>>
+                            <?=$board['board']?>
+                        </option>
+                        <?php endforeach?>
                     </select>
+                    <label for="boardsid" class="">Board auswählen:</label>
                 </div>
                 <!-- Two buttons for saving and canceling the form -->
-                <div class="row mt-3">
-                    <div class="col-5"></div>
+                <div class="row mt-3 justify-content-end align-content-end">
                     <div class="col-auto">
                         <button type="reset" class="btn bg-dark-subtle rounded"><i class="fa-solid fa-broom"></i> Reset
                         </button>
                     </div>
                     <div class="col-auto">
-                        <a href="<?=base_url()?>" class="btn bg-dark-subtle rounded"><i class="fa-solid fa-x"></i> Abbrechen
+                        <a href="<?=base_url('columns')?>" class="btn bg-dark-subtle rounded"><i class="fa-solid fa-x"></i> Abbrechen
                         </a>
                     </div>
                     <?= $mode == 'delete' ?

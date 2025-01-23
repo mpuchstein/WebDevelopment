@@ -13,10 +13,10 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Board</th>
-                    <th>Sortid</th>
                     <th>Spalte</th>
                     <th class="d-none d-sm-block">Spaltenbeschreibung</th>
+                    <th>Board</th>
+                    <th>SortID</th>
                     <th>Bearbeiten</th>
                 </tr>
                 </thead>
@@ -24,10 +24,10 @@
                 <?php foreach ($columns as $column): ?>
                 <tr>
                     <td><?= esc($column['id']) ?></td>
-                    <td><?= esc($column['boardsid']) ?></td>
-                    <td><?= esc($column['sortid']) ?></td>
                     <td><?= esc($column['spalte']) ?></td>
                     <td><?= esc($column['spaltenbeschreibung']) ?></td>
+                    <td><?= esc($column['board']) ?></td>
+                    <td><?= esc($column['sortid']) ?></td>
 
                     <td>
                         <a
