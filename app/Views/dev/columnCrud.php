@@ -46,8 +46,7 @@
                 <div class="form-floating mb-3">
                     <select type="number" name="boardsid" id="boardsid"
                             class="form-select<?=isset($error['boardsid']) ? ' is-invalid' : '' ?>"
-                        <?= ($mode == 'delete') ? ' disabled' : '' ?>
-                    >
+                        <?= ($mode == 'delete') ? ' disabled' : '' ?>>
                         <?= isset($columns['id']) ? '' : '<option selected value="">Select Board</option>' ?>
                         <?php foreach ($boards as $board): ?>
                             <option value="<?= $board['id'] ?>" <?= isset($columns['boardsid']) && ($board['id'] == $columns['boardsid']) ? 'selected' : '' ?>>
