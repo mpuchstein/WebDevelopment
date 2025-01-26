@@ -42,6 +42,22 @@ class Validation extends BaseConfig
     // Rules
     // --------------------------------------------------------------------
 
+    // Validation user login
+    public array $loginInput= [
+        'username' => [
+            'rules' => 'required',
+            'errors' => [
+                'required' => 'Username required',
+            ]
+        ],
+        'password' => [
+            'rules' => 'required',
+            'errors' => [
+                'required' => 'Password required',
+            ]
+        ],
+    ];
+
     // Rules for validating arrays containing task data
     public array $tasksArray = [
         'task' => [

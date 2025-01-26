@@ -1,9 +1,9 @@
 <!-- Navigation to task 1 -->
-<body class="container d-flex flex-column h-100" data-bs-theme="dark">
+<body class="container-fluid d-flex flex-column h-100" data-bs-theme="dark">
 <!-- HEADER: MENU + HEROE SECTION -->
-<header class="container-fluid sticky-top">
-    <div class="container-fluid bg-header">
-        <div class="container-fluid m-1 col-md-2">
+<header class="container-fluid sticky-top bg-header">
+    <div class="container">
+        <div class="container m-1 col-md-2">
             <a href="<?= base_url('/') ?>">
                 <!-- Logo is included -->
                 <img src="<?= base_url('assets/images/07_-_WE-Logo.svg') ?>" alt="Webentwicklung"
