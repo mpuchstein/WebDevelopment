@@ -1,5 +1,5 @@
 <!-- Footer from task 1 -->
-<footer class="footer sticky-bottom container mt-auto bg-footer pb-1 mt-2">
+<footer class="footer sticky-bottom container-fluid mt-auto bg-footer pb-1 mt-2">
     <div class="row">
         <div class="col text-start ps-3">
             ©Web-Entwicklung Team 17 2024
