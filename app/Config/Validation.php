@@ -58,6 +58,15 @@ class Validation extends BaseConfig
         ],
     ];
 
+    public array $checkUsername=[
+        'username' => [
+            'rules' => 'required|is_not_unique[personen.username]',
+            'errors' => [
+                'required' => 'Username required',
+                'is_not_unique' => 'Username does not exist',
+            ]
+        ]
+    ];
     // Rules for validating arrays containing task data
     public array $tasksArray = [
         'task' => [

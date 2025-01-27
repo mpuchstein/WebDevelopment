@@ -2,13 +2,30 @@
     <div class="container mt-3">
         <div class="row">
             <div class="container col-sm w-auto h-auto">
-                <div class="img-fluid align-self-center my-auto">
-                    <img src="<?= base_url('assets/images/07_-_WE-Logo.svg') ?>" alt="Webentwicklung"
-                         style="width: 128px;height: 64px;" class="logo"/>
-                    <ul>
-                        <li>Max Mustermann:<ul><li>mmustermann</li><li>Pa$$word0</li></ul></li>
-                        <li>Moni Mittermeier:<ul><li>mmittermeier</li><li>Pa$$word1</li></ul></li>
-                    </ul>
+                <div class="card">
+                    <div class="card-img ms-3">
+                        <img src="<?= base_url('assets/images/07_-_WE-Logo.svg') ?>" alt="Webentwicklung"
+                             style="width: 128px;height: 64px;" class="logo"/>
+                    </div>
+                    <div class="card-header card-title">
+                        <h2>Testnutzer</h2>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Max Mustermann:
+                                <ul>
+                                    <li>mmustermann</li>
+                                    <li>Pa$$word0</li>
+                                </ul>
+                            </li>
+                            <li>Moni Mittermeier:
+                                <ul>
+                                    <li>mmittermeier</li>
+                                    <li>Pa$$word1</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="container col-sm w-25 h-25">
@@ -21,14 +38,14 @@
                             <div class="form-floating mb-3">
                                 <input type="text"
                                        class="form-control<?= isset($errors['username']) ? ' is-invalid' : '' ?>"
-                                       id="username" name="username"/>
-                                <label for="username">Username:</label>
+                                       id="username" name="username" autocomplete="username"/>
+                                <label for="username">Nutzername:</label>
                                 <?= isset($errors['username']) ? '<div class="invalid-feedback">' . $errors['username'] . '</div>' : '' ?>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="password"
-                                       class="form-control<?= isset($errors['password']) ? ' is-invalid' : '' ?>
-                                       id=" password" name="password"/>
+                                       class="form-control <?= isset($errors['password']) ? ' is-invalid' : '' ?>"
+                                       id="password" name="password" autocomplete="current-password"/>
                                 <label for="password">Passwort:</label>
                                 <?= isset($errors['password']) ? '<div class="invalid-feedback">' . $errors['password'] . '</div>' : '' ?>
                             </div>
