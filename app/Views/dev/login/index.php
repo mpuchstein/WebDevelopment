@@ -5,6 +5,10 @@
                 <div class="img-fluid align-self-center my-auto">
                     <img src="<?= base_url('assets/images/07_-_WE-Logo.svg') ?>" alt="Webentwicklung"
                          style="width: 128px;height: 64px;" class="logo"/>
+                    <ul>
+                        <li>Max Mustermann:<ul><li>mmustermann</li><li>Pa$$word0</li></ul></li>
+                        <li>Moni Mittermeier:<ul><li>mmittermeier</li><li>Pa$$word1</li></ul></li>
+                    </ul>
                 </div>
             </div>
             <div class="container col-sm w-25 h-25">

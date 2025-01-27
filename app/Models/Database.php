@@ -53,6 +53,8 @@ class Database extends Model
     ];
 
     protected array $allowedFieldsUser = [
+        'username' => null,
+        'role' => null,
         'vorname' => null,
         'name' => null,
         'email' => null,
@@ -260,12 +262,20 @@ class Database extends Model
     public function getUsersSecure(int $userId = null): array
     {
         $builder = $this->db->table($this->userTable);
-        $builder->select('id, vorname, name, email');
+        $builder->select('id, username, role, vorname, name, email');
         if ($userId != null) {
             $builder->where($this->primaryKeyUser, $userId);
             return $builder->get()->getRowArray();
         }
         return $builder->get()->getResultArray();
+    }
+
+    public function getUserByName(string $username): array
+    {
+        $builder = $this->db->table($this->userTable);
+        $builder->select('id, role');
+        $builder->where('username' , $username);
+        return $builder->get()->getRowArray();
     }
 
     public function userSetSecret(int $userId, string $secret): bool
