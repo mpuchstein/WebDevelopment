@@ -99,10 +99,10 @@ class Tasks extends BaseController
             $errorData['personen'] = $database->getUsersSecure();
             $errorData['error'] = $validation->getErrors();
             $errorData['tasks'] = $data;
-            echo view('template/header');
-            echo view('template/nav');
+            echo view('templates/header');
+            echo view('templates/nav');
             echo view('pages/tasksCrud', $errorData);
-            echo view('template/footer');
+            echo view('templates/footer');
         } else {
             $database->updateTask($data['id'], $data);
             return redirect()->to(base_url('tasks/success/edit/' . $data['id']));
@@ -119,13 +119,13 @@ class Tasks extends BaseController
             $data['headline'] = 'Tasks';
             $data['tasks'] = $database->getTask(joinTaskType: true, joinUser: true, sortColumn: true);
             $data['columns'] = $database->getColumns(joinBoards: true);
-            echo view('template/header');
-            echo view('template/nav');
+            echo view('templates/header');
+            echo view('templates/nav');
             echo view('pages/tasksCards', $data);
             echo(
                 '<script>alert("' . $validation->getErrors()['id'] . '")</script>'
             );
-            echo view('template/footer');
+            echo view('templates/footer');
         } else {
             $database->deleteTask($data['id']);
             return redirect()->to(base_url('tasks/success/delete/' . $data['id']));
@@ -147,10 +147,10 @@ class Tasks extends BaseController
         $data['headline'] = 'Tasks';
         $data['tasks'] = $database->getTask(joinTaskType: true, joinUser: true, sortColumn: true);
         $data['columns'] = $database->getColumns(joinBoards: true);
-        echo view('template/header');
-        echo view('template/nav');
+        echo view('templates/header');
+        echo view('templates/nav');
         echo view('pages/tasksCards', $data);
         echo view('pages/tasksSuccess', $dataSuc);
-        echo view('template/footer');
+        echo view('templates/footer');
     }
 }

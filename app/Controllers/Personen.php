@@ -13,10 +13,9 @@ class Personen extends BaseController
         #$data['test'] = 'Ich teste gerade';
         $data['headline'] = 'Personen';
         $data['personen'] = $database->getUsersSecure();
-        echo view('template/header');
-        echo view('template/nav');
+        echo view('templates/header');
+        echo view('templates/nav');
         echo view('pages/Personen', $data);
-        echo view('template/footer');
-
+        echo view('templates/footer');
     }
 }

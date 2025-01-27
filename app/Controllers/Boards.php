@@ -13,10 +13,10 @@ class Boards extends BaseController
         $data['headline'] = 'Boards';
         $data['theader'] = ['ID', 'Board'];
         $data['tdata'] = $boardModel->getData();
-        echo view('template/header', $datahead);
-        echo view('template/nav');
+        echo view('templates/header', $datahead);
+        echo view('templates/nav');
         echo view('dev/boards/index', $data);
-        echo view('template/footer');
+        echo view('templates/footer');
     }
 
     public function getJson($id = null)

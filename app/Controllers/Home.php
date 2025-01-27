@@ -8,10 +8,10 @@ class Home extends BaseController
 {
     public function getIndex()
     {
-        echo view('template/header');
-        echo view('template/nav');
+        echo view('templates/header');
+        echo view('templates/nav');
         echo view('dev/login/index');
-        echo view('template/footer');
+        echo view('templates/footer');
     }
 
     public function getReset()
@@ -53,10 +53,10 @@ class Home extends BaseController
             $errorData['password'] = $data['password'];
 
         }
-        echo view('template/header');
-        echo view('template/nav');
+        echo view('templates/header');
+        echo view('templates/nav');
         echo view('dev/login/index', $errorData);
-        echo view('template/footer');
+        echo view('templates/footer');
     }
 
 }

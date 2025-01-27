@@ -10,10 +10,10 @@ class Columns extends BaseController
     {
         $database = new Database();
         $data['columns'] = $database->getColumns(joinBoards: true);
-        echo view('template/header');
-        echo view('template/nav');
+        echo view('templates/header');
+        echo view('templates/nav');
         echo view('dev/columns', $data);
-        echo view('template/footer');
+        echo view('templates/footer');
     }
 
     public function getCrud($type = 'new', $id = null)
@@ -34,10 +34,10 @@ class Columns extends BaseController
         } elseif ($type == 'new' && $id != null) {
             return redirect()->to(base_url('/columns/crud/edit/' . $id));
         }
-        echo view('template/header');
-        echo view('template/nav');
+        echo view('templates/header');
+        echo view('templates/nav');
         echo view('dev/columnCrud', $data);
-        echo view('template/footer');
+        echo view('templates/footer');
     }
 
     public function postNew()
@@ -51,10 +51,10 @@ class Columns extends BaseController
             $errorData['error'] = $validation->getErrors();
             $errorData['boards'] = $database->getBoards();
             $errorData['columns'] = $data;
-            echo view('template/header');
-            echo view('template/nav');
+            echo view('templates/header');
+            echo view('templates/nav');
             echo view('dev/columnCrud', $errorData);
-            echo view('template/footer');
+            echo view('templates/footer');
         } else {
             $database = new Database();
             $id = $database->insertColumn($data);
@@ -73,10 +73,10 @@ class Columns extends BaseController
             $errorData['error'] = $validation->getErrors();
             $errorData['boards'] = $database->getBoards();
             $errorData['columns'] = $data;
-            echo view('template/header');
-            echo view('template/nav');
+            echo view('templates/header');
+            echo view('templates/nav');
             echo view('dev/columnCrud', $errorData);
-            echo view('template/footer');
+            echo view('templates/footer');
         } else {
             $database->updateColumn($data['id'], $data);
             return redirect()->to(base_url('columns'));
@@ -90,11 +90,11 @@ class Columns extends BaseController
         $validation = service('validation');
         if (!$validation->run($data, 'columnDelete')) {
             $data['columns'] = $database->getColumns(joinBoards: true);
-            echo view('template/header');
-            echo view('template/nav');
+            echo view('templates/header');
+            echo view('templates/nav');
             echo view('dev/columns', $data);
             echo('<script>alert("' . $validation->getErrors()['id'] . '")</script>');
-            echo view('template/footer');
+            echo view('templates/footer');
         } else {
             $database->deleteColumn($data['id']);
             return redirect()->to(base_url('columns'));
