@@ -13,10 +13,10 @@ class Tasks extends BaseController
         $data['tasks'] = $database->getTask(joinTaskType: true, joinUser: true, sortColumn: true);
         $data['columns'] = $database->getColumns(joinBoards: true);
 
-        echo view('template/header');
-        echo view('template/nav');
+        echo view('templates/header');
+        echo view('templates/nav');
         echo view('pages/tasksCards', $data);
-        echo view('template/footer');
+        echo view('templates/footer');
     }
 
     public function getTable()
@@ -24,10 +24,10 @@ class Tasks extends BaseController
         $database = new Database();
         $data['headline'] = 'TasksTable';
         $data['tasks'] = $database->getTask(joinTaskType: true, joinColumns: true, joinUser: true);
-        echo view('template/header');
-        echo view('template/nav');
+        echo view('templates/header');
+        echo view('templates/nav');
         echo view('pages/tasksTab', $data);
-        echo view('template/footer');
+        echo view('templates/footer');
     }
 
     //TODO catch $ID not in database
@@ -51,10 +51,10 @@ class Tasks extends BaseController
         } elseif ($type == 'new' && $id != null) {
             return redirect()->to('/tasks/crud/edit/' . $id);  //not allowed to add a new item with $id set
         }
-        echo view('template/header');
-        echo view('template/nav');
+        echo view('templates/header');
+        echo view('templates/nav');
         echo view('pages/tasksCrud', $data);
-        echo view('template/footer');
+        echo view('templates/footer');
     }
 
     public function postNew()
@@ -73,10 +73,10 @@ class Tasks extends BaseController
             $errorData['personen'] = $database->getUsersSecure();
             $errorData['error'] = $validation->getErrors();
             $errorData['tasks'] = $data;
-            echo view('template/header');
-            echo view('template/nav');
+            echo view('templates/header');
+            echo view('templates/nav');
             echo view('pages/tasksCrud', $errorData);
-            echo view('template/footer');
+            echo view('templates/footer');
         } else {
             $id = $database->insertTask($data);
             return redirect()->to(base_url('tasks/success/new/') . $id);

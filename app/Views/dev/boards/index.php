@@ -21,11 +21,6 @@
                                 Placeholder
                             </button>
                         </div>
-                        <!--                        <div class="col-auto">-->
-                        <!--                            <button type="reset" class="btn btn-dark btn-outline-light">-->
-                        <!--                                <i class="fa-solid fa-broom"></i> Reset-->
-                        <!--                            </button>-->
-                        <!--                        </div>-->
                         <div class="col-auto">
                             <button type="button" class="btn btn-dark btn-outline-light" data-bs-dismiss="modal"
                                     aria-label="Abbrechen">
