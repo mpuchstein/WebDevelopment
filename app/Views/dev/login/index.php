@@ -2,12 +2,12 @@
     <div class="container mt-3">
         <div class="row">
             <div class="container col-sm w-auto h-auto">
-                <div class="card">
+                <div class="card border-light-subtle">
                     <div class="card-img ms-3">
                         <img src="<?= base_url('assets/images/07_-_WE-Logo.svg') ?>" alt="Webentwicklung"
                              style="width: 128px;height: 64px;" class="logo"/>
                     </div>
-                    <div class="card-header card-title">
+                    <div class="card-header card-title border-light">
                         <h2>Testnutzer</h2>
                     </div>
                     <div class="card-body">
@@ -29,8 +29,8 @@
                 </div>
             </div>
             <div class="container col-sm w-25 h-25">
-                <div class="card align-content-center">
-                    <div class="card-header">
+                <div class="card align-content-center border-light-subtle">
+                    <div class="card-header border-light">
                         <h1>Login</h1>
                     </div>
                     <div class="card-body">

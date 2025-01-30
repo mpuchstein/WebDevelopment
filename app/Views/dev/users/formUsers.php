@@ -29,8 +29,8 @@
                         <label for="name">Nachname</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" name="name" id="name" class="form-control">
-                        <label for="name">Nachname</label>
+                        <input type="text" name="email" id="email" class="form-control">
+                        <label for="email">Email</label>
                     </div>
                     <div class="row mt-3 align-content-end justify-content-end">
                         <div class="col-auto">

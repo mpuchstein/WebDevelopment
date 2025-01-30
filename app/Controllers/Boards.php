@@ -9,7 +9,7 @@ class Boards extends BaseController
     public function getIndex()
     {
         $boardModel = new BoardsModel();
-        $datahead['scriptfile'] = base_url('assets/s/boards.js');
+        $datahead['scriptfile'] = base_url('assets/js/boards.js');
         $data['headline'] = 'Boards';
         $data['theader'] = ['ID', 'Board'];
         $data['tdata'] = $boardModel->getData();

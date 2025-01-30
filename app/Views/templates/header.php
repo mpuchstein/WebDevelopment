@@ -17,10 +17,10 @@
 
     <!-- lokale version von bootstrap -->
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/bootstrap.css') ?>"/>
-    <script src="<?= base_url('assets/s/bootstrap.js') ?>"></script>
+    <script src="<?= base_url('assets/js/bootstrap.js') ?>"></script>
     <!-- import bootstrap so you can use it in js -->
     <script type="module">
-        import * as bootstrap from '<?=base_url('assets/s/bootstrap.js')?>'
+        import * as bootstrap from '<?=base_url('assets/js/bootstrap.js')?>'
         window.bootstrap = bootstrap;
     </script>
     <!-- set baseurl for javascript -->
