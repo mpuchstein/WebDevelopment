@@ -43,7 +43,7 @@ class Validation extends BaseConfig
     // --------------------------------------------------------------------
 
     // Validation user login
-    public array $loginInput= [
+    public array $loginInput = [
         'username' => [
             'rules' => 'required',
             'errors' => [
@@ -58,7 +58,7 @@ class Validation extends BaseConfig
         ],
     ];
 
-    public array $checkUsername=[
+    public array $checkUsername = [
         'username' => [
             'rules' => 'required|is_not_unique[personen.username]',
             'errors' => [
@@ -177,5 +177,81 @@ class Validation extends BaseConfig
                 'is_not_unique' => 'Diese ID existiert nicht. Kann also auch nicht gelöscht werden.',
             ]
         ]
+    ];
+    public array $usersInsertArray = [
+        'username' => [
+            'rules' => 'required|is_unique[personen.username]',
+            'errors' => [
+                'required' => 'Username ist erforderlich.',
+                'is_unique' => 'Dieser Username existiert bereits.',
+            ]
+        ],
+        'plevel' => [
+            'rules' => 'permit_empty|is_natural_no_zero',
+            'errors' => [
+                'is_natural_no_zero' => 'Privilegien müssen eine <strong>natürliche Zahl</strong> sein.',
+            ]
+        ],
+        'vorname' => [
+            'rules' => 'required',
+            'errors' => [
+                'required' => 'Vorname ist erforderlich.',
+            ]
+        ],
+        'name' => [
+            'rules' => 'required',
+            'errors' => [
+                'required' => 'Name ist erforderlich.',
+            ]
+        ],
+        'email' => [
+            'rules' => 'required|valid_email|is_unique[personen.email]',
+            'errors' => [
+                'required' => 'Email ist erforderlich.',
+                'is_unique' => 'Diese Email existiert bereits bei einem anderen Nutzer.',
+            ]
+        ],
+    ];
+    //rules for validation an insert action on users
+    public array $usersUpdateArray = [
+        'id' => [
+            'rules' => 'required|is_unique[personen.id,id,{id}]',
+            'errors' => [
+                'required' => 'This error means somebody messed with the code.',
+                'is_unique' => 'This error means somebody messed with the code.',
+            ]
+        ],
+        'username' => [
+            'rules' => 'required|is_unique[personen.username,id,{id}]',
+            'errors' => [
+                'required' => 'Username ist erforderlich.',
+                'is_unique' => 'Dieser Username existiert bereits.',
+            ]
+        ],
+        'plevel' => [
+            'rules' => 'is_natural_no_zero',
+            'errors' => [
+                'is_natural_no_zero' => 'Privilegien müssen eine <strong>natürliche Zahl</strong> sein.',
+            ]
+        ],
+        'vorname' => [
+            'rules' => 'required',
+            'errors' => [
+                'required' => 'Vorname ist erforderlich.',
+            ]
+        ],
+        'name' => [
+            'rules' => 'required',
+            'errors' => [
+                'required' => 'Name ist erforderlich.',
+            ]
+        ],
+        'email' => [
+            'rules' => 'required|valid_email|is_unique[personen.email,id,{id}]',
+            'errors' => [
+                'required' => 'Email ist erforderlich.',
+                'is_unique' => 'Diese Email existiert bereits bei einem anderen Nutzer.',
+            ]
+        ],
     ];
 }

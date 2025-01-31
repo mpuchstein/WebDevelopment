@@ -9,6 +9,32 @@ const tablebtn =
     '</button>' +
     '</div>' +
     '</td>'
+
+function genModalForm(){
+    document.forms[modalformid].addEventListener('submit', (event) => {
+        event.preventDefault();
+        // TODO do something here to show user that form is being submitted
+        fetch(event.target.action, {
+            method: 'POST',
+            body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+        }).then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json(); // or response.text() or whatever the server sends
+        }).then((data) => {
+            console.log(data)
+            // TODO handle body
+            if(data['success'] == true) {
+                updateTable()
+                $(modalid).modal('hide')
+            }
+        }).catch((error) => {
+            // TODO handle error
+        });
+    });
+}
+
 function updateTable() {
     let tableRows = ''
     const rowButtons = tablebtn.replaceAll('%formid%', modalformid)
@@ -48,7 +74,6 @@ function showModal(requrl, mode, elemid) {
     formFields.disabled = false
     modalForm.reset()
     modalForm.action=requrl
-    console.log(elemid)
 
     switch(mode){
         case modenew:

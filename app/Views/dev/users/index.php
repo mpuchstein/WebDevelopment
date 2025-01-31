@@ -48,4 +48,5 @@
 
     document.getElementById('btn_add').addEventListener('click', ()=>{showModal(requrlnew, modenew, -1)})
     updateTable()
+    genModalForm()
 </script>
