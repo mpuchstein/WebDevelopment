@@ -29,5 +29,6 @@
     </script>
     <!-- lokale CSS Einbindung -->
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/style.css') ?>"/>
+    <script src="<?= base_url('assets/js/various-scripts.js') ?>"></script>
     <?= isset($scriptfile) ? '<script src="' . $scriptfile . '"></script>' : '<!-- kein Javascript File -->' ?>
 </head>

@@ -10,7 +10,8 @@ class Users extends BaseController
         $database = new Database();
         $data['users'] = $database->getUsersSecure();
         echo view('templates/header');
-        echo view('templates/navbar');
+        echo view('templates/nav');
+        echo view('dev/users/formUsers');
         echo view('dev/users/index', $data);
         echo view('templates/footer');
     }
