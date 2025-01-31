@@ -16,7 +16,7 @@
                 <a href="<?= base_url('tasks/table') ?>" class="btn btn-outline-light btn-dark">TasksTable</a>
                 <a href="<?= base_url('boards') ?>" class="btn btn-outline-light btn-dark">Boards</a>
                 <a href="<?= base_url('columns') ?>" class="btn btn-outline-light dark btn-dark">Spalten</a>
-                <a href="<?= base_url('personen') ?>" class="btn btn-outline-light dark btn-dark">Personen</a>
+                <a href="<?= base_url('users') ?>" class="btn btn-outline-light dark btn-dark">Personen</a>
             </nav>
         </div>
     </div>

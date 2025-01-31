@@ -2,39 +2,39 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="formHeadline" class="modal-title">
+                <h2 id="modalHeadline" class="modal-title">
                     Placeholder
                 </h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="formUsers" method="post">
+                <form id="modalForm" method="post">
                     <input type="hidden" name="id" id="id">
-                    <div class="form-floating mb-3">
-                        <input type="text" name="username" id="username" class="form-control">
-                        <label for="username">Nutzername</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <select type="text" name="role" id="role" class="form-select">
-                            <option value="user">User</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" name="forename" id="forename" class="form-control">
-                        <label for="forename">Vorname</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" name="name" id="name" class="form-control">
-                        <label for="name">Nachname</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" name="email" id="email" class="form-control">
-                        <label for="email">Email</label>
-                    </div>
+                    <fieldset id="modalFormFields">
+                        <div class="form-floating mb-3">
+                            <input type="text" name="username" id="username" class="form-control">
+                            <label for="username">Nutzername</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" name="plevel" id="plevel" class="form-control">
+                            <label for="plevel">Privilegien</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" name="vorname" id="vorname" class="form-control">
+                            <label for="forename">Vorname</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" name="name" id="name" class="form-control">
+                            <label for="name">Nachname</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" name="email" id="email" class="form-control">
+                            <label for="email">Email</label>
+                        </div>
+                    </fieldset>
                     <div class="row mt-3 align-content-end justify-content-end">
                         <div class="col-auto">
-                            <button type="submit" id="formSubmit" class="btn btn-dark btn-outline-light">
+                            <button type="submit" id="formSubmit" class="btn">
                                 Placeholder
                             </button>
                         </div>

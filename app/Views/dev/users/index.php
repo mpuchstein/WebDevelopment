@@ -5,7 +5,7 @@
     <div class="row justify-content-between align-content-center">
         <h1 class="col-auto">User Management</h1>
         <div class="col-auto">
-            <button type="button" class="btn btn-primary">
+            <button type="button" id="btn_add" class="btn btn-primary">
                 <i class="fa-solid fa-plus"></i>
             </button>
         </div>
@@ -17,7 +17,7 @@
             <tr class="table-primary">
                 <th>#</th>
                 <th>Username</th>
-                <th>Privilegierung</th>
+                <th>Privilegien</th>
                 <th>Vorname</th>
                 <th>Name</th>
                 <th>E-Mail</th>
@@ -31,38 +31,21 @@
 </main>
 
 <script>
-    const actionButtons =
-        '<td>' +
-        '<div class="btn-group">' +
-        '<button type="button" id="%id%_delete"class="btn btn-sm btn-info" data-bs-target="%formid%"' +
-        '><i class="fa-solid fa-pen-to-square"></i>' +
-        '</button>' +
-        '<button type="button" id="%id%_delete" class="btn btn-sm btn-danger" data-bs-target="%formid%"' +
-        '><i class="fa-solid fa-eraser"></i>' +
-        '</button>' +
-        '</div>' +
-        '</td>'
-    function fillTable(data) {
-        let tableRows = ''
-        const rowButtons = actionButtons.replaceAll('%formid%', '#modal')
-        for (const row of data) {
-            tableRows += '<tr>'
-            tableRows += '<td>' + row['id'] + '</td>'
-            tableRows += '<td>' + row['username'] + '</td>'
-            tableRows += '<td>' + row['plevel'] + '</td>'
-            tableRows += '<td>' + row['vorname'] + '</td>'
-            tableRows += '<td>' + row['name'] + '</td>'
-            tableRows += '<td>' + row['email'] + '</td>'
-            tableRows += rowButtons.replaceAll('%id%', row['id']);
-            tableRows += '</tr>'
-        }
-        document.getElementById('userTableBody').innerHTML = tableRows
-        for(const row of data) {
-            //TODO: add onclick listener to all buttons
-        }
-    }
+    const theadids = ['id', 'username', 'plevel', 'vorname', 'name', 'email']
+    const tablebodyid = 'userTableBody'
+    const modenew = 'new'
+    const modeedit = 'edit'
+    const modedelete = 'delete'
+    const requrljson = '<?=base_url('users/json')?>'
+    const requrlnew = '<?=base_url('users/new')?>'
+    const requrledit = '<?=base_url('users/edit')?>'
+    const requrldelete = '<?=base_url('users/delete')?>'
+    const modalid = '#modal'
+    const modalformid = 'modalForm'
+    const modalheadlineid = 'modalHeadline'
+    const modalsubmitid= 'formSubmit'
+    const modalformfieldsid = 'modalFormFields'
 
-    let tableData = getData('<?=base_url('users/json')?>').then((value) => {
-        fillTable(value)
-    })
+    document.getElementById('btn_add').addEventListener('click', ()=>{showModal(requrlnew, modenew, -1)})
+    updateTable()
 </script>
