@@ -45,6 +45,7 @@
     const modalheadlineid = 'modalHeadline'
     const modalsubmitid= 'formSubmit'
     const modalformfieldsid = 'modalFormFields'
+    const formfieldsnames = ['username', 'plevel', 'vorname', 'name', 'email']
 
     document.getElementById('btn_add').addEventListener('click', ()=>{showModal(requrlnew, modenew, -1)})
     updateTable()

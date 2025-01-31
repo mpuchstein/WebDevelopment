@@ -10,7 +10,7 @@ const tablebtn =
     '</div>' +
     '</td>'
 
-function genModalForm(){
+function genModalForm() {
     document.forms[modalformid].addEventListener('submit', (event) => {
         event.preventDefault();
         // TODO do something here to show user that form is being submitted
@@ -23,14 +23,19 @@ function genModalForm(){
             }
             return response.json(); // or response.text() or whatever the server sends
         }).then((data) => {
-            console.log(data)
             // TODO handle body
-            if(data['success'] == true) {
+            if (data['success'] === true) {
                 updateTable()
                 $(modalid).modal('hide')
+            } else {
+                formfieldsnames.forEach(formField => {
+                    document.getElementById(formField).classList.toggle('is-invalid', formField in data['errors'])
+                    document.getElementById(formField + '_invalid').innerText = data['errors'][formField]
+                })
             }
         }).catch((error) => {
             // TODO handle error
+            console.log(error)
         });
     });
 }
@@ -72,10 +77,14 @@ function showModal(requrl, mode, elemid) {
     const formButton = document.getElementById(modalsubmitid)
     const formFields = document.getElementById(modalformfieldsid)
     formFields.disabled = false
+    formfieldsnames.forEach(formField => {
+        document.getElementById(formField).classList.toggle('is-invalid', false)
+        document.getElementById(formField+'_invalid').innerText = ''
+    })
     modalForm.reset()
-    modalForm.action=requrl
+    modalForm.action = requrl
 
-    switch(mode){
+    switch (mode) {
         case modenew:
             modalHeadline.innerText = 'Neu'
             formButton.className = 'btn btn-success'
@@ -88,12 +97,12 @@ function showModal(requrl, mode, elemid) {
             break;
         case modedelete:
             modalHeadline.innerText = 'Löschen'
-            formButton.className ='btn btn-danger'
+            formButton.className = 'btn btn-danger'
             formButton.innerHTML = '<i class="fa-solid fa-eraser"></i> Löschen'
             formFields.disabled = true
             break;
     }
-    if(elemid > 0){
+    if (elemid > 0) {
         fetch(requrljson + '/' + elemid).then((response) => {
             return response.json()
         }).then((data) => {
