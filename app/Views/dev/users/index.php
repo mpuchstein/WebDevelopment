@@ -16,7 +16,7 @@
             <thead>
             <tr class="table-primary">
                 <th>#</th>
-                <th>Username</th>
+                <th>Nutzername</th>
                 <th>Privilegien</th>
                 <th>Vorname</th>
                 <th>Name</th>

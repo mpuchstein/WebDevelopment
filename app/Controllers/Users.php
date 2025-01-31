@@ -31,12 +31,31 @@ class Users extends BaseController
             $errors = $validation->getErrors();
             return response()->setJSON(['success' => false, 'errors' => $errors,]);
         }
-
     }
-    public function sanitizeData($data){
-        foreach ($data as $key => $value) {
-            $data[$key] = empty($data[$key]) ? null : $data[$key];
+    public function postEdit(){
+        $data = $this->request->getPost();
+        $database = new Database();
+        $validation = service('validation');
+        if($validation->run($data, 'usersUpdateArray')){
+            $database = new Database();
+            $success = $database->updateUser($data['id'], $data);
+            return response()->setJSON(['success' => $success, 'id' => $data['id'],]);
+        } else {
+            $errors = $validation->getErrors();
+            return response()->setJSON(['success' => false, 'errors' => $errors,]);
         }
     }
 
+    public function postDelete(){
+        $data = $this->request->getPost();
+        $validation = service('validation');
+        if($validation->run($data, 'usersDeleteArray')){
+            $database = new Database();
+            $success = $database->deleteUser($data['id']);
+            return response()->setJSON(['success' => $success, 'id' => $data['id'],]);
+        } else {
+            $errors = $validation->getErrors();
+            return response()->setJSON(['success' => false, 'errors' => $errors,]);
+        }
+    }
 }

@@ -19,6 +19,7 @@ function genModalForm() {
             body: new URLSearchParams(new FormData(event.target)) // event.target is the form
         }).then((response) => {
             if (!response.ok) {
+                console.log(response)
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             return response.json(); // or response.text() or whatever the server sends
