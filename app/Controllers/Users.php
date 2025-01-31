@@ -33,10 +33,4 @@ class Users extends BaseController
         }
 
     }
-    public function sanitizeData($data){
-        foreach ($data as $key => $value) {
-            $data[$key] = empty($data[$key]) ? null : $data[$key];
-        }
-    }
-
 }

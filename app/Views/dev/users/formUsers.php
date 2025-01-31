@@ -17,7 +17,7 @@
                             <div id="username_invalid" class="invalid-tooltip"></div>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" name="plevel" id="plevel" class="form-control">
+                            <input type="text" name="plevel" id="plevel" class="form-control" value="1000">
                             <label for="plevel">Privilegien</label>
                             <div id="plevel_invalid" class="invalid-tooltip"></div>
                         </div>

@@ -72,35 +72,35 @@ class Validation extends BaseConfig
         'task' => [
             'rules' => 'required',
             'errors' => [
-                'required' => 'Bitte tragen Sie einen <strong>Tasknamen</strong> ein.'
+                'required' => 'Bitte tragen Sie einen Tasknamen ein.'
             ],
         ],
         'taskartenid' => [
             'rules' => 'required|is_not_unique[taskarten.id]',
             'errors' => [
-                'required' => 'Bitte wählen Sie eine <strong>Taskart</strong> aus.',
-                'is_not_unique' => '<strong>Die gewählte Taskart existiert nicht.</strong>'
+                'required' => 'Bitte wählen Sie eine Taskart aus.',
+                'is_not_unique' => 'Die gewählte Taskart existiert nicht.'
             ],
         ],
         'spaltenid' => [
             'rules' => 'required|is_not_unique[spalten.id]',
             'errors' => [
-                'required' => 'Bitte wählen Sie eine <strong>Spalte</strong> aus.',
-                'is_not_unique' => '<strong>Die gewählte Spalte existiert nicht.</strong>'
+                'required' => 'Bitte wählen Sie eine Spalte aus.',
+                'is_not_unique' => 'Die gewählte Spalte existiert nicht.'
             ],
         ],
         'personenid' => [
             'rules' => 'required|is_not_unique[personen.id]',
             'errors' => [
-                'required' => 'Bitte wählen Sie eine <strong>Person</strong> aus.',
-                'is_not_unique' => '<strong>Die gewählte Person existiert nicht.</strong>'
+                'required' => 'Bitte wählen Sie eine Person aus.',
+                'is_not_unique' => 'Die gewählte Person existiert nicht.'
             ],
         ],
         'deadline' => [
             'rules' => 'required|valid_date',
             'errors' => [
-                'required' => 'Bitte tragen Sie eine <strong>Deadline</strong> ein.',
-                'valid_date' => 'Bitte tragen Sie ein <strong>valides</strong> Datum ein.',
+                'required' => 'Bitte tragen Sie eine Deadline ein.',
+                'valid_date' => 'Bitte tragen Sie ein valides Datum ein.',
             ],
         ],
         'notizen' => [
@@ -112,19 +112,19 @@ class Validation extends BaseConfig
         'erinnerung' => [
             'rules' => 'required',
             'errors' => [
-                'required' => 'Bitte nicht am <strong>Sourcecode</strong> herumspielen.',
+                'required' => 'Bitte nicht am Sourcecode herumspielen.',
             ]
         ],
         'erledigt' => [
             'rules' => 'required',
             'errors' => [
-                'required' => 'Bitte nicht am <strong>Sourcecode</strong> herumspielen.',
+                'required' => 'Bitte nicht am Sourcecode herumspielen.',
             ]
         ],
         'geloescht' => [
             'rules' => 'required',
             'errors' => [
-                'required' => 'Bitte nicht am <strong>Sourcecode</strong> herumspielen.',
+                'required' => 'Bitte nicht am Sourcecode herumspielen.',
             ]
         ],
     ];
@@ -144,27 +144,27 @@ class Validation extends BaseConfig
         'spalte' => [
             'rules' => 'required',
             'errors' => [
-                'required' => 'Bitte tragen Sie eine <strong>Bezeichnung</strong> ein.',
+                'required' => 'Bitte tragen Sie eine Bezeichnung ein.',
             ],
         ],
         'spaltenbeschreibung' => [
             'rules' => 'required',
             'errors' => [
-                'required' => 'Bitte tragen Sie eine <strong>Beschreibung</strong> ein.',
+                'required' => 'Bitte tragen Sie eine Beschreibung ein.',
             ],
         ],
         'sortid' => [
             'rules' => 'required|integer',
             'errors' => [
-                'required' => 'Bitte tragen Sie eine <strong>SortID</strong> ein.',
-                'integer' => 'Bitte tragen Sie eine <strong>Zahl</strong> ein.',
+                'required' => 'Bitte tragen Sie eine SortID ein.',
+                'integer' => 'Bitte tragen Sie eine Zahl ein.',
             ]
         ],
         'boardsid' => [
             'rules' => 'required|is_not_unique[boards.id]',
             'errors' => [
-                'required' => 'Bitte wählen Sie ein <strong>Board</strong> aus.',
-                'is_not_unique' => '<strong>Das gewählte Board existiert nicht!!</strong>',
+                'required' => 'Bitte wählen Sie ein Board aus.',
+                'is_not_unique' => 'Das gewählte Board existiert nicht!!',
             ],
         ],
     ];
@@ -189,7 +189,7 @@ class Validation extends BaseConfig
         'plevel' => [
             'rules' => 'permit_empty|is_natural_no_zero',
             'errors' => [
-                'is_natural_no_zero' => 'Privilegien müssen eine <strong>natürliche Zahl</strong> sein.',
+                'is_natural_no_zero' => 'Privilegien müssen eine natürliche Zahl sein.',
             ]
         ],
         'vorname' => [
@@ -231,7 +231,7 @@ class Validation extends BaseConfig
         'plevel' => [
             'rules' => 'is_natural_no_zero',
             'errors' => [
-                'is_natural_no_zero' => 'Privilegien müssen eine <strong>natürliche Zahl</strong> sein.',
+                'is_natural_no_zero' => 'Privilegien müssen eine natürliche Zahl sein.',
             ]
         ],
         'vorname' => [
