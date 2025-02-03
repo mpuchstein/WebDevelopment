@@ -42,7 +42,7 @@ class Home extends BaseController
                 if ($result) {
                     // for testing setFlashdata because it only sets the session for the next request
                     // TODO: once filtering is implemented set session correctly
-                    session()->setFlashdata(['userid' => $user['id'], 'role' => $user['role'], 'logged_in' => true]);
+                    session()->set(['userid' => $user['id'], 'pLevel' => $user['plevel'], 'logged_in' => true]);
                     return redirect()->to(base_url('tasks'));
                 }
             }

@@ -13,7 +13,7 @@
                             <p class="fs-2"><?= esc($column['spalte']) ?></p>
                         </div>
                         <?php foreach ($tasks as $task): ?>
-                            <?= $column['id'] == $task['spaltenid'] ? '<div class="card p-1 m-1' . ($task['erledigt'] == 1 ? ' border-success' : '') . '"> 
+                            <?= $column['id'] == $task['spaltenid'] ? '<div draggable="true" class="card p-1 m-1' . ($task['erledigt'] == 1 ? ' border-success' : '') . '"> 
                                     <div class="card-header text-center">
                                         <p class="card-title fs-3"> ' . $task['icon'] . ' ' . esc($task['task']) . '</p>
                                     </div>

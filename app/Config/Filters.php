@@ -2,6 +2,9 @@
 
 namespace Config;
 
+use App\Filters\LoggedInFilter;
+use App\Filters\NotLoggedInFilter;
+use App\Filters\UserSessionFilter;
 use CodeIgniter\Config\Filters as BaseFilters;
 use CodeIgniter\Filters\Cors;
 use CodeIgniter\Filters\CSRF;
@@ -34,6 +37,9 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+
+        'isLoggedIn'   => LoggedInFilter::class,
+        'notLoggedIn'  => NotLoggedInFilter::class,
     ];
 
     /**
@@ -103,5 +109,8 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, list<string>>>
      */
-    public array $filters = [];
+    public array $filters = [
+        'isLoggedIn' => ['before' => ['tasks', 'tasks/*', 'boards', 'boards/*', 'columns', 'columns/*', 'users', 'users/*',]],
+        'notLoggedIn' => ['before' => ['', 'register', 'login']]
+    ];
 }

@@ -4,7 +4,7 @@
 <header class="container-fluid sticky-top bg-header">
     <div class="container">
         <div class="container m-1 col-md-2">
-            <a href="<?= base_url('/') ?>">
+            <a href="<?= base_url('/tasks') ?>">
                 <!-- Logo is included -->
                 <img src="<?= base_url('assets/images/07_-_WE-Logo.svg') ?>" alt="Webentwicklung"
                      style="width: 128px;height: 64px;" class="logo"/>
