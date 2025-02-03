@@ -9,7 +9,7 @@ class Users extends BaseController
     public function getIndex(){
         echo view('templates/header');
         echo view('templates/nav');
-        echo view('dev/users/formUsers');
+        echo view('templates/components/modalUsers');
         echo view('dev/users/index');
         echo view('templates/footer');
     }

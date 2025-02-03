@@ -30,6 +30,18 @@ class Tasks extends BaseController
         echo view('templates/footer');
     }
 
+    public function getTasks(){
+        $database = new Database();
+        $data['boards'] = $database->getBoards();
+        echo view('templates/header');
+        echo view('templates/nav');
+        echo view('templates/components/tasks');
+        echo view('templates/components/udBtn');
+        echo view('templates/components/modalTasks');
+        echo view('dev/tasks/index', $data);
+        echo view('templates/footer');
+    }
+
     //TODO catch $ID not in database
     public function getCrud($type = 'new', $id = null)
     {
@@ -137,6 +149,24 @@ class Tasks extends BaseController
         $database = new Database();
         $task = $database->getTask($id, joinTaskType: true, joinColumns: true, joinUser: true, sortColumn: true);
         return $this->response->setJSON($task);
+    }
+
+    public function postJson(){
+        $data = $this->request->getJSON(true);
+        $database = new Database();
+        //$validation = service('validation');
+        //TODO: Add validation
+        if(isset($data['boardId'])){
+            $resultdata = [];
+            $columnData = $database -> getColumns(boardsId: $data['boardId']);
+            foreach($columnData as $column){
+                $resultdata[$column['id']] = [
+                    'columnName' => $column['spalte'],
+                    'tasks' => $database ->getTask(columnId: $column['id'], joinTaskType: true, joinUser: true),
+                ];
+            }
+            return $this->response->setJSON($resultdata);
+        }
     }
 
     public function getSuccess($type, $id)

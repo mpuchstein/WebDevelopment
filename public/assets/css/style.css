@@ -9,6 +9,10 @@
     color: white;
 }
 
+.columnContainer {
+    width: 20rem;
+}
+
 .table-dark i:hover { /* Icons färben sich blau beim überfahren mit Cursor */
     color: lightskyblue;
 }

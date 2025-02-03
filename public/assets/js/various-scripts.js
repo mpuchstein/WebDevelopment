@@ -1,15 +1,33 @@
-const tablebtn =
-    '<td>' +
-    '<div class="btn-group">' +
-    '<button type="button" id="%id%_edit"class="btn btn-sm btn-info" data-bs-target="#%formid%"' +
-    '><i class="fa-solid fa-pen-to-square"></i>' +
-    '</button>' +
-    '<button type="button" id="%id%_delete" class="btn btn-sm btn-danger" data-bs-target="#%formid%"' +
-    '><i class="fa-solid fa-eraser"></i>' +
-    '</button>' +
-    '</div>' +
-    '</td>'
-
+function updateTaskCards() {
+    let columns = ''
+    const itemButtons = document.getElementById(TEMPLATE_UD_BTN).innerHTML.replaceAll('%FORM_ID%', MODAL_FORM_ID)
+    const boardId = document.getElementById('boardSelector').value
+    fetch(REQ_TASK_HEADER, {
+        body: JSON.stringify({boardId: boardId})
+    }).then((response) => {
+        return response.json()
+    }).then((data) => {
+        for (const columnId in data) {
+            let taskCards = ''
+            for (const task of data[columnId]['tasks']) {
+                taskCards += document.getElementById(TEMPLATE_CARD_TASK).innerHTML
+                    .replaceAll('%TASK_ID%', task['id'])
+                    .replaceAll('%TASK_HEADING%', task['task'])
+                    .replaceAll('%TASK_ICON%', task['icon'])
+                    .replaceAll('%REMINDER_DATE%', task['erinnerungsdatum'])
+                    .replaceAll('%USER%', task['username'])
+                    .replaceAll('%UD_BTN%', itemButtons.replaceAll('%ID%', task['id']))
+            }
+            columns += '<td>\n'
+            columns += document.getElementById(TEMPLATE_CARD_COLUMN).innerHTML
+                .replaceAll('%COLUMN_ID%', columnId)
+                .replaceAll('%COLUMN_HEADING%', data[columnId]['columnName'])
+                .replaceAll('%TASK_CARDS%', taskCards)
+            columns += '</td>\n'
+        }
+        document.getElementById(TABLE_BODY_ID).innerHTML = columns
+    })
+}
 function genModalForm() {
     document.forms[modalformid].addEventListener('submit', (event) => {
         event.preventDefault();
@@ -43,7 +61,7 @@ function genModalForm() {
 
 function updateTable() {
     let tableRows = ''
-    const rowButtons = tablebtn.replaceAll('%formid%', modalformid)
+    const rowButtons = TEMPLATE_UD_BTN.replaceAll('%FORM_ID%', modalformid)
     fetch(requrljson).then((response) => {
         return response.json()
     }).then((data) => {
@@ -52,7 +70,9 @@ function updateTable() {
             for (const tid of theadids) {
                 tableRows += '<td>' + row[tid] + '</td>'
             }
-            tableRows += rowButtons.replaceAll('%id%', row['id']);
+            tableRows += '<td>'
+            tableRows += rowButtons.replaceAll('%ID%', row['id']);
+            tableRows += '</td>'
             tableRows += '</tr>'
         }
         document.getElementById(tablebodyid).innerHTML = tableRows
