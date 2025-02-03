@@ -17,6 +17,7 @@
                 <a href="<?= base_url('boards') ?>" class="btn btn-outline-light btn-dark">Boards</a>
                 <a href="<?= base_url('columns') ?>" class="btn btn-outline-light dark btn-dark">Spalten</a>
                 <a href="<?= base_url('users') ?>" class="btn btn-outline-light dark btn-dark">Personen</a>
+                <a href="<?= base_url('logout') ?>" class="btn btn-outline-light dark btn-dark">Logout</a>
             </nav>
         </div>
     </div>

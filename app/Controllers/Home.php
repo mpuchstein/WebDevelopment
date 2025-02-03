@@ -13,15 +13,6 @@ class Home extends BaseController
         echo view('dev/login/index');
         echo view('templates/footer');
     }
-
-    public function getReset()
-    {
-        $database = new Database();
-        $database->userSetSecret(1, 'Pa$$word0');
-        $database->userSetSecret(2, 'Pa$$word1');
-        return redirect()->to(base_url('tasks'));
-    }
-
     public function postIndex()
     {
         $data = $this->request->getPost();
@@ -58,5 +49,4 @@ class Home extends BaseController
         echo view('dev/login/index', $errorData);
         echo view('templates/footer');
     }
-
 }
