@@ -31,23 +31,24 @@
 </main>
 
 <script>
-    const theadids = ['id', 'username', 'plevel', 'vorname', 'name', 'email']
-    const tablebodyid = 'userTableBody'
-    const modenew = 'new'
-    const modeedit = 'edit'
-    const modedelete = 'delete'
-    const requrljson = '<?=base_url('users/json')?>'
-    const requrlnew = '<?=base_url('users/new')?>'
-    const requrledit = '<?=base_url('users/edit')?>'
-    const requrldelete = '<?=base_url('users/delete')?>'
-    const modalid = '#modal'
-    const modalformid = 'modalForm'
-    const modalheadlineid = 'modalHeadline'
-    const modalsubmitid= 'formSubmit'
-    const modalformfieldsid = 'modalFormFields'
-    const formfieldsnames = ['username', 'plevel', 'vorname', 'name', 'email']
+    const THEAD_IDS = ['id', 'username', 'plevel', 'vorname', 'name', 'email']
+    const TABLE_BODY_ID = 'userTableBody'
+    const TEMPLATE_UD_BTN = 'TEMPLATE_UD_BTN'
+    const MODE_NEW = 'new'
+    const MODE_EDIT = 'edit'
+    const MODE_DELETE = 'delete'
+    const REQ_URL_JSON = '<?=base_url('users/json')?>'
+    const REQ_URL_NEW = '<?=base_url('users/new')?>'
+    const REQ_URL_EDIT = '<?=base_url('users/edit')?>'
+    const REQ_URL_DELETE = '<?=base_url('users/delete')?>'
+    const MODAL_ID = '#modal'
+    const MODEL_FORM_ID = 'modalForm'
+    const MODAL_HEADLINE_ID = 'modalHeadline'
+    const MODAL_SUBMIT_ID= 'formSubmit'
+    const MODAL_FORMFIELDS_ID = 'modalFormFields'
+    const MODAL_FORMFIELDS_NAMES = ['username', 'plevel', 'vorname', 'name', 'email']
 
-    document.getElementById('btn_add').addEventListener('click', ()=>{showModal(requrlnew, modenew, -1)})
+    document.getElementById('btn_add').addEventListener('click', ()=>{showModal(REQ_URL_NEW, MODE_NEW, -1)})
     updateTable()
     genModalForm()
 </script>

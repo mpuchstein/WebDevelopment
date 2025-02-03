@@ -29,7 +29,7 @@ function updateTaskCards() {
     })
 }
 function genModalForm() {
-    document.forms[modalformid].addEventListener('submit', (event) => {
+    document.forms[MODEL_FORM_ID].addEventListener('submit', (event) => {
         event.preventDefault();
         // TODO do something here to show user that form is being submitted
         fetch(event.target.action, {
@@ -42,12 +42,11 @@ function genModalForm() {
             }
             return response.json(); // or response.text() or whatever the server sends
         }).then((data) => {
-            // TODO handle body
             if (data['success'] === true) {
                 updateTable()
-                $(modalid).modal('hide')
+                $(MODAL_ID).modal('hide')
             } else {
-                formfieldsnames.forEach(formField => {
+                MODAL_FORMFIELDS_NAMES.forEach(formField => {
                     document.getElementById(formField).classList.toggle('is-invalid', formField in data['errors'])
                     document.getElementById(formField + '_invalid').innerText = data['errors'][formField]
                 })
@@ -61,13 +60,13 @@ function genModalForm() {
 
 function updateTable() {
     let tableRows = ''
-    const rowButtons = TEMPLATE_UD_BTN.replaceAll('%FORM_ID%', modalformid)
-    fetch(requrljson).then((response) => {
+    const rowButtons = document.getElementById(TEMPLATE_UD_BTN).innerHTML.replaceAll('%FORM_ID%', MODEL_FORM_ID)
+    fetch(REQ_URL_JSON).then((response) => {
         return response.json()
     }).then((data) => {
         for (const row of data) {
             tableRows += '<tr>'
-            for (const tid of theadids) {
+            for (const tid of THEAD_IDS) {
                 tableRows += '<td>' + row[tid] + '</td>'
             }
             tableRows += '<td>'
@@ -75,30 +74,30 @@ function updateTable() {
             tableRows += '</td>'
             tableRows += '</tr>'
         }
-        document.getElementById(tablebodyid).innerHTML = tableRows
+        document.getElementById(TABLE_BODY_ID).innerHTML = tableRows
         for (const row of data) {
             const elemid = row['id']
-            const editid = elemid + '_edit'
-            const delid = elemid + '_delete'
+            const editid = 'edit_' + elemid
+            const delid = 'delete_' +elemid
             const editBtn = document.getElementById(editid)
             const delBtn = document.getElementById(delid)
             editBtn.addEventListener('click', () => {
-                showModal(requrledit, modeedit, elemid)
+                showModal(REQ_URL_EDIT, MODE_EDIT, elemid)
             })
             delBtn.addEventListener('click', () => {
-                showModal(requrldelete, modedelete, elemid)
+                showModal(REQ_URL_DELETE, MODE_DELETE, elemid)
             })
         }
     })
 }
 
 function showModal(requrl, mode, elemid) {
-    const modalHeadline = document.getElementById(modalheadlineid)
-    const modalForm = document.getElementById(modalformid)
-    const formButton = document.getElementById(modalsubmitid)
-    const formFields = document.getElementById(modalformfieldsid)
+    const modalHeadline = document.getElementById(MODAL_HEADLINE_ID)
+    const modalForm = document.getElementById(MODEL_FORM_ID)
+    const formButton = document.getElementById(MODAL_SUBMIT_ID)
+    const formFields = document.getElementById(MODAL_FORMFIELDS_ID)
     formFields.disabled = false
-    formfieldsnames.forEach(formField => {
+    MODAL_FORMFIELDS_NAMES.forEach(formField => {
         document.getElementById(formField).classList.toggle('is-invalid', false)
         document.getElementById(formField+'_invalid').innerText = ''
     })
@@ -106,17 +105,17 @@ function showModal(requrl, mode, elemid) {
     modalForm.action = requrl
 
     switch (mode) {
-        case modenew:
+        case MODE_NEW:
             modalHeadline.innerText = 'Neu'
             formButton.className = 'btn btn-success'
             formButton.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Speichern'
             break
-        case modeedit:
+        case MODE_EDIT:
             modalHeadline.innerText = 'Bearbeiten'
             formButton.className = 'btn btn-info'
             formButton.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Editieren'
             break;
-        case modedelete:
+        case MODE_DELETE:
             modalHeadline.innerText = 'Löschen'
             formButton.className = 'btn btn-danger'
             formButton.innerHTML = '<i class="fa-solid fa-eraser"></i> Löschen'
@@ -124,7 +123,7 @@ function showModal(requrl, mode, elemid) {
             break;
     }
     if (elemid > 0) {
-        fetch(requrljson + '/' + elemid).then((response) => {
+        fetch(REQ_URL_JSON + '/' + elemid).then((response) => {
             return response.json()
         }).then((data) => {
             console.log(data)
@@ -137,5 +136,5 @@ function showModal(requrl, mode, elemid) {
         })
     }
 
-    $(modalid).modal('show');
+    $(MODAL_ID).modal('show');
 }
