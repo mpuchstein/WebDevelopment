@@ -20,15 +20,25 @@ class Columns extends BaseController
     public function getTest(){
         $database = new Database();
         $navData = $this->getNavElements('columns');
+        $formData['boards'] = $database->getBoards();
         echo view('templates/header');
         echo view('templates/nav', $navData);
+        echo view('templates/components/modalColumns', $formData);
         echo view('templates/components/udBtn');
-        echo view('templates/components/modalColumns');
         echo view('dev/columns/index');
         echo view('templates/footer');
-
     }
 
+    public function getJson($id = null)
+    {
+        $database = new Database();
+        $task = $database->getColumns(joinBoards: true);
+        if ($id == null) {
+            return $this->response->setJSON($task);
+        } else {
+            return $this->response->setJSON($task[0]);
+        }
+    }
     public function getCrud($type = 'new', $id = null)
     {
         $navData = $this->getNavElements('columns');

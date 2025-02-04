@@ -8,82 +8,54 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="modalTasksForm" method="post">
+                <form id="modalColumnsForm" method="post">
                     <input type="hidden" name="id" id="id">
                     <fieldset id="modalFormFields">
                         <div class="form-floating mb-3">
-                            <input type="text" name="task" id="task" class="form-control">
-                            <label for="task">Bezeichnung</label>
-                            <div id="task_invalid" class="invalid-tooltip"></div>
+                            <input type="text" name="spalte" id="spalte" class="form-control"
+                                   placeholder="Spaltenbezeichnung">
+                            <label for="spalte" class="">Spaltenbezeichnung</label>
+                            <div id="spalte_invalid" class="invalid-feedback"></div>
                         </div>
                         <div class="form-floating mb-3">
-                            <select type="number" name="taskartenid" id="taskartenid" class="form-select">
-
+                            <textarea name="spaltenbeschreibung" id="spaltenbeschreibung" class="form-control"
+                                      placeholder="Spaltenbeschreibung">
+                            </textarea>
+                            <label for="spaltenbeschreibung" class="">Spaltenbeschreibung</label>
+                            <div id="spaltenbeschreibung_invalid" class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" name="sortid" id="sortid" class="form-control" placeholder="Sortier-ID">
+                            <label for="sortid" class="">Sortid</label>
+                            <div id="sortid_invalid" class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select type="number" name="boardsid" id="boardsid" class="form-select">
+                                <?php foreach ($boards as $board): ?>
+                                    <option value="<?= $board['id'] ?>">
+                                        <?= $board['board'] ?>
+                                    </option>
+                                <?php endforeach ?>
                             </select>
-                            <label for="taskartenid">Taskart auswählen</label>
-                            <div id="taskartenid_invalid" class="invalid-tooltip"></div>
+                            <label for="boardsid" class="">Board auswählen:</label>
+                            <div id="boardsid_invalid" class="invalid-feedback"></div>
                         </div>
-                        <div class="form-floating mb-3">
-                            <select type="number" name="spaltenid" id="spaltenid" class="form-select">
-
-                            </select>
-                            <label for="spaltenid">Spalte auswählen</label>
-                            <div id="spaltenid_invalid" class="invalid-tooltip"></div>
+                    </fieldset>
+                    <div class="row mt-1 me-3 mb-3 align-content-end justify-content-end">
+                        <div class="col-auto">
+                            <button type="submit" id="formSubmit" class="btn">
+                                Placeholder
+                            </button>
                         </div>
-                        <div class="form-floating mb-3">
-                            <select type="number" name="personenid" id="personenid" class="form-select">
-
-                            </select>
-                            <label for="personenid">Person auswählen</label>
-                            <div id="personenid_invalid" class="invalid-tooltip"></div>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-dark btn-outline-light" data-bs-dismiss="modal"
+                                    aria-label="Abbrechen">
+                                <i class="fa-solid fa-x"></i> Abbrechen
+                            </button>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input type="datetime-local" name="deadline" id="deadline" class="form-control">
-                            <label for="deadline">Deadline</label>
-                            <div id="deadline_invalid" class="invalid-tooltip"></div>
-                        </div>
-                        <div class="form-check">
-                            <input type="checkbox" name="erinnerung" id="erinnerung" class="form-check-input">
-                            <label for="erinnerung" class="form-check-label">Erinnerung</label>
-                            <div id="erinnerung_invalid" class="invalid-tooltip"></div>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="datetime-local" name="erinnerungsdatum" id="erinnerungsdatum"
-                                   class="form-control">
-                            <label for="erinnerungsdatum">Erinnerungsdatum</label>
-                            <div id="erinnerungsdatum_invalid" class="invalid-tooltip"></div>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <textarea name="notizen" id="notizen" class="form-control"></textarea>
-                            <label for="notizen">Notiz</label>
-                            <div id="notizen_invalid" class="invalid-tooltip"></div>
-                        </div>
-                        <div class="form-check">
-                            <input type="checkbox" name="erledigt" id="erledigt" class="form-check-input">
-                            <label for="erledigt" class="form-check-label">erledigt</label>
-                            <div id="erledigt_invalid" class="invalid-tooltip"></div>
-                        </div>
-                        <div class="form-check">
-                            <input type="checkbox" name="geloescht" id="geloescht" class="form-check-input">
-                            <label for="geloescht" class="form-check-label">geloescht</label>
-                            <div id="geloescht_invalid" class="invalid-tooltip"></div>
-                        </div>
+                    </div>
+                </form>
             </div>
-            </fieldset>
-            <div class="row mt-1 me-3 mb-3 align-content-end justify-content-end">
-                <div class="col-auto">
-                    <button type="submit" id="formSubmit" class="btn">
-                        Placeholder
-                    </button>
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-dark btn-outline-light" data-bs-dismiss="modal"
-                            aria-label="Abbrechen">
-                        <i class="fa-solid fa-x"></i> Abbrechen
-                    </button>
-                </div>
-            </div>
-            </form>
         </div>
     </div>
 </div>
