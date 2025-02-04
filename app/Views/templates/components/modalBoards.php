@@ -15,6 +15,7 @@
                         <div class="form-floating mb-3">
                             <input type="text" name="board" id="board" class="form-control" placeholder="Board Name">
                             <label for="board">Board Name</label>
+                            <div id="board_invalid" class="invalid-feedback"></div>
                         </div>
                     </fieldset>
                     <div class="row mt-3 align-content-end justify-content-end">
@@ -22,7 +23,6 @@
                             <button type="submit" id="formSubmit" class="btn btn-dark btn-outline-light">
                                 Placeholder
                             </button>
-                            <div id="board_invalid" class="invalid-feedback"></div>
                         </div>
                         <div class="col-auto">
                             <button type="button" class="btn btn-dark btn-outline-light" data-bs-dismiss="modal"

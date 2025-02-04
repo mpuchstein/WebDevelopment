@@ -42,10 +42,14 @@ class Boards extends BaseController
     {
         $data = $this->request->getPost();
         $validation = service('validation');
+//        echo('<pre>');
+//        var_dump($data);
+//        echo('</pre>');
+//        die();
         if ($validation->run($data, 'boardsInsertArray')) {
             $database = new Database();
             $id = $database->insertBoard($data);
-            return $this->response->setJSON(['result' => true, 'id' => $id]);
+            return $this->response->setJSON(['success' => true, 'id' => $id]);
         } else {
             $errors = $validation->getErrors();
             return response()->setJSON(['success' => false, 'errors' => $errors,]);
@@ -59,7 +63,7 @@ class Boards extends BaseController
         if ($validation->run($data, 'boardsUpdateArray')) {
             $database = new Database();
             $database->updateBoard($data['id'], $data);
-            return $this->response->setJSON(['result' => true, 'id' => $data['id']]);
+            return $this->response->setJSON(['success' => true, 'id' => $data['id']]);
         } else {
             $errors = $validation->getErrors();
             return response()->setJSON(['success' => false, 'errors' => $errors,]);
@@ -73,7 +77,7 @@ class Boards extends BaseController
         if ($validation->run($data, 'boardsId')) {
             $database = new Database();
             $database->deleteBoard($data['id']);
-            return $this->response->setJSON(['result' => true, 'id' => $data['id']]);
+            return $this->response->setJSON(['success' => true, 'id' => $data['id']]);
         } else {
             $errors = $validation->getErrors();
             return response()->setJSON(['success' => false, 'errors' => $errors,]);
