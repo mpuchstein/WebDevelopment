@@ -1,13 +1,13 @@
 <main>
-    <div class="container mt-3">
-        <div class="row">
-            <div class="container col-sm w-auto h-auto">
-                <div class="card border-light-subtle">
+    <div class="container mt-2">
+        <div class="d-flex flex-column-reverse flex-md-row justify-content-md-evenly gap-2 gap-md-4">
+            <div class="container-fluid">
+                <div class="card">
                     <div class="card-img ms-3">
                         <img src="<?= base_url('assets/images/07_-_WE-Logo.svg') ?>" alt="Webentwicklung"
                              style="width: 128px;height: 64px;" class="logo"/>
                     </div>
-                    <div class="card-header card-title border-light">
+                    <div class="card-header card-title">
                         <h2>Testnutzer</h2>
                     </div>
                     <div class="card-body">
@@ -22,15 +22,16 @@
                                 <ul>
                                     <li>mmittermeier</li>
                                     <li>Pa$$word1</li>
+                                    <li>Erweiterte Privilegien</li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="container col-sm w-25 h-25">
-                <div class="card align-content-center border-light-subtle">
-                    <div class="card-header border-light">
+            <div class="container-fluid">
+                <div class="card align-content-center">
+                    <div class="card-header">
                         <h1>Login</h1>
                     </div>
                     <div class="card-body">
