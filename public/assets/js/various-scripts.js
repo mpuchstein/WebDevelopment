@@ -15,6 +15,7 @@ function updateTaskCards() {
                     .replaceAll('%TASK_HEADING%', task['task'])
                     .replaceAll('%TASK_ICON%', task['icon'])
                     .replaceAll('%REMINDER_DATE%', task['erinnerungsdatum'])
+                    .replaceAll('%DEADLINE%', task['deadline'])
                     .replaceAll('%USER%', task['username'])
                     .replaceAll('%UD_BTN%', itemButtons.replaceAll('%ID%', task['id']))
             }
