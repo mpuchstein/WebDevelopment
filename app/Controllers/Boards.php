@@ -15,6 +15,7 @@ class Boards extends BaseController
         $data['tdata'] = $boardModel->getData();
         echo view('templates/header', $datahead);
         echo view('templates/nav');
+        echo view('templates/components/modalBoards');
         echo view('dev/boards/index', $data);
         echo view('templates/footer');
     }

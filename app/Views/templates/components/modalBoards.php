@@ -1,8 +1,9 @@
-<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="formHeadline" aria-hidden="true">
+<!-- modal form for editing boards> -->
+<div class="modal fade" id="boardsForm" tabindex="-1" aria-labelledby="formHeadline" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modalHeadline" class="modal-title">
+                <h2 id="formHeadline" class="modal-title">
                     Placeholder
                 </h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -10,16 +11,13 @@
             <div class="modal-body">
                 <form id="modalForm" method="post">
                     <input type="hidden" name="id" id="id">
-                    <fieldset id="modalFormFields">
-                        <div class="form-floating mb-3">
-                            <input type="text" name="username" id="username" class="form-control">
-                            <label for="username">Nutzername</label>
-                            <div id="username_invalid" class="invalid-tooltip"></div>
-                        </div>
-                    </fieldset>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="board" id="board" class="form-control" placeholder="Board Name">
+                        <label for="board">Board Name</label>
+                    </div>
                     <div class="row mt-3 align-content-end justify-content-end">
                         <div class="col-auto">
-                            <button type="submit" id="formSubmit" class="btn">
+                            <button type="submit" id="formSubmit" class="btn btn-dark btn-outline-light">
                                 Placeholder
                             </button>
                         </div>
