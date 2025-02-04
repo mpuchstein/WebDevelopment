@@ -7,7 +7,9 @@
                 </div>
                 <select type="number" name="boardSelector" id="boardSelector" class="form-select">
                     <?php foreach ($boards as $board): ?>
-                        <option value="<?= esc($board['id']) ?>"><?= esc($board['board']) ?></option>
+                        <option value="<?= esc($board['id']) ?>"<?= $boardsId == $board['id'] ? 'selected' : '' ?>>
+                            <?= esc($board['board']) ?>
+                        </option>
                     <?php endforeach ?>
                 </select>
             </div>
@@ -29,6 +31,7 @@
 
 <script>
     const TABLE_BODY_ID = 'tasksContainer'
+    const BOARDS_ID = <?= $boardsId ?>
 
     const MODE_NEW = 'new'
     const MODE_EDIT = 'edit'
@@ -51,7 +54,7 @@
         {
             method: "POST",
             headers: {
-                "Content-Type": "application\json",
+                "Content-Type": "application/json"
             }
         }
     )
@@ -59,6 +62,11 @@
     const TEMPLATE_CARD_COLUMN = 'TEMPLATE_CARD_COLUMN'
     const TEMPLATE_CARD_TASK = 'TEMPLATE_CARD_TASK'
     const TEMPLATE_UD_BTN = 'TEMPLATE_UD_BTN'
+
+    document.getElementById('boardSelector').addEventListener('change', () => {
+        console.log(document.getElementById('boardSelector').value)
+        setBoard('<?=esc(base_url('boards'))?>', document.getElementById('boardSelector').value)
+    })
 
     document.getElementById('btn_add').addEventListener('click', () => {
         showModal(REQ_URL_NEW, MODE_NEW, -1)

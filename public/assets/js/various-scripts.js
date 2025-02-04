@@ -153,3 +153,20 @@ function showModal(requrl, mode, elemid) {
 
     $(MODAL_ID).modal('show');
 }
+
+function setBoard(url, id){
+    fetch(url,{
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ boardId: id})
+    }).then((response) =>{
+        return response.json()
+    }).then((data) => {
+        if(data['success'] === true){
+            location.reload()
+        } else {
+            console.log('Board does not exist')
+            location.reload()
+        }
+    })
+}
