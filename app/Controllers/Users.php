@@ -7,7 +7,7 @@ use App\Models\Database;
 class Users extends BaseController
 {
     public function getIndex(){
-        $navData['navElems'] = $this->getNavElements('users');
+        $navData = $this->getNavElements('users');
         echo view('templates/header');
         echo view('templates/nav', $navData);
         echo view('templates/components/udBtn');

@@ -9,7 +9,7 @@ class Columns extends BaseController
     public function getIndex()
     {
         $database = new Database();
-        $navData['navElems'] = $this->getNavElements('columns');
+        $navData = $this->getNavElements('columns');
         $data['columns'] = $database->getColumns(joinBoards: true);
         echo view('templates/header');
         echo view('templates/nav', $navData);
@@ -19,7 +19,7 @@ class Columns extends BaseController
 
     public function getCrud($type = 'new', $id = null)
     {
-        $navData['navElems'] = $this->getNavElements('columns');
+        $navData = $this->getNavElements('columns');
         $data['mode'] = $type;
         $database = new Database();
         $data['boards'] = $database->getBoards();
@@ -45,10 +45,10 @@ class Columns extends BaseController
     public function postNew()
     {
         $data = $this->request->getPost();
-        $navData['navElems'] = $this->getNavElements('columns');
+        $database = new Database();
         $validation = service('validation');
         if (!$validation->run($data, 'columnArray')) {
-            $database = new Database();
+            $navData = $this->getNavElements('columns');
             $errorData['headline'] = 'Spalte erstellen';
             $errorData['mode'] = 'new';
             $errorData['error'] = $validation->getErrors();
@@ -59,7 +59,6 @@ class Columns extends BaseController
             echo view('dev/columnCrud', $errorData);
             echo view('templates/footer');
         } else {
-            $database = new Database();
             $id = $database->insertColumn($data);
             return redirect()->to(base_url('columns'));
         }
@@ -68,10 +67,10 @@ class Columns extends BaseController
     public function postEdit()
     {
         $data = $this->request->getPost();
-        $navData['navElems'] = $this->getNavElements('columns');
         $database = new Database();
         $validation = service('validation');
         if (!$validation->run($data, 'columnArray')) {
+            $navData = $this->getNavElements('columns');
             $errorData['headline'] = 'Spalte bearbeiten';
             $errorData['mode'] = 'edit';
             $errorData['error'] = $validation->getErrors();
@@ -93,7 +92,7 @@ class Columns extends BaseController
         $database = new Database();
         $validation = service('validation');
         if (!$validation->run($data, 'columnDelete')) {
-            $navData['navElems'] = $this->getNavElements('columns');
+            $navData = $this->getNavElements('columns');
             $data['columns'] = $database->getColumns(joinBoards: true);
             echo view('templates/header');
             echo view('templates/nav', $navData);

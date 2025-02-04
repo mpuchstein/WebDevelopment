@@ -3,17 +3,18 @@
 namespace App\Controllers;
 
 use App\Models\BoardsModel;
+use App\Models\Database;
 
 class Boards extends BaseController
 {
     public function getIndex()
     {
-        $boardModel = new BoardsModel();
-        $navData['navElems'] = $this->getNavElements('boards');
+        $database = new Database();
+        $navData = $this->getNavElements('boards');
         $datahead['scriptfile'] = base_url('assets/js/boards.js');
         $data['headline'] = 'Boards';
         $data['theader'] = ['#', 'Board'];
-        $data['tdata'] = $boardModel->getData();
+        $data['tdata'] = $database->getBoards();
         echo view('templates/header', $datahead);
         echo view('templates/nav', $navData);
         echo view('templates/components/modalBoards');
@@ -35,32 +36,32 @@ class Boards extends BaseController
 
     public function getJson($id = null)
     {
-        $boardModel = new BoardsModel();
-        $board = $boardModel->getData($id);
+        $database = new Database();
+        $board = $database->getBoards($id);
         return $this->response->setJSON($board);
     }
 
     public function postNew()
     {
-        $boardModel = new BoardsModel();
+        $database = new Database();
         $insertData = $this->request->getPost();
-        $id = $boardModel->insertData($insertData);
+        $id = $database->insertBoard($insertData);
         return redirect()->to(base_url('boards'));
     }
 
     public function postEdit()
     {
-        $boardModel = new BoardsModel();
+        $database = new Database();
         $updateData = $this->request->getPost();
-        $boardModel->updateData($updateData['id'], $updateData);
+        $database->updateBoard($updateData['id'], $updateData);
         return redirect()->to(base_url('boards'));
     }
 
     public function postDelete()
     {
-        $boardModel = new BoardsModel();
+        $database = new Database();
         $deleteData = $this->request->getPost();
-        $boardModel->delete($deleteData['id']);
+        $database->deleteBoard($deleteData['id']);
         return redirect()->to(base_url('boards'));
     }
 }
