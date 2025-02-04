@@ -17,6 +17,18 @@ class Columns extends BaseController
         echo view('templates/footer');
     }
 
+    public function getTest(){
+        $database = new Database();
+        $navData = $this->getNavElements('columns');
+        echo view('templates/header');
+        echo view('templates/nav', $navData);
+        echo view('templates/components/udBtn');
+        echo view('templates/components/modalColumns');
+        echo view('dev/columns/index');
+        echo view('templates/footer');
+
+    }
+
     public function getCrud($type = 'new', $id = null)
     {
         $navData = $this->getNavElements('columns');

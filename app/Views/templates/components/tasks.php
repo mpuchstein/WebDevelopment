@@ -1,5 +1,5 @@
 <div hidden="hidden" id="TEMPLATE_CARD_COLUMN">
-    <div class="card columnContainer overflow-y-scroll">
+    <div class="card columnContainer h-75 overflow-y-scroll">
         <div class="card-header card-title text-center" id="column_%COLUMN_ID%">%COLUMN_HEADING%</div>
         <div class="card-body">
             %TASK_CARDS%
