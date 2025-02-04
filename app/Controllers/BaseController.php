@@ -59,20 +59,23 @@ abstract class BaseController extends Controller
     }
 
     public function getNavElements($active = null):array{
-        $result = [];
+        $navElems = [];
+        $menuElems = [];
         if(session('logged_in')){
-            $result['tasks'] = ['name' => 'Tasks', 'link' => base_url('tasks')];
-            $result['boards'] = ['name' => 'Boards', 'link' => base_url('boards')];
-            $result['columns'] = ['name' => 'Spalten', 'link' => base_url('columns')];
+            $navElems['tasks'] = ['name' => 'Tasks', 'link' => base_url('tasks')];
+            $navElems['boards'] = ['name' => 'Boards', 'link' => base_url('boards')];
+            $navElems['columns'] = ['name' => 'Spalten', 'link' => base_url('columns')];
+            $menuElems['profile'] = ['name' => 'Profile', 'link' => base_url('profile')];
+            $menuElems['logout'] = ['name' => 'Logout', 'link' => base_url('logout')];
             if(session('pLevel') >= 2000){
-                $result['users'] = ['name' => 'Personen', 'link' => base_url('users')];
+                $navElems['users'] = ['name' => 'Personen', 'link' => base_url('users')];
             }
         } else {
-            $result['register'] = ['name' => 'Register', 'link' => base_url('register')];
+            $navElems['register'] = ['name' => 'Register', 'link' => base_url('register')];
         }
-        if($active != null && isset($result[$active])){
-            $result[$active]['active'] = true;
+        if($active != null && isset($navElems[$active])){
+            $navElems[$active]['active'] = true;
         }
-        return $result;
+        return ['navElems' => $navElems, 'menuElems' => $menuElems];
     }
 }

@@ -1,5 +1,5 @@
 <!-- table view for users -->
-<main class="bg-dark-subtle container pt-2">
+<main class="card-body">
     <div class="row justify-content-between align-content-center">
         <h1 class="col-auto">User Management</h1>
         <div class="col-auto">

@@ -1,11 +1,11 @@
-<main class="card-header bg-dark-subtle pt-2">
-    <div class="row justify-content-between align-content-center mt-0 m-2">
+<main class="card-body">
+    <div class="row justify-content-between align-content-center">
         <div class="col-auto">
             <div class="input-group">
                 <div class="input-group-text">
                     <label for="boardSelector">Board:</label>
                 </div>
-                <select type="number" name="boardSelector" id="boardSelector" class="form-select form-select-sm">
+                <select type="number" name="boardSelector" id="boardSelector" class="form-select">
                     <?php foreach ($boards as $board): ?>
                         <option value="<?= esc($board['id']) ?>"><?= esc($board['board']) ?></option>
                     <?php endforeach ?>
@@ -18,12 +18,12 @@
             </button>
         </div>
     </div>
-    <div class="container table-responsive">
-    <table class="table table-borderless table-striped-columns">
-        <tr id="tasksContainer">
-            <!-- tasks are going to be placed here -->
-        </tr>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-borderless">
+            <tr id="tasksContainer">
+                <!-- tasks are going to be placed here -->
+            </tr>
+        </table>
     </div>
 </main>
 
@@ -42,9 +42,9 @@
     const MODAL_ID = '#modal'
     const MODAL_FORM_ID = 'modalTasksForm'
     const MODAL_HEADLINE_ID = 'modalHeadline'
-    const MODAL_SUBMIT_ID= 'formSubmit'
+    const MODAL_SUBMIT_ID = 'formSubmit'
     const MODAL_FORMFIELDS_ID = 'modalFormFields'
-    const MODAL_FORMFIELDS_NAMES= ['task', 'taskartenid', 'spaltenid', 'personenid', 'deadline', 'erinnerung', 'erinnerungsdatum', 'notizen', 'erledigt', 'geloescht']
+    const MODAL_FORMFIELDS_NAMES = ['task', 'taskartenid', 'spaltenid', 'personenid', 'deadline', 'erinnerung', 'erinnerungsdatum', 'notizen', 'erledigt', 'geloescht']
 
     const REQ_TASK_HEADER = new Request(
         '<?=base_url('tasks/json')?>',
@@ -60,8 +60,14 @@
     const TEMPLATE_CARD_TASK = 'TEMPLATE_CARD_TASK'
     const TEMPLATE_UD_BTN = 'TEMPLATE_UD_BTN'
 
-    document.getElementById('btn_add').addEventListener('click', ()=>{showModal(REQ_URL_NEW, MODE_NEW, -1)})
-    function updateSite(){updateTaskCards()}
+    document.getElementById('btn_add').addEventListener('click', () => {
+        showModal(REQ_URL_NEW, MODE_NEW, -1)
+    })
+
+    function updateSite() {
+        updateTaskCards()
+    }
+
     updateSite()
     genModalForm()
 </script>

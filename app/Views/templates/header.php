@@ -20,7 +20,7 @@
     <script src="<?= base_url('assets/js/bootstrap.js') ?>"></script>
     <!-- import bootstrap so you can use it in js -->
     <script type="module">
-        import * as bootstrap from '<?=base_url('assets/js/bootstrap.js')?>'
+        import * as bootstrap from '<?=base_url('assets/js/bootstrap.bundle.js')?>'
         window.bootstrap = bootstrap;
     </script>
     <!-- set baseurl for javascript -->

@@ -12,7 +12,7 @@ class Boards extends BaseController
         $navData['navElems'] = $this->getNavElements('boards');
         $datahead['scriptfile'] = base_url('assets/js/boards.js');
         $data['headline'] = 'Boards';
-        $data['theader'] = ['ID', 'Board'];
+        $data['theader'] = ['#', 'Board'];
         $data['tdata'] = $boardModel->getData();
         echo view('templates/header', $datahead);
         echo view('templates/nav', $navData);

@@ -8,8 +8,9 @@ class Home extends BaseController
 {
     public function getIndex()
     {
+        $navData['navElems'] = $this->getNavElements();
         echo view('templates/header');
-        echo view('templates/nav');
+        echo view('templates/nav', $navData);
         echo view('dev/login/index');
         echo view('templates/footer');
     }
@@ -42,8 +43,9 @@ class Home extends BaseController
             $errorData['password'] = $data['password'];
 
         }
+        $navData['navElems'] = $this->getNavElements();
         echo view('templates/header');
-        echo view('templates/nav');
+        echo view('templates/nav', $navData);
         echo view('dev/login/index', $errorData);
         echo view('templates/footer');
     }
