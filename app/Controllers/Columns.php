@@ -17,7 +17,8 @@ class Columns extends BaseController
         echo view('templates/footer');
     }
 
-    public function getTest(){
+    public function getTest()
+    {
         $database = new Database();
         $navData = $this->getNavElements('columns');
         $formData['boards'] = $database->getBoards();
@@ -32,13 +33,14 @@ class Columns extends BaseController
     public function getJson($id = null)
     {
         $database = new Database();
-        $task = $database->getColumns(joinBoards: true);
+        $task = $database->getColumns(columnId: $id, joinBoards: true);
         if ($id == null) {
             return $this->response->setJSON($task);
         } else {
             return $this->response->setJSON($task[0]);
         }
     }
+
     public function getCrud($type = 'new', $id = null)
     {
         $navData = $this->getNavElements('columns');

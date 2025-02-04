@@ -1,7 +1,7 @@
 <!-- table view for columns -->
 <main class="card-body">
     <div class="row justify-content-between align-content-center">
-        <h1 class="col-auto">Spaltenverwalung</h1>
+        <h1 class="col-auto">Spaltenverwaltung</h1>
         <div class="col-auto">
             <button type="button" id="btn_add" class="btn btn-primary">
                 <i class="fa-solid fa-plus"></i>

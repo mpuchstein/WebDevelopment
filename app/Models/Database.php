@@ -185,10 +185,10 @@ class Database extends Model
         $builder->select($this->columnsTable . '.*');
         $builder->orderBy($this->columnsTable . '.' . 'sortid', 'ASC');
         if ($columnId != null) {
-            $builder->where($this->primaryKeyColumns, $columnId);
+            $builder->where($this->columnsTable.'.'.$this->primaryKeyColumns, $columnId);
         }
         if ($boardsId != null) {
-            $builder->where($this->foreignKeyColumns[$this->boardsTable], $boardsId);
+            $builder->where($this->boardsTable.'.'.$this->foreignKeyColumns[$this->boardsTable], $boardsId);
         }
         if ($joinBoards) {
             foreach ($this->allowedFieldsBoards as $key => $value) {
