@@ -14,7 +14,7 @@
                         <div class="form-floating mb-3">
                             <input type="text" name="task" id="task" class="form-control">
                             <label for="task">Bezeichnung</label>
-                            <div id="task_invalid" class="invalid-tooltip"></div>
+                            <div id="task_invalid" class="invalid-feedback"></div>
                         </div>
                         <div class="form-floating mb-3">
                             <select type="number" name="taskartenid" id="taskartenid" class="form-select">
@@ -23,7 +23,7 @@
                                 <?php endforeach?>
                             </select>
                             <label for="taskartenid">Taskart auswählen</label>
-                            <div id="taskartenid_invalid" class="invalid-tooltip"></div>
+                            <div id="taskartenid_invalid" class="invalid-feedback"></div>
                         </div>
                         <div class="form-floating mb-3">
                             <select type="number" name="spaltenid" id="spaltenid" class="form-select">
@@ -32,7 +32,7 @@
                                 <?php endforeach?>
                             </select>
                             <label for="spaltenid">Spalte auswählen</label>
-                            <div id="spaltenid_invalid" class="invalid-tooltip"></div>
+                            <div id="spaltenid_invalid" class="invalid-feedback"></div>
                         </div>
                         <div class="form-floating mb-3">
                             <select type="number" name="personenid" id="personenid" class="form-select">
@@ -41,38 +41,38 @@
                                 <?php endforeach?>
                             </select>
                             <label for="personenid">Person auswählen</label>
-                            <div id="personenid_invalid" class="invalid-tooltip"></div>
+                            <div id="personenid_invalid" class="invalid-feedback"></div>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="datetime-local" name="deadline" id="deadline" class="form-control">
                             <label for="deadline">Deadline</label>
-                            <div id="deadline_invalid" class="invalid-tooltip"></div>
+                            <div id="deadline_invalid" class="invalid-feedback"></div>
                         </div>
                         <div class="form-check">
                             <input type="checkbox" name="erinnerung" id="erinnerung" class="form-check-input">
                             <label for="erinnerung" class="form-check-label">Erinnerung</label>
-                            <div id="erinnerung_invalid" class="invalid-tooltip"></div>
+                            <div id="erinnerung_invalid" class="invalid-feedback"></div>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="datetime-local" name="erinnerungsdatum" id="erinnerungsdatum"
                                    class="form-control">
                             <label for="erinnerungsdatum">Erinnerungsdatum</label>
-                            <div id="erinnerungsdatum_invalid" class="invalid-tooltip"></div>
+                            <div id="erinnerungsdatum_invalid" class="invalid-feedback"></div>
                         </div>
                         <div class="form-floating mb-3">
                             <textarea name="notizen" id="notizen" class="form-control"></textarea>
                             <label for="notizen">Notiz</label>
-                            <div id="notizen_invalid" class="invalid-tooltip"></div>
+                            <div id="notizen_invalid" class="invalid-feedback"></div>
                         </div>
                         <div class="form-check">
                             <input type="checkbox" name="erledigt" id="erledigt" class="form-check-input">
                             <label for="erledigt" class="form-check-label">erledigt</label>
-                            <div id="erledigt_invalid" class="invalid-tooltip"></div>
+                            <div id="erledigt_invalid" class="invalid-feedback"></div>
                         </div>
                         <div class="form-check">
                             <input type="checkbox" name="geloescht" id="geloescht" class="form-check-input">
                             <label for="geloescht" class="form-check-label">geloescht</label>
-                            <div id="geloescht_invalid" class="invalid-tooltip"></div>
+                            <div id="geloescht_invalid" class="invalid-feedback"></div>
                         </div>
             </div>
             </fieldset>

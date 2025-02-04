@@ -11,14 +11,11 @@ class Boards extends BaseController
     {
         $database = new Database();
         $navData = $this->getNavElements('boards');
-        $datahead['scriptfile'] = base_url('assets/js/boards.js');
-        $data['headline'] = 'Boards';
-        $data['theader'] = ['#', 'Board'];
-        $data['tdata'] = $database->getBoards();
-        echo view('templates/header', $datahead);
+        echo view('templates/header');
         echo view('templates/nav', $navData);
+        echo view('templates/components/udBtn');
         echo view('templates/components/modalBoards');
-        echo view('dev/boards/index', $data);
+        echo view('dev/boards/index');
         echo view('templates/footer');
     }
 
@@ -43,25 +40,43 @@ class Boards extends BaseController
 
     public function postNew()
     {
-        $database = new Database();
-        $insertData = $this->request->getPost();
-        $id = $database->insertBoard($insertData);
-        return redirect()->to(base_url('boards'));
+        $data = $this->request->getPost();
+        $validation = service('validation');
+        if ($validation->run($data, 'boardsInsertArray')) {
+            $database = new Database();
+            $id = $database->insertBoard($data);
+            return $this->response->setJSON(['result' => true, 'id' => $id]);
+        } else {
+            $errors = $validation->getErrors();
+            return response()->setJSON(['success' => false, 'errors' => $errors,]);
+        }
     }
 
     public function postEdit()
     {
-        $database = new Database();
-        $updateData = $this->request->getPost();
-        $database->updateBoard($updateData['id'], $updateData);
-        return redirect()->to(base_url('boards'));
+        $data = $this->request->getPost();
+        $validation = service('validation');
+        if ($validation->run($data, 'boardsUpdateArray')) {
+            $database = new Database();
+            $database->updateBoard($data['id'], $data);
+            return $this->response->setJSON(['result' => true, 'id' => $data['id']]);
+        } else {
+            $errors = $validation->getErrors();
+            return response()->setJSON(['success' => false, 'errors' => $errors,]);
+        }
     }
 
     public function postDelete()
     {
-        $database = new Database();
-        $deleteData = $this->request->getPost();
-        $database->deleteBoard($deleteData['id']);
-        return redirect()->to(base_url('boards'));
+        $data = $this->request->getPost();
+        $validation = service('validation');
+        if ($validation->run($data, 'boardsId')) {
+            $database = new Database();
+            $database->deleteBoard($data['id']);
+            return $this->response->setJSON(['result' => true, 'id' => $data['id']]);
+        } else {
+            $errors = $validation->getErrors();
+            return response()->setJSON(['success' => false, 'errors' => $errors,]);
+        }
     }
 }

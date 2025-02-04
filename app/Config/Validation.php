@@ -273,4 +273,28 @@ class Validation extends BaseConfig
             ]
         ]
     ];
+
+    public array $boardsInsertArray = [
+        'board' => [
+            'rules' => 'required',
+            'errors' => [
+                'required' => 'Boardname ist erforderlich.',
+            ]
+        ]
+    ];
+    public array $boardsUpdateArray = [
+        'id' => [
+            'rules' => 'required|is_not_unique[boards.id]',
+            'errors' => [
+                'required' => 'ID ist erforderlich.',
+                'is_not_unique' => 'Diese ID existiert nicht.',
+            ]
+        ],
+        'board' => [
+            'rules' => 'required',
+            'errors' => [
+                'required' => 'Board ist erforderlich.',
+            ]
+        ]
+    ];
 }
