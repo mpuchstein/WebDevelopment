@@ -1,13 +1,15 @@
-<main class="container bg-dark-subtle pt-2">
-    <div class="row justify-content-between align-content-center">
+<main class="card-header bg-dark-subtle pt-2">
+    <div class="row justify-content-between align-content-center mt-0 m-2">
         <div class="col-auto">
-            <div class="form-floating mb-2">
-                <select type="number" name="boardSelector" id="boardSelector" class="form-select">
+            <div class="input-group">
+                <div class="input-group-text">
+                    <label for="boardSelector">Board:</label>
+                </div>
+                <select type="number" name="boardSelector" id="boardSelector" class="form-select form-select-sm">
                     <?php foreach ($boards as $board): ?>
                         <option value="<?= esc($board['id']) ?>"><?= esc($board['board']) ?></option>
                     <?php endforeach ?>
                 </select>
-                <label for="boardSelector">Board:</label>
             </div>
         </div>
         <div class="col-auto">

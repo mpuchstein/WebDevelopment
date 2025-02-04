@@ -1,3 +1,5 @@
+</div>
+</div>
 <!-- Footer from task 1 -->
 <footer class="footer sticky-bottom container-fluid mt-auto bg-footer pb-1 mt-2">
     <div class="row">

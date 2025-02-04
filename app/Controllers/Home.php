@@ -31,9 +31,7 @@ class Home extends BaseController
                 $result = $database->userCheckSecret($user['id'], $data['password']);
                 // check the password against the database, if correct log user in and forward to taskboard
                 if ($result) {
-                    // for testing setFlashdata because it only sets the session for the next request
-                    // TODO: once filtering is implemented set session correctly
-                    session()->set(['userid' => $user['id'], 'pLevel' => $user['plevel'], 'logged_in' => true]);
+                    session()->set(['userid' => $user['id'], 'pLevel' => $user['plevel'], 'logged_in' => true, 'boardsid' => $user['defboard']]);
                     return redirect()->to(base_url('tasks'));
                 }
             }

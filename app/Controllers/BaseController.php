@@ -57,4 +57,22 @@ abstract class BaseController extends Controller
         $this->validation = Services::validation();
         // E.g.: $this->session = \Config\Services::session();
     }
+
+    public function getNavElements($active = null):array{
+        $result = [];
+        if(session('logged_in')){
+            $result['tasks'] = ['name' => 'Tasks', 'link' => base_url('tasks')];
+            $result['boards'] = ['name' => 'Boards', 'link' => base_url('boards')];
+            $result['columns'] = ['name' => 'Spalten', 'link' => base_url('columns')];
+            if(session('pLevel') >= 2000){
+                $result['users'] = ['name' => 'Personen', 'link' => base_url('users')];
+            }
+        } else {
+            $result['register'] = ['name' => 'Register', 'link' => base_url('register')];
+        }
+        if($active != null && isset($result[$active])){
+            $result[$active]['active'] = true;
+        }
+        return $result;
+    }
 }

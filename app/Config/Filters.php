@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Filters\BoardIdFilter;
 use App\Filters\LoggedInFilter;
 use App\Filters\NotLoggedInFilter;
 use App\Filters\UserSessionFilter;
@@ -40,6 +41,7 @@ class Filters extends BaseFilters
 
         'isLoggedIn'   => LoggedInFilter::class,
         'notLoggedIn'  => NotLoggedInFilter::class,
+        'boardId'       => BoardIdFilter::class,
     ];
 
     /**
@@ -111,6 +113,7 @@ class Filters extends BaseFilters
      */
     public array $filters = [
         'isLoggedIn' => ['before' => ['tasks', 'tasks/*', 'boards', 'boards/*', 'columns', 'columns/*', 'users', 'users/*',]],
-        'notLoggedIn' => ['before' => ['', 'register', 'login']]
+        'notLoggedIn' => ['before' => ['', 'register', 'login']],
+        'boardId'   => ['before' => ['tasks', 'tasks/*'], 'after' => ['tasks', 'tasks/*']],
     ];
 }

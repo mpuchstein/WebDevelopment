@@ -7,8 +7,9 @@ use App\Models\Database;
 class Users extends BaseController
 {
     public function getIndex(){
+        $navData['navElems'] = $this->getNavElements('users');
         echo view('templates/header');
-        echo view('templates/nav');
+        echo view('templates/nav', $navData);
         echo view('templates/components/udBtn');
         echo view('templates/components/modalUsers');
         echo view('dev/users/index');

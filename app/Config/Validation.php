@@ -263,4 +263,14 @@ class Validation extends BaseConfig
             ]
         ]
     ];
+
+    public array $boardsId = [
+        'id' => [
+            'rules' => 'required|is_not_unique[boards.id]',
+            'errors' => [
+                'required' => 'Board ID ist erforderlich.',
+                'is_not_unique' => 'Dieses Board existiert nicht.',
+            ]
+        ]
+    ];
 }

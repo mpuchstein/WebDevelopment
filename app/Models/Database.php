@@ -55,6 +55,7 @@ class Database extends Model
     protected array $allowedFieldsUser = [
         'username' => null,
         'plevel' => null,
+        'defboard' => null,
         'vorname' => null,
         'name' => null,
         'email' => null,
@@ -262,7 +263,7 @@ class Database extends Model
     public function getUsersSecure(int $userId = null): array
     {
         $builder = $this->db->table($this->userTable);
-        $builder->select('id, username, plevel, vorname, name, email');
+        $builder->select('id, username, plevel, defboard, vorname, name, email');
         if ($userId != null) {
             $builder->where($this->primaryKeyUser, $userId);
             return $builder->get()->getRowArray();
@@ -273,7 +274,7 @@ class Database extends Model
     public function getUserByName(string $username): array
     {
         $builder = $this->db->table($this->userTable);
-        $builder->select('id, plevel');
+        $builder->select('id, plevel, defboard');
         $builder->where('username' , $username);
         return $builder->get()->getRowArray();
     }

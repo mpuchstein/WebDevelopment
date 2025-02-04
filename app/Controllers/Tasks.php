@@ -9,16 +9,18 @@ class Tasks extends BaseController
     public function getIndex()
     {
         $database = new Database();
-        $data['boards'] = $database->getBoards();
-        $dataForm['columns'] = $database->getColumns();
-        $dataForm['taskTypes'] = $database->getTaskTypes();
-        $dataForm['users'] = $database->getUsersSecure();
+        $navData['navElems'] = $this->getNavElements('tasks');
+        $formData['columns'] = $database->getColumns(session('boardsId'));
+        $formData['taskTypes'] = $database->getTaskTypes();
+        $formData['users'] = $database->getUsersSecure();
+        $indexData['boards'] = $database->getBoards();
+        $indexData['boardsId'] = session('boardsId');
         echo view('templates/header');
-        echo view('templates/nav');
+        echo view('dev/nav', $navData);
         echo view('templates/components/tasks');
         echo view('templates/components/udBtn');
-        echo view('templates/components/modalTasks', $dataForm);
-        echo view('dev/tasks/index', $data);
+        echo view('templates/components/modalTasks', $formData);
+        echo view('dev/tasks/index', $indexData);
         echo view('templates/footer');
     }
 
