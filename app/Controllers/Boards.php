@@ -26,9 +26,9 @@ class Boards extends BaseController
     {
         $data = $this->request->getJSON(true);
         $validation = service('validation');
-        if ($validation->run($data, 'boardsId')) {
-            session()->set('boardsid', $data['boardsId']);
-            return $this->response->setJSON(['success' => true, 'boardsId' => $data['boardsId']]);
+        if ($validation->run(['id'=>$data['boardId']], 'boardsId')) {
+            session()->set('boardsid', $data['boardId']);
+            return $this->response->setJSON(['success' => true, 'boardsId' => $data['boardId']]);
         } else {
             return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
         }

@@ -10,11 +10,11 @@ class Tasks extends BaseController
     {
         $database = new Database();
         $navData = $this->getNavElements('tasks');
-        $formData['columns'] = $database->getColumns(boardsId: session('boardsId'));
+        $formData['columns'] = $database->getColumns(boardsId: session('boardsid'));
         $formData['taskTypes'] = $database->getTaskTypes();
         $formData['users'] = $database->getUsersSecure();
         $indexData['boards'] = $database->getBoards();
-        $indexData['boardsId'] = session('boardsId');
+        $indexData['boardsId'] = session('boardsid');
         echo view('templates/header');
         echo view('templates/nav', $navData);
         echo view('templates/components/tasks');

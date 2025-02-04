@@ -72,6 +72,7 @@ abstract class BaseController extends Controller
             }
         } else {
             $navElems['register'] = ['name' => 'Register', 'link' => base_url('register')];
+            $menuElems['register'] = ['name' => 'Register', 'link' => base_url('register')];
         }
         if($active != null && isset($navElems[$active])){
             $navElems[$active]['active'] = true;
