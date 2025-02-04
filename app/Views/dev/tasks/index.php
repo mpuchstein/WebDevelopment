@@ -27,12 +27,22 @@
 
 <script>
     const TABLE_BODY_ID = 'tasksContainer'
+
+    const MODE_NEW = 'new'
+    const MODE_EDIT = 'edit'
+    const MODE_DELETE = 'delete'
+
     const REQ_URL_JSON = '<?=base_url('tasks/json')?>'
     const REQ_URL_NEW = '<?=base_url('tasks/new')?>'
-    const REQ_URL_EDIT = '<?=base_url('tasks/new')?>'
-    const REQ_URL_DELETE = '<?=base_url('tasks/new')?>'
+    const REQ_URL_EDIT = '<?=base_url('tasks/edit')?>'
+    const REQ_URL_DELETE = '<?=base_url('tasks/delete')?>'
 
-    const MODAL_FORM_ID = 'tasksForm'
+    const MODAL_ID = '#modal'
+    const MODAL_FORM_ID = 'modalTasksForm'
+    const MODAL_HEADLINE_ID = 'modalHeadline'
+    const MODAL_SUBMIT_ID= 'formSubmit'
+    const MODAL_FORMFIELDS_ID = 'modalFormFields'
+    const MODAL_FORMFIELDS_NAMES= ['task', 'taskartenid', 'spaltenid', 'personenid', 'deadline', 'erinnerung', 'erinnerungsdatum', 'notizen', 'erledigt', 'geloescht']
 
     const REQ_TASK_HEADER = new Request(
         '<?=base_url('tasks/json')?>',
@@ -48,6 +58,8 @@
     const TEMPLATE_CARD_TASK = 'TEMPLATE_CARD_TASK'
     const TEMPLATE_UD_BTN = 'TEMPLATE_UD_BTN'
 
-
-    updateTaskCards()
+    document.getElementById('btn_add').addEventListener('click', ()=>{showModal(REQ_URL_NEW, MODE_NEW, -1)})
+    function updateSite(){updateTaskCards()}
+    updateSite()
+    genModalForm()
 </script>

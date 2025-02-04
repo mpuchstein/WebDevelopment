@@ -1,3 +1,4 @@
+
 function updateTaskCards() {
     let columns = ''
     const itemButtons = document.getElementById(TEMPLATE_UD_BTN).innerHTML.replaceAll('%FORM_ID%', MODAL_FORM_ID)
@@ -7,9 +8,9 @@ function updateTaskCards() {
     }).then((response) => {
         return response.json()
     }).then((data) => {
-        for (const columnId in data) {
+        for(const columnId in data) {
             let taskCards = ''
-            for (const task of data[columnId]['tasks']) {
+            for(const task of data[columnId]['tasks']) {
                 taskCards += document.getElementById(TEMPLATE_CARD_TASK).innerHTML
                     .replaceAll('%TASK_ID%', task['id'])
                     .replaceAll('%TASK_HEADING%', task['task'])
@@ -26,41 +27,27 @@ function updateTaskCards() {
             columns += '</td>\n'
         }
         document.getElementById(TABLE_BODY_ID).innerHTML = columns
-    })
-}
-function genModalForm() {
-    document.forms[MODEL_FORM_ID].addEventListener('submit', (event) => {
-        event.preventDefault();
-        // TODO do something here to show user that form is being submitted
-        fetch(event.target.action, {
-            method: 'POST',
-            body: new URLSearchParams(new FormData(event.target)) // event.target is the form
-        }).then((response) => {
-            if (!response.ok) {
-                console.log(response)
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json(); // or response.text() or whatever the server sends
-        }).then((data) => {
-            if (data['success'] === true) {
-                updateTable()
-                $(MODAL_ID).modal('hide')
-            } else {
-                MODAL_FORMFIELDS_NAMES.forEach(formField => {
-                    document.getElementById(formField).classList.toggle('is-invalid', formField in data['errors'])
-                    document.getElementById(formField + '_invalid').innerText = data['errors'][formField]
+        for(const columnId in data) {
+            for(const task of data[columnId]['tasks']){
+                const taskId= task['id']
+                const editId = 'edit_' + taskId
+                const delId = 'delete_' + taskId
+                const editBtn = document.getElementById(editId)
+                const delBtn = document.getElementById(delId)
+                editBtn.addEventListener('click', () => {
+                    showModal(REQ_URL_EDIT, MODE_EDIT, taskId)
+                })
+                delBtn.addEventListener('click', () => {
+                    showModal(REQ_URL_DELETE, MODE_DELETE, taskId)
                 })
             }
-        }).catch((error) => {
-            // TODO handle error
-            console.log(error)
-        });
-    });
+        }
+    })
 }
 
 function updateTable() {
     let tableRows = ''
-    const rowButtons = document.getElementById(TEMPLATE_UD_BTN).innerHTML.replaceAll('%FORM_ID%', MODEL_FORM_ID)
+    const rowButtons = document.getElementById(TEMPLATE_UD_BTN).innerHTML.replaceAll('%FORM_ID%', MODAL_FORM_ID)
     fetch(REQ_URL_JSON).then((response) => {
         return response.json()
     }).then((data) => {
@@ -91,9 +78,38 @@ function updateTable() {
     })
 }
 
+function genModalForm() {
+    document.forms[MODAL_FORM_ID].addEventListener('submit', (event) => {
+        event.preventDefault();
+        // TODO do something here to show user that form is being submitted
+        fetch(event.target.action, {
+            method: 'POST',
+            body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+        }).then((response) => {
+            if (!response.ok) {
+                console.log(response)
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json(); // or response.text() or whatever the server sends
+        }).then((data) => {
+            if (data['success'] === true) {
+                updateSite()
+                $(MODAL_ID).modal('hide')
+            } else {
+                MODAL_FORMFIELDS_NAMES.forEach(formField => {
+                    document.getElementById(formField).classList.toggle('is-invalid', formField in data['errors'])
+                    document.getElementById(formField + '_invalid').innerText = data['errors'][formField]
+                })
+            }
+        }).catch((error) => {
+            // TODO handle error
+            console.log(error)
+        });
+    });
+}
 function showModal(requrl, mode, elemid) {
     const modalHeadline = document.getElementById(MODAL_HEADLINE_ID)
-    const modalForm = document.getElementById(MODEL_FORM_ID)
+    const modalForm = document.getElementById(MODAL_FORM_ID)
     const formButton = document.getElementById(MODAL_SUBMIT_ID)
     const formFields = document.getElementById(MODAL_FORMFIELDS_ID)
     formFields.disabled = false
@@ -126,7 +142,6 @@ function showModal(requrl, mode, elemid) {
         fetch(REQ_URL_JSON + '/' + elemid).then((response) => {
             return response.json()
         }).then((data) => {
-            console.log(data)
             Object.entries(data).forEach(entry => {
                 const inputField = document.getElementById(entry[0])
                 if (inputField) {

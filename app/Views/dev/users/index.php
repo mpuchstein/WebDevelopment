@@ -1,5 +1,3 @@
-<!--code for modal form gets echoed by codeigniter here-->
-
 <!-- table view for users -->
 <main class="bg-dark-subtle container pt-2">
     <div class="row justify-content-between align-content-center">
@@ -42,13 +40,14 @@
     const REQ_URL_EDIT = '<?=base_url('users/edit')?>'
     const REQ_URL_DELETE = '<?=base_url('users/delete')?>'
     const MODAL_ID = '#modal'
-    const MODEL_FORM_ID = 'modalForm'
+    const MODAL_FORM_ID = 'modalForm'
     const MODAL_HEADLINE_ID = 'modalHeadline'
     const MODAL_SUBMIT_ID= 'formSubmit'
     const MODAL_FORMFIELDS_ID = 'modalFormFields'
     const MODAL_FORMFIELDS_NAMES = ['username', 'plevel', 'vorname', 'name', 'email']
 
     document.getElementById('btn_add').addEventListener('click', ()=>{showModal(REQ_URL_NEW, MODE_NEW, -1)})
-    updateTable()
+    function updateSite(){updateTable()}
+    updateSite()
     genModalForm()
 </script>

@@ -78,13 +78,13 @@ class Database extends Model
         $builder->select($this->tasksTable . '.*');
         $builder->orderBy($this->tasksTable . '.' . 'sortid', 'ASC');
         if ($taskId != null) {
-            $builder->where($this->primaryKeyTasks, $taskId);
+            $builder->where($this->tasksTable.'.'.$this->primaryKeyTasks, $taskId);
         }
         if ($columnId != null) {
-            $builder->where($this->foreignKeyTasks[$this->columnsTable], $columnId);
+            $builder->where($this->tasksTable.'.'.$this->foreignKeyTasks[$this->columnsTable], $columnId);
         }
         if ($userId != null) {
-            $builder->where($this->foreignKeyTasks[$this->userTable], $userId);
+            $builder->where($this->tasksTable.'.'.$this->foreignKeyTasks[$this->userTable], $userId);
         }
         //join tasks with tasktypes where taskartenid = taskarten.id
         if ($joinTaskType) {
