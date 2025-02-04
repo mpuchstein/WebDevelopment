@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1deb5ubuntu1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jan 08, 2025 at 11:25 PM
--- Server version: 10.6.18-MariaDB-0ubuntu0.22.04.1
--- PHP Version: 8.2.27
+-- Host: localhost
+-- Generation Time: Feb 04, 2025 at 07:36 PM
+-- Server version: 11.6.2-MariaDB
+-- PHP Version: 8.3.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,13 +32,6 @@ CREATE TABLE `boards` (
   `board` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `boards`
---
-
-INSERT INTO `boards` (`id`, `board`) VALUES
-(1, 'Allgemeine Todos');
-
 -- --------------------------------------------------------
 
 --
@@ -47,19 +40,14 @@ INSERT INTO `boards` (`id`, `board`) VALUES
 
 CREATE TABLE `personen` (
   `id` int(11) NOT NULL,
+  `username` text NOT NULL,
+  `plevel` int(11) NOT NULL DEFAULT 1000,
+  `defboard` int(11) NOT NULL,
   `vorname` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `passwort` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `personen`
---
-
-INSERT INTO `personen` (`id`, `vorname`, `name`, `email`, `passwort`) VALUES
-(1, 'Max', 'Mustermann', 'max.mustermann@mustermail.de', 'Pa$$word0'),
-(2, 'Moni', 'Mittermeier', 'moni.mm@mustermail.de', 'Pa$$word1');
 
 -- --------------------------------------------------------
 
@@ -75,14 +63,6 @@ CREATE TABLE `spalten` (
   `spaltenbeschreibung` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `spalten`
---
-
-INSERT INTO `spalten` (`id`, `boardsid`, `sortid`, `spalte`, `spaltenbeschreibung`) VALUES
-(1, 1, 100, 'Zu Besprechen', 'Noch zu besprechende Todos'),
-(3, 1, 200, 'In Bearbeitung', 'Todos die aktuell bearbeitet werden');
-
 -- --------------------------------------------------------
 
 --
@@ -94,14 +74,6 @@ CREATE TABLE `taskarten` (
   `taskart` varchar(50) NOT NULL,
   `icon` varchar(59) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `taskarten`
---
-
-INSERT INTO `taskarten` (`id`, `taskart`, `icon`) VALUES
-(1, 'Uni', '<i class=\"fa-solid fa-building-columns\"></i>'),
-(2, 'Home', '<i class=\"fa-solid fa-house-chimney\"></i>');
 
 -- --------------------------------------------------------
 
@@ -126,15 +98,6 @@ CREATE TABLE `tasks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tasks`
---
-
-INSERT INTO `tasks` (`id`, `personenid`, `spaltenid`, `taskartenid`, `sortid`, `task`, `notizen`, `erstelldatum`, `erinnerungsdatum`, `erinnerung`, `deadline`, `erledigt`, `geloescht`) VALUES
-(1, 2, 1, 1, 100, 'Folien für Vortrag', '                        ', '2025-01-06 00:00:00', '2025-01-13 14:00:00', 0, '2025-01-15 00:00:00', 0, 0),
-(2, 2, 3, 2, 50, 'Keller Ausmisten', NULL, '2024-12-01 14:37:00', '2024-12-26 08:00:00', 0, '2025-01-01 00:00:00', 1, 0),
-(6, 2, 3, 1, 90, 'Abgabe für Webentwicklung!', 'Ich bin bearbeitet!', '2025-01-08 12:00:00', '0000-00-00 00:00:00', 0, '2025-01-09 00:00:00', 1, 0);
-
---
 -- Indexes for dumped tables
 --
 
@@ -148,7 +111,8 @@ ALTER TABLE `boards`
 -- Indexes for table `personen`
 --
 ALTER TABLE `personen`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`) USING HASH;
 
 --
 -- Indexes for table `spalten`
@@ -168,9 +132,9 @@ ALTER TABLE `taskarten`
 --
 ALTER TABLE `tasks`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `spaltenid` (`spaltenid`),
   ADD KEY `tasks_ibfk_1` (`personenid`),
-  ADD KEY `tasks_ibfk_3` (`taskartenid`);
+  ADD KEY `tasks_ibfk_3` (`taskartenid`),
+  ADD KEY `tasks_ibfk_2` (`spaltenid`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -180,31 +144,31 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT for table `boards`
 --
 ALTER TABLE `boards`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personen`
 --
 ALTER TABLE `personen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `spalten`
 --
 ALTER TABLE `spalten`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `taskarten`
 --
 ALTER TABLE `taskarten`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -215,14 +179,6 @@ ALTER TABLE `tasks`
 --
 ALTER TABLE `spalten`
   ADD CONSTRAINT `spalten_ibfk_1` FOREIGN KEY (`boardsid`) REFERENCES `boards` (`id`);
-
---
--- Constraints for table `tasks`
---
-ALTER TABLE `tasks`
-  ADD CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`personenid`) REFERENCES `personen` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tasks_ibfk_2` FOREIGN KEY (`spaltenid`) REFERENCES `spalten` (`id`),
-  ADD CONSTRAINT `tasks_ibfk_3` FOREIGN KEY (`taskartenid`) REFERENCES `taskarten` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
