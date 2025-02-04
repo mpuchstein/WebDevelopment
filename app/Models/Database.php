@@ -188,7 +188,7 @@ class Database extends Model
             $builder->where($this->columnsTable.'.'.$this->primaryKeyColumns, $columnId);
         }
         if ($boardsId != null) {
-            $builder->where($this->boardsTable.'.'.$this->foreignKeyColumns[$this->boardsTable], $boardsId);
+            $builder->where($this->columnsTable.'.'.$this->foreignKeyColumns[$this->boardsTable], $boardsId);
         }
         if ($joinBoards) {
             foreach ($this->allowedFieldsBoards as $key => $value) {
