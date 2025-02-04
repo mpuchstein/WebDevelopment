@@ -24,8 +24,8 @@
         </div>
     </div>
 </header>
-<div class="container-fluid">
-    <div class="card">
+<div class="container-fluid h-100">
+    <div class="card h-100">
         <div class="card-header">
             <nav class="nav">
                 <ul class="col nav nav-tabs card-header-tabs">
@@ -40,4 +40,3 @@
                 </ul>
             </nav>
         </div>
-

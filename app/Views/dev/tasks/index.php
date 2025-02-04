@@ -1,4 +1,4 @@
-<main class="card-body">
+<main class="card-body d-flex flex-column bg-success">
     <div class="row justify-content-between align-content-center">
         <div class="col-auto">
             <div class="input-group">
@@ -20,12 +20,9 @@
             </button>
         </div>
     </div>
-    <div class="table-responsive">
-        <table class="table table-borderless">
-            <tr id="tasksContainer">
-                <!-- tasks are going to be placed here -->
-            </tr>
-        </table>
+    <div id="tasksContainer" class="mt-3 container-fluid flex-grow-1 align-self-stretch align-items-stretch
+     overflow-x-scroll d-flex gap-3 bg-danger">
+        <!-- tasks are going to be placed here -->
     </div>
 </main>
 

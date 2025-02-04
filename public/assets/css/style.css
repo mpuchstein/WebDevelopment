@@ -10,7 +10,8 @@
 }
 
 .columnContainer {
-    width: 20rem;
+    max-width: 23rem;
+    min-width: 17rem;
 }
 
 .table-dark i:hover { /* Icons färben sich blau beim überfahren mit Cursor */

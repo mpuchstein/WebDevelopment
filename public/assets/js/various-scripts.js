@@ -1,4 +1,3 @@
-
 function updateTaskCards() {
     let columns = ''
     const itemButtons = document.getElementById(TEMPLATE_UD_BTN).innerHTML.replaceAll('%FORM_ID%', MODAL_FORM_ID)
@@ -8,9 +7,9 @@ function updateTaskCards() {
     }).then((response) => {
         return response.json()
     }).then((data) => {
-        for(const columnId in data) {
+        for (const columnId in data) {
             let taskCards = ''
-            for(const task of data[columnId]['tasks']) {
+            for (const task of data[columnId]['tasks']) {
                 taskCards += document.getElementById(TEMPLATE_CARD_TASK).innerHTML
                     .replaceAll('%TASK_ID%', task['id'])
                     .replaceAll('%TASK_HEADING%', task['task'])
@@ -27,9 +26,9 @@ function updateTaskCards() {
             columns += '</td>\n'
         }
         document.getElementById(TABLE_BODY_ID).innerHTML = columns
-        for(const columnId in data) {
-            for(const task of data[columnId]['tasks']){
-                const taskId= task['id']
+        for (const columnId in data) {
+            for (const task of data[columnId]['tasks']) {
+                const taskId = task['id']
                 const editId = 'edit_' + taskId
                 const delId = 'delete_' + taskId
                 const editBtn = document.getElementById(editId)
@@ -65,7 +64,7 @@ function updateTable() {
         for (const row of data) {
             const elemid = row['id']
             const editid = 'edit_' + elemid
-            const delid = 'delete_' +elemid
+            const delid = 'delete_' + elemid
             const editBtn = document.getElementById(editid)
             const delBtn = document.getElementById(delid)
             editBtn.addEventListener('click', () => {
@@ -107,6 +106,7 @@ function genModalForm() {
         });
     });
 }
+
 function showModal(requrl, mode, elemid) {
     const modalHeadline = document.getElementById(MODAL_HEADLINE_ID)
     const modalForm = document.getElementById(MODAL_FORM_ID)
@@ -115,7 +115,7 @@ function showModal(requrl, mode, elemid) {
     formFields.disabled = false
     MODAL_FORMFIELDS_NAMES.forEach(formField => {
         document.getElementById(formField).classList.toggle('is-invalid', false)
-        document.getElementById(formField+'_invalid').innerText = ''
+        document.getElementById(formField + '_invalid').innerText = ''
     })
     modalForm.reset()
     modalForm.action = requrl
@@ -154,19 +154,17 @@ function showModal(requrl, mode, elemid) {
     $(MODAL_ID).modal('show');
 }
 
-function setBoard(url, id){
-    fetch(url,{
+function setBoard(url, id) {
+    fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ boardId: id})
-    }).then((response) =>{
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({boardId: id})
+    }).then((response) => {
         return response.json()
     }).then((data) => {
-        if(data['success'] === true){
-            location.reload()
-        } else {
+        if (data['success'] !== true) {
             console.log('Board does not exist')
-            location.reload()
         }
+        location.reload()
     })
 }
