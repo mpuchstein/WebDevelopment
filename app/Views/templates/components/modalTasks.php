@@ -76,7 +76,7 @@
                         </div>
             </div>
             </fieldset>
-            <div class="row mt-3 align-content-end justify-content-end">
+            <div class="row mt-1 me-3 mb-3 align-content-end justify-content-end">
                 <div class="col-auto">
                     <button type="submit" id="formSubmit" class="btn">
                         Placeholder

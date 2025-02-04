@@ -20,6 +20,11 @@ class Boards extends BaseController
         echo view('templates/footer');
     }
 
+    public function postIndex(){
+        $data = $this->request->getJSON(true);
+
+    }
+
     public function getJson($id = null)
     {
         $boardModel = new BoardsModel();
