@@ -1,9 +1,44 @@
 .bg-header { /* Farbe der Navigation wird festgelegt */
-    background-color: #002060 !important;
+    background-color: #131A4D !important;
 }
 .bg-footer { /* Farbe des Footers wird festgelegt */
-    background-color: #002060; !important;
+    background-color: #131A4D !important;
 }
+
+.bg-dark {
+    background-color: #050715 !important;
+}
+
+/*.bg-body {
+    background-color: #050715 !important;
+}*/
+
+.btn-primary {
+    background-color: #212D84 !important;
+    border-color: #212D84 !important;
+}
+
+.btn-info {
+    background-color: #212D84 !important;
+    border-color: #212D84 !important;
+    color: white !important;
+}
+
+.btn-danger {
+    background-color: #B3005A !important;
+}
+
+a {
+    color: white !important;  /* Farbe des Links */
+}
+
+/*a:hover {
+    color: #212D84 !important;
+}
+
+a:active {
+    color: #212D84 !important;
+}*/
 
 .text-white { /* Färbt Text weiß */
     color: white;
