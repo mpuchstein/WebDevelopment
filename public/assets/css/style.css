@@ -1,3 +1,7 @@
+body {
+    padding-top: 8rem;
+}
+
 .bg-header { /* Farbe der Navigation wird festgelegt */
     background-color: #131A4D !important;
 }

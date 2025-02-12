@@ -1,4 +1,4 @@
-<main class="card-body d-flex flex-column">
+<main class="container d-flex flex-column bg-dark-subtle p-2">
     <div class="row justify-content-between align-content-center">
         <div class="col-auto">
             <div class="input-group">
@@ -25,6 +25,10 @@
         <!-- tasks are going to be placed here -->
     </div>
 </main>
+
+<?php echo view('templates/components/tasks')?>
+<?php echo view('templates/components/udBtn')?>
+<?php echo view('templates/components/modalTasks')?>
 
 <script>
     const TABLE_BODY_ID = 'tasksContainer'

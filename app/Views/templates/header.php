@@ -17,10 +17,9 @@
 
     <!-- lokale version von bootstrap -->
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/bootstrap.css') ?>"/>
-    <script src="<?= base_url('assets/js/bootstrap.js') ?>"></script>
     <!-- import bootstrap so you can use it in js -->
     <script type="module">
-        import * as bootstrap from '<?=base_url('assets/js/bootstrap.bundle.js')?>'
+        import * as bootstrap from '<?=base_url('assets/js/bootstrap.bundle.min.js')?>'
         window.bootstrap = bootstrap;
     </script>
     <!-- set baseurl for javascript -->
@@ -30,5 +29,4 @@
     <!-- lokale CSS Einbindung -->
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/style.css') ?>"/>
     <script src="<?= base_url('assets/js/various-scripts.js') ?>"></script>
-    <?= isset($scriptfile) ? '<script src="' . $scriptfile . '"></script>' : '<!-- kein Javascript File -->' ?>
 </head>
