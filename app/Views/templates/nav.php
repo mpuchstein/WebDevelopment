@@ -15,7 +15,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav nav-pills me-auto mb-2 mb-sm-0">
+                <ul class="navbar-nav nav-pills me-auto mb-2 mb-sm-0 fs-5">
                     <?php foreach ($navElems as $navElem) : ?>
                         <li class="nav-item">
                             <a class="nav-link ps-2 <?= isset($navElem['active']) ? esc(' active') : '' ?>"

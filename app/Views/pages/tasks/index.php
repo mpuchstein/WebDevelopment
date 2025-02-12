@@ -26,6 +26,8 @@
     </div>
 </main>
 
+<?php echo view('templates/components/tasks')?>
+<?php echo view('templates/components/udBtn')?>
 <?php echo view('templates/components/modalTasks')?>
 
 <script>
@@ -72,7 +74,7 @@
     })
 
     function updateSite() {
-        createTaskView();
+        updateTaskCards()
     }
 
     updateSite()

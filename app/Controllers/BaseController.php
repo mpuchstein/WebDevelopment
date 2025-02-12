@@ -63,6 +63,7 @@ abstract class BaseController extends Controller
         $menuElems = [];
         if(session('logged_in')){
             $navElems['tasks'] = ['name' => 'Tasks', 'link' => base_url('tasks')];
+            $navElems['tasks2'] = ['name' => 'Tasks2', 'link' => base_url('tasks/tasks')];
             $navElems['boards'] = ['name' => 'Boards', 'link' => base_url('boards')];
             $navElems['columns'] = ['name' => 'Spalten', 'link' => base_url('columns')];
             $menuElems['profile'] = ['name' => 'Profile', 'link' => base_url('users/profile')];

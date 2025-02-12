@@ -22,9 +22,10 @@
         import * as bootstrap from '<?=base_url('assets/js/bootstrap.bundle.min.js')?>'
         window.bootstrap = bootstrap;
     </script>
-    <!-- set baseurl for javascript -->
+    <!-- set baseurl for javascript and what time it is right now -->
     <script>
         const BASE_URL = "<?= base_url() ?>"; // Set baseURL for all scripts
+        const DATE_NOW = new Date();
     </script>
     <!-- lokale CSS Einbindung -->
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/style.css') ?>"/>

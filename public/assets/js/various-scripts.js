@@ -45,6 +45,190 @@ function updateTaskCards() {
     })
 }
 
+function createTask(taskData) {
+    const task = document.createElement('div');
+    task.id = 'task_' + taskData['id'];
+    task.classList.add('card', 'mb-2')
+    const taskHeader = document.createElement('div');
+    task.appendChild(taskHeader);
+    taskHeader.classList.add('card-header', 'd-flex', 'justify-content-between', 'align-items-center');
+    const taskTitle = document.createElement('span');
+    taskHeader.appendChild(taskTitle);
+    taskTitle.classList.add('card-title', 'fs-4', 'col-md-10');
+    taskTitle.name = 'taskTitle';
+    taskTitle.innerHTML = taskData['icon'] + '<span class="ms-4">' + taskData['task'] + '</span>';
+    const taskTitleDropdown = document.createElement('div');
+    const taskTitleDrpBtn = document.createElement('button');
+    taskHeader.appendChild(taskTitleDropdown);
+    taskTitleDropdown.appendChild(taskTitleDrpBtn);
+    taskTitleDropdown.classList.add('dropdown', 'my-auto', 'd-none', 'd-md-block');
+    taskTitleDrpBtn.type = 'button';
+    taskTitleDrpBtn.classList.add('btn', 'btn-sm', 'btn-outline-light', 'dropdown-toggle');
+    const taskTitleDrpMenu = document.createElement('ul');
+    taskTitleDropdown.appendChild(taskTitleDrpMenu);
+    taskTitleDrpMenu.classList.add('dropdown-menu');
+    taskTitleDrpMenu.id = 'drpMen_' + taskData['id'];
+    taskTitleDrpBtn.dataset.bsToggle = 'dropdown';
+    const editDrpLi = document.createElement('li');
+    const delDrpLi = document.createElement('li');
+    const editDrpBtn = document.createElement('a');
+    const delDrpBtn = document.createElement('a');
+    taskTitleDrpMenu.appendChild(editDrpLi);
+    taskTitleDrpMenu.appendChild(delDrpLi);
+    editDrpLi.className = 'dropdown-item';
+    delDrpLi.className = 'dropdown-item';
+    editDrpLi.appendChild(editDrpBtn);
+    delDrpLi.appendChild(delDrpBtn);
+    editDrpBtn.role = 'button';
+    delDrpBtn.role = 'button';
+    editDrpBtn.dataset.bsTarget = MODAL_FORM_ID;
+    delDrpBtn.dataset.bsTarget = MODAL_FORM_ID;
+    editDrpBtn.innerText = 'Bearbeiten';
+    delDrpBtn.innerHTML = 'Löschen';
+    editDrpLi.addEventListener('click', () => {
+        showModal(REQ_URL_EDIT, MODE_EDIT, taskData['id']);
+    })
+    delDrpLi.addEventListener('click', () => {
+        showModal(REQ_URL_DELETE, MODE_DELETE, taskData['id']);
+    })
+    const taskBody = document.createElement('div');
+    task.appendChild(taskBody);
+    taskBody.classList.add('card-body');
+    const taskBodyList = document.createElement('ul');
+    taskBody.appendChild(taskBodyList);
+    taskBodyList.classList.add('list-group', 'list-group-flush');
+    const listElemTemp = document.createElement('li');
+    listElemTemp.classList.add('list-group-item');
+    const rowIcon = document.createElement('i');
+    rowIcon.classList.add('fa-solid', 'me-4');
+    const reminder = listElemTemp.cloneNode(true);
+    taskBodyList.appendChild(reminder);
+    const reminderIcon = rowIcon.cloneNode(true);
+    const reminderText = document.createElement('span');
+    reminder.appendChild(reminderIcon);
+    reminder.appendChild(reminderText);
+    reminderIcon.title = 'Erinnerungsdatum';
+    if (taskData['erinnerung'] === '1') {
+        reminderIcon.classList.add('fa-bell');
+        reminderText.innerText = taskData['erinnerungsdatum']
+        if (Date.parse(taskData['erinnerungsdatum']) - DATE_NOW < 24 * 3600) {
+            reminder.classList.add('bg-danger');
+        }
+    } else {
+        reminderIcon.classList.add('fa-bell-slash');
+        reminderText.innerText = 'Keine Erinnerung';
+    }
+    const deadline = listElemTemp.cloneNode(true);
+    taskBodyList.appendChild(deadline);
+    const deadlineIcon = rowIcon.cloneNode(true);
+    const deadlineText = document.createElement('span');
+    deadline.appendChild(deadlineIcon);
+    deadline.appendChild(deadlineText);
+    deadlineIcon.classList.add('fa-clock');
+    deadlineIcon.title = 'Deadline';
+    deadlineText.innerText = taskData['deadline'];
+    if (Date.parse(taskData['deadline']) - DATE_NOW < 0) {
+        deadline.classList.add('bg-danger-subtle');
+    } else if (Date.parse(taskData['deadline']) - DATE_NOW < 24 * 3600) {
+        deadline.classList.add('bg-danger');
+    }
+    const user = listElemTemp.cloneNode(true);
+    taskBodyList.appendChild(user);
+    const userIcon = rowIcon.cloneNode(true);
+    const userText = document.createElement('span');
+    user.appendChild(userIcon);
+    user.appendChild(userText);
+    userIcon.classList.add('fa-user');
+    userIcon.title = 'User';
+    userText.innerText = taskData['username'];
+    const taskFooter = document.createElement('div');
+    task.appendChild(taskFooter);
+    taskFooter.classList.add('card-footer', 'text-center');
+    const editBtn = document.createElement('button');
+    const delBtn = document.createElement('button');
+    const btnGrp = document.createElement('div');
+    btnGrp.appendChild(editBtn);
+    btnGrp.appendChild(delBtn);
+    taskFooter.appendChild(btnGrp);
+    btnGrp.classList.add('btn-group', 'd-md-none');
+    editBtn.type = 'button';
+    delBtn.type = 'button';
+    editBtn.classList.add('btn', 'btn-sm', 'btn-info')
+    delBtn.classList.add('btn', 'btn-sm', 'btn-danger')
+    editBtn.dataset.bsTarget = MODAL_FORM_ID;
+    delBtn.dataset.bsTarget = MODAL_FORM_ID;
+    editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
+    delBtn.innerHTML = '<i class="fa-solid fa-eraser"></i>';
+    editBtn.addEventListener('click', () => {
+        showModal(REQ_URL_EDIT, MODE_EDIT, taskData['id']);
+    })
+    delBtn.addEventListener('click', () => {
+        showModal(REQ_URL_DELETE, MODE_DELETE, taskData['id']);
+    })
+    return task;
+}
+
+function crudColumn(columnId, columnData) {
+    const boardView = document.getElementById('tasksContainer');
+    const column = document.getElementById('column_' + columnId)
+    if (!column) {
+        const column = document.createElement('div');
+        boardView.appendChild(column);
+        column.id = 'column_' + columnId;
+        column.classList.add('card', 'columnContainer', 'overflow-y-scroll');
+        const columnTitle = document.createElement('div');
+        columnTitle.classList.add('card-header', 'card-title', 'text-center', 'fs-4');
+        columnTitle.innerText = columnData['columnName'];
+        column.appendChild(columnTitle);
+        const taskContainer = document.createElement('div');
+        column.appendChild(taskContainer);
+        taskContainer.id = 'taskContainerColumn_' + columnId;
+        taskContainer.classList.add('card-body');
+        for (const taskData of columnData['tasks']) {
+            const task = document.getElementById('task_' + taskData['id']);
+            if (!task) {
+                taskContainer.appendChild(createTask(taskData));
+            } else {
+                updateTask(task, taskData);
+            }
+        }
+        const columnFooter = document.createElement('div');
+        column.appendChild(columnFooter);
+        columnFooter.classList.add('card-footer', 'text-center');
+        const colFootBtn = document.createElement('button');
+        columnFooter.appendChild(colFootBtn);
+        columnFooter.classList.add('btn', 'btn-primary');
+        columnFooter.innerHTML = '<i class="fa-solid fa-plus"></i>';
+        columnFooter.addEventListener('click', () => {
+            showModal(REQ_URL_NEW, MODE_NEW, -1);
+        })
+    } else {
+       for (const taskData of columnData['tasks']) {
+            const task = document.getElementById('task_' + taskData['id']);
+            const taskContainer = document.getElementById('column_' + columnId);
+            if (!task) {
+                taskContainer.appendChild(createTask(taskData));
+            } else {
+                taskContainer.removeChild(task);
+                taskContainer.appendChild(createTask(taskData));
+            }
+        }
+    }
+}
+
+function createTaskView() {
+    const boardId = document.getElementById('boardSelector').value
+    fetch(REQ_TASK_HEADER, {
+        body: JSON.stringify({boardId: boardId})
+    }).then((response) => {
+        return response.json()
+    }).then((data) => {
+        for (const columnId in data) {
+            crudColumn(columnId, data[columnId]);
+        }
+    });
+}
+
 function updateTable() {
     let tableRows = ''
     const rowButtons = document.getElementById(TEMPLATE_UD_BTN).innerHTML.replaceAll('%FORM_ID%', MODAL_FORM_ID)
