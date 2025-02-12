@@ -26,17 +26,10 @@
     </div>
 </main>
 
-<?php echo view('templates/components/tasks')?>
-<?php echo view('templates/components/udBtn')?>
 <?php echo view('templates/components/modalTasks')?>
 
 <script>
-    const TABLE_BODY_ID = 'tasksContainer'
     const BOARDS_ID = <?= $boardsId ?>
-
-    const MODE_NEW = 'new'
-    const MODE_EDIT = 'edit'
-    const MODE_DELETE = 'delete'
 
     const REQ_URL_JSON = '<?=base_url('tasks/json')?>'
     const REQ_URL_NEW = '<?=base_url('tasks/new')?>'
@@ -60,10 +53,6 @@
         }
     )
 
-    const TEMPLATE_CARD_COLUMN = 'TEMPLATE_CARD_COLUMN'
-    const TEMPLATE_CARD_TASK = 'TEMPLATE_CARD_TASK'
-    const TEMPLATE_UD_BTN = 'TEMPLATE_UD_BTN'
-
     document.getElementById('boardSelector').addEventListener('change', () => {
         console.log(document.getElementById('boardSelector').value)
         setBoard('<?=esc(base_url('boards'))?>', document.getElementById('boardSelector').value)
@@ -73,10 +62,6 @@
         showModal(REQ_URL_NEW, MODE_NEW, -1)
     })
 
-    function updateSite() {
-        updateTaskCards()
-    }
-
-    updateSite()
-    genModalForm()
+    createTaskView();
+    genModalForm_new()
 </script>

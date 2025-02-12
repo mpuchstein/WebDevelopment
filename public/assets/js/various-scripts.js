@@ -20,13 +20,13 @@ function sortTasks(taskContainer) {
 
 function updateTask(taskElem, taskData){
     taskElem.dataset.sortId = taskData['sortId'];
-    const taskTitle = taskElem.querySelector('.card-header').querySelector('[title="taskTitle"]');
+    const taskTitle = taskElem.querySelector('.card-header').querySelector('[title="Taskname"]');
     const reminder = taskElem.querySelector('[title="reminder"]');
-    const reminderText = taskElem.querySelector('[title="reminderText"]');
-    const reminderIcon = taskElem.querySelector('[title="Erinnerungsdatum"]');
-    const deadline = taskElem.querySelector('[title="deadline"]');
-    const deadlineText = taskElem.querySelector('[title="deadlineText"]');
-    const userText = taskElem.querySelector('[title="userText"]');
+    const reminderIcon = taskElem.querySelector('[title="Erinnerung"]');
+    const reminderText = taskElem.querySelector('[title="Erinnerungsdatum"]');
+    const deadline = taskElem.querySelector('[title="Deadline"]');
+    const deadlineText = taskElem.querySelector('[title="Deadlinedatum"]');
+    const userText = taskElem.querySelector('[title="Username"]');
     taskTitle.innerHTML = taskData['icon'] + '<span class="ms-4">' + taskData['task'] + '</span>';
     userText.innerText = taskData['username'];
     if (taskData['erinnerung'] === '1') {
@@ -66,12 +66,14 @@ function createTask(taskData) {
     taskHeader.appendChild(taskTitleDropdown);
     taskTitleDrpMenu.appendChild(delDrpLi);
     delDrpLi.appendChild(delDrpBtn);
+
+    // set title so you can query for the element
+    taskTitle.title = 'Taskname';
+
     task.id = 'task_' + taskData['id'];
-    task.dataset.sortId = taskData['sortid'];
     task.classList.add('card', 'mb-2');
     taskHeader.classList.add('card-header', 'd-flex', 'justify-content-between', 'align-items-center');
     taskTitle.classList.add('card-title', 'fs-4', 'col-md-10');
-    taskTitle.title = 'taskTitle';
     taskTitle.innerHTML = taskData['icon'] + '<span class="ms-4">' + taskData['task'] + '</span>';
     taskTitleDropdown.appendChild(taskTitleDrpBtn);
     taskTitleDropdown.classList.add('dropdown', 'my-auto', 'd-none', 'd-md-block');
@@ -125,18 +127,21 @@ function createTask(taskData) {
     taskBodyList.appendChild(user);
     user.appendChild(userIcon);
     user.appendChild(userText);
+
+    // set titles so you can query for the elements
+    reminder.title = 'reminder';
+    reminderIcon.title = 'Erinnerung';
+    reminderText.title='Erinnerungsdatum';
+    deadline.title = 'Deadline';
+    deadlineText.title='Deadlinedatum';
+    userIcon.title = 'User';
+    userText.title='Username';
+
     taskBody.classList.add('card-body');
     taskBodyList.classList.add('list-group', 'list-group-flush');
-    reminder.title = 'reminder';
-    reminderText.title='reminderText'
-    reminderIcon.title = 'Erinnerungsdatum';
-    deadline.title = 'deadline';
-    deadlineText.title='deadlineText'
     deadlineIcon.classList.add('fa-clock');
     deadlineIcon.title = 'Deadline';
-    userText.title='userText'
     userIcon.classList.add('fa-user');
-    userIcon.title = 'User';
     userText.innerText = taskData['username'];
     // generate task footer
     const taskFooter = document.createElement('div');
@@ -173,16 +178,26 @@ function crudColumn(columnId, columnData) {
     let column = document.getElementById('column_' + columnId)
     if (!column) {
         column = document.createElement('div');
-        boardView.appendChild(column);
-        column.id = 'column_' + columnId;
-        column.classList.add('card', 'columnContainer', 'overflow-y-scroll');
         const columnTitle = document.createElement('div');
+        const taskContainer = document.createElement('div');
+        const columnFooter = document.createElement('div');
+        const colFootBtn = document.createElement('button');
+        columnFooter.appendChild(colFootBtn);
+        boardView.appendChild(column);
+        column.appendChild(columnTitle);
+        column.appendChild(taskContainer);
+        column.appendChild(columnFooter);
+        column.id = 'column_' + columnId;
+        taskContainer.id = 'taskContainerColumn_' + columnId;
+        columnFooter.classList.add('card-footer', 'text-center');
+        columnFooter.classList.add('btn', 'btn-primary');
+        columnFooter.innerHTML = '<i class="fa-solid fa-plus"></i>';
+        columnFooter.addEventListener('click', () => {
+            showModal(REQ_URL_NEW, MODE_NEW, -1);
+        })
+        column.classList.add('card', 'columnContainer', 'overflow-y-scroll');
         columnTitle.classList.add('card-header', 'card-title', 'text-center', 'fs-4');
         columnTitle.innerText = columnData['columnName'];
-        column.appendChild(columnTitle);
-        const taskContainer = document.createElement('div');
-        column.appendChild(taskContainer);
-        taskContainer.id = 'taskContainerColumn_' + columnId;
         taskContainer.classList.add('card-body');
         for (const taskData of columnData['tasks']) {
             const task = document.getElementById('task_' + taskData['id']);
@@ -190,19 +205,8 @@ function crudColumn(columnId, columnData) {
                 taskContainer.appendChild(createTask(taskData));
             } else {
                 updateTask(task, taskData);
-                sortTasks(taskContainer);
             }
         }
-        const columnFooter = document.createElement('div');
-        column.appendChild(columnFooter);
-        columnFooter.classList.add('card-footer', 'text-center');
-        const colFootBtn = document.createElement('button');
-        columnFooter.appendChild(colFootBtn);
-        columnFooter.classList.add('btn', 'btn-primary');
-        columnFooter.innerHTML = '<i class="fa-solid fa-plus"></i>';
-        columnFooter.addEventListener('click', () => {
-            showModal(REQ_URL_NEW, MODE_NEW, -1);
-        })
         sortTasks(taskContainer);
     } else {
         for (const taskData of columnData['tasks']) {

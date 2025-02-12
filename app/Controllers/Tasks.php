@@ -20,21 +20,6 @@ class Tasks extends BaseController
         echo view('pages/tasks/index', $indexData);
         echo view('templates/footer');
     }
-
-    public function getTasks()
-    {
-        $database = new Database();
-        $navData = $this->getNavElements('tasks2');
-        $indexData['columns'] = $database->getColumns(boardsId: session('boardsid'));
-        $indexData['taskTypes'] = $database->getTaskTypes();
-        $indexData['users'] = $database->getUsersSecure();
-        $indexData['boards'] = $database->getBoards();
-        $indexData['boardsId'] = session('boardsid');
-        echo view('templates/header');
-        echo view('templates/nav', $navData);
-        echo view('dev/tasks/index', $indexData);
-        echo view('templates/footer');
-    }
     public function postNew()
     {
         $data = $this->request->getPost();

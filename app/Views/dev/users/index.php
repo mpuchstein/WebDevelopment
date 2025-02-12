@@ -32,9 +32,6 @@
     const THEAD_IDS = ['id', 'username', 'plevel', 'vorname', 'name', 'email']
     const TABLE_BODY_ID = 'userTableBody'
     const TEMPLATE_UD_BTN = 'TEMPLATE_UD_BTN'
-    const MODE_NEW = 'new'
-    const MODE_EDIT = 'edit'
-    const MODE_DELETE = 'delete'
     const REQ_URL_JSON = '<?=base_url('users/json')?>'
     const REQ_URL_NEW = '<?=base_url('users/new')?>'
     const REQ_URL_EDIT = '<?=base_url('users/edit')?>'

@@ -29,9 +29,6 @@
     const THEAD_IDS = ['id', 'board']
     const TABLE_BODY_ID = 'boardsTableBody'
     const TEMPLATE_UD_BTN = 'TEMPLATE_UD_BTN'
-    const MODE_NEW = 'new'
-    const MODE_EDIT = 'edit'
-    const MODE_DELETE = 'delete'
     const REQ_URL_JSON = '<?=base_url('boards/json')?>'
     const REQ_URL_NEW = '<?=base_url('boards/new')?>'
     const REQ_URL_EDIT = '<?=base_url('boards/edit')?>'

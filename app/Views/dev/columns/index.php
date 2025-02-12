@@ -31,9 +31,6 @@
     const THEAD_IDS = ['id', 'spalte', 'spaltenbeschreibung', 'board', 'sortid']
     const TABLE_BODY_ID = 'columnTableBody'
     const TEMPLATE_UD_BTN = 'TEMPLATE_UD_BTN'
-    const MODE_NEW = 'new'
-    const MODE_EDIT = 'edit'
-    const MODE_DELETE = 'delete'
     const REQ_URL_JSON = '<?=base_url('columns/json')?>'
     const REQ_URL_NEW = '<?=base_url('columns/new')?>'
     const REQ_URL_EDIT = '<?=base_url('columns/edit')?>'
