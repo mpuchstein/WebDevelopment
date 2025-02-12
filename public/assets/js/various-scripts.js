@@ -1,50 +1,6 @@
-function updateTaskCards() {
-    let columns = ''
-    const itemButtons = document.getElementById(TEMPLATE_UD_BTN).innerHTML.replaceAll('%FORM_ID%', MODAL_FORM_ID)
-    const boardId = document.getElementById('boardSelector').value
-    fetch(REQ_TASK_HEADER, {
-        body: JSON.stringify({boardId: boardId})
-    }).then((response) => {
-        return response.json()
-    }).then((data) => {
-        for (const columnId in data) {
-            let taskCards = ''
-            for (const task of data[columnId]['tasks']) {
-                taskCards += document.getElementById(TEMPLATE_CARD_TASK).innerHTML
-                    .replaceAll('%TASK_ID%', task['id'])
-                    .replaceAll('%TASK_HEADING%', task['task'])
-                    .replaceAll('%TASK_ICON%', task['icon'])
-                    .replaceAll('%REMINDER_DATE%', task['erinnerungsdatum'])
-                    .replaceAll('%DEADLINE%', task['deadline'])
-                    .replaceAll('%USER%', task['username'])
-                    .replaceAll('%UD_BTN%', itemButtons.replaceAll('%ID%', task['id']))
-            }
-            columns += '<td>\n'
-            columns += document.getElementById(TEMPLATE_CARD_COLUMN).innerHTML
-                .replaceAll('%COLUMN_ID%', columnId)
-                .replaceAll('%COLUMN_HEADING%', data[columnId]['columnName'])
-                .replaceAll('%TASK_CARDS%', taskCards)
-            columns += '</td>\n'
-        }
-        document.getElementById(TABLE_BODY_ID).innerHTML = columns
-        for (const columnId in data) {
-            for (const task of data[columnId]['tasks']) {
-                const taskId = task['id']
-                const editId = 'edit_' + taskId
-                const delId = 'delete_' + taskId
-                const editBtn = document.getElementById(editId)
-                const delBtn = document.getElementById(delId)
-                editBtn.addEventListener('click', () => {
-                    showModal(REQ_URL_EDIT, MODE_EDIT, taskId)
-                })
-                delBtn.addEventListener('click', () => {
-                    showModal(REQ_URL_DELETE, MODE_DELETE, taskId)
-                })
-            }
-        }
-    })
-}
-
+const MODE_NEW = 'new'
+const MODE_EDIT = 'edit'
+const MODE_DELETE = 'delete'
 function tasksComparator(a, b) {
     if (a.dataset.sortId < b.dataset.sortId)
         return -1;
@@ -53,54 +9,82 @@ function tasksComparator(a, b) {
     return 0;
 }
 
-function sortTasks(column) {
-    console.log(column)
-    const tasks = column.querySelectorAll("[data-sort-id]");
-    console.log(tasks)
+function sortTasks(taskContainer) {
+    const tasks = taskContainer.querySelectorAll("[data-sort-id]");
     const tasksArray = Array.from(tasks);
     let sorted = tasksArray.sort(tasksComparator);
-    console.log(sorted)
     sorted.forEach(e =>
-        column.appendChild(e)
+        taskContainer.appendChild(e)
     );
-    console.log(column)
+}
+
+function updateTask(taskElem, taskData){
+    taskElem.dataset.sortId = taskData['sortId'];
+    const taskTitle = taskElem.querySelector('.card-header').querySelector('[title="taskTitle"]');
+    const reminder = taskElem.querySelector('[title="reminder"]');
+    const reminderText = taskElem.querySelector('[title="reminderText"]');
+    const reminderIcon = taskElem.querySelector('[title="Erinnerungsdatum"]');
+    const deadline = taskElem.querySelector('[title="deadline"]');
+    const deadlineText = taskElem.querySelector('[title="deadlineText"]');
+    const userText = taskElem.querySelector('[title="userText"]');
+    taskTitle.innerHTML = taskData['icon'] + '<span class="ms-4">' + taskData['task'] + '</span>';
+    userText.innerText = taskData['username'];
+    if (taskData['erinnerung'] === '1') {
+        reminderIcon.classList.add('fa-bell');
+        reminderText.innerText = taskData['erinnerungsdatum']
+        if (Date.parse(taskData['erinnerungsdatum']) - DATE_NOW < 24 * 3600) {
+            reminder.classList.toggle('bg-danger', true);
+        } else {
+            reminder.classList.toggle('bg-danger', false);
+        }
+    } else {
+        reminderIcon.classList.add('fa-bell-slash');
+        reminderText.innerText = 'Keine Erinnerung';
+    }
+    deadlineText.innerText = taskData['deadline'];
+    if (Date.parse(taskData['deadline']) - DATE_NOW < 0) {
+        deadline.classList.add('bg-danger-subtle');
+    } else if (Date.parse(taskData['deadline']) - DATE_NOW < 24 * 3600) {
+        deadline.classList.add('bg-danger');
+    }
 }
 
 function createTask(taskData) {
     const task = document.createElement('div');
-    task.id = 'task_' + taskData['id'];
-    task.dataset.sortId = taskData['sortid'];
-    task.classList.add('card', 'mb-2');
+    //generate task header
     const taskHeader = document.createElement('div');
-    task.appendChild(taskHeader);
-    taskHeader.classList.add('card-header', 'd-flex', 'justify-content-between', 'align-items-center');
     const taskTitle = document.createElement('span');
-    taskHeader.appendChild(taskTitle);
-    taskTitle.classList.add('card-title', 'fs-4', 'col-md-10');
-    taskTitle.name = 'taskTitle';
-    taskTitle.innerHTML = taskData['icon'] + '<span class="ms-4">' + taskData['task'] + '</span>';
     const taskTitleDropdown = document.createElement('div');
     const taskTitleDrpBtn = document.createElement('button');
-    taskHeader.appendChild(taskTitleDropdown);
-    taskTitleDropdown.appendChild(taskTitleDrpBtn);
-    taskTitleDropdown.classList.add('dropdown', 'my-auto', 'd-none', 'd-md-block');
-    taskTitleDrpBtn.type = 'button';
-    taskTitleDrpBtn.classList.add('btn', 'btn-sm', 'btn-outline-light', 'dropdown-toggle');
     const taskTitleDrpMenu = document.createElement('ul');
-    taskTitleDropdown.appendChild(taskTitleDrpMenu);
-    taskTitleDrpMenu.classList.add('dropdown-menu');
-    taskTitleDrpMenu.id = 'drpMen_' + taskData['id'];
-    taskTitleDrpBtn.dataset.bsToggle = 'dropdown';
     const editDrpLi = document.createElement('li');
     const delDrpLi = document.createElement('li');
     const editDrpBtn = document.createElement('a');
     const delDrpBtn = document.createElement('a');
-    taskTitleDrpMenu.appendChild(editDrpLi);
+    task.appendChild(taskHeader);
+    taskHeader.appendChild(taskTitle);
+    taskHeader.appendChild(taskTitleDropdown);
     taskTitleDrpMenu.appendChild(delDrpLi);
+    delDrpLi.appendChild(delDrpBtn);
+    task.id = 'task_' + taskData['id'];
+    task.dataset.sortId = taskData['sortid'];
+    task.classList.add('card', 'mb-2');
+    taskHeader.classList.add('card-header', 'd-flex', 'justify-content-between', 'align-items-center');
+    taskTitle.classList.add('card-title', 'fs-4', 'col-md-10');
+    taskTitle.title = 'taskTitle';
+    taskTitle.innerHTML = taskData['icon'] + '<span class="ms-4">' + taskData['task'] + '</span>';
+    taskTitleDropdown.appendChild(taskTitleDrpBtn);
+    taskTitleDropdown.classList.add('dropdown', 'my-auto', 'd-none', 'd-md-block');
+    taskTitleDrpBtn.type = 'button';
+    taskTitleDrpBtn.classList.add('btn', 'btn-sm', 'btn-outline-light', 'dropdown-toggle');
+    taskTitleDropdown.appendChild(taskTitleDrpMenu);
+    taskTitleDrpMenu.classList.add('dropdown-menu');
+    taskTitleDrpMenu.id = 'drpMen_' + taskData['id'];
+    taskTitleDrpBtn.dataset.bsToggle = 'dropdown';
+    taskTitleDrpMenu.appendChild(editDrpLi);
     editDrpLi.className = 'dropdown-item';
     delDrpLi.className = 'dropdown-item';
     editDrpLi.appendChild(editDrpBtn);
-    delDrpLi.appendChild(delDrpBtn);
     editDrpBtn.role = 'button';
     delDrpBtn.role = 'button';
     editDrpBtn.dataset.bsTarget = MODAL_FORM_ID;
@@ -113,65 +97,57 @@ function createTask(taskData) {
     delDrpLi.addEventListener('click', () => {
         showModal(REQ_URL_DELETE, MODE_DELETE, taskData['id']);
     })
+    // generate task body
     const taskBody = document.createElement('div');
-    task.appendChild(taskBody);
-    taskBody.classList.add('card-body');
     const taskBodyList = document.createElement('ul');
-    taskBody.appendChild(taskBodyList);
-    taskBodyList.classList.add('list-group', 'list-group-flush');
+    const reminderText = document.createElement('span');
+    const deadlineText = document.createElement('span');
+    const userText = document.createElement('span');
     const listElemTemp = document.createElement('li');
-    listElemTemp.classList.add('list-group-item');
     const rowIcon = document.createElement('i');
+    // set template values for list element and row icon so they can easily be cloned
+    listElemTemp.classList.add('list-group-item');
     rowIcon.classList.add('fa-solid', 'me-4');
     const reminder = listElemTemp.cloneNode(true);
-    taskBodyList.appendChild(reminder);
     const reminderIcon = rowIcon.cloneNode(true);
-    const reminderText = document.createElement('span');
+    const deadline = listElemTemp.cloneNode(true);
+    const deadlineIcon = rowIcon.cloneNode(true);
+    const user = listElemTemp.cloneNode(true);
+    const userIcon = rowIcon.cloneNode(true);
+    task.appendChild(taskBody);
+    taskBody.appendChild(taskBodyList);
     reminder.appendChild(reminderIcon);
     reminder.appendChild(reminderText);
-    reminderIcon.title = 'Erinnerungsdatum';
-    if (taskData['erinnerung'] === '1') {
-        reminderIcon.classList.add('fa-bell');
-        reminderText.innerText = taskData['erinnerungsdatum']
-        if (Date.parse(taskData['erinnerungsdatum']) - DATE_NOW < 24 * 3600) {
-            reminder.classList.add('bg-danger');
-        }
-    } else {
-        reminderIcon.classList.add('fa-bell-slash');
-        reminderText.innerText = 'Keine Erinnerung';
-    }
-    const deadline = listElemTemp.cloneNode(true);
+    taskBodyList.appendChild(reminder);
     taskBodyList.appendChild(deadline);
-    const deadlineIcon = rowIcon.cloneNode(true);
-    const deadlineText = document.createElement('span');
     deadline.appendChild(deadlineIcon);
     deadline.appendChild(deadlineText);
-    deadlineIcon.classList.add('fa-clock');
-    deadlineIcon.title = 'Deadline';
-    deadlineText.innerText = taskData['deadline'];
-    if (Date.parse(taskData['deadline']) - DATE_NOW < 0) {
-        deadline.classList.add('bg-danger-subtle');
-    } else if (Date.parse(taskData['deadline']) - DATE_NOW < 24 * 3600) {
-        deadline.classList.add('bg-danger');
-    }
-    const user = listElemTemp.cloneNode(true);
     taskBodyList.appendChild(user);
-    const userIcon = rowIcon.cloneNode(true);
-    const userText = document.createElement('span');
     user.appendChild(userIcon);
     user.appendChild(userText);
+    taskBody.classList.add('card-body');
+    taskBodyList.classList.add('list-group', 'list-group-flush');
+    reminder.title = 'reminder';
+    reminderText.title='reminderText'
+    reminderIcon.title = 'Erinnerungsdatum';
+    deadline.title = 'deadline';
+    deadlineText.title='deadlineText'
+    deadlineIcon.classList.add('fa-clock');
+    deadlineIcon.title = 'Deadline';
+    userText.title='userText'
     userIcon.classList.add('fa-user');
     userIcon.title = 'User';
     userText.innerText = taskData['username'];
+    // generate task footer
     const taskFooter = document.createElement('div');
-    task.appendChild(taskFooter);
-    taskFooter.classList.add('card-footer', 'text-center');
     const editBtn = document.createElement('button');
     const delBtn = document.createElement('button');
     const btnGrp = document.createElement('div');
+    task.appendChild(taskFooter);
     btnGrp.appendChild(editBtn);
     btnGrp.appendChild(delBtn);
     taskFooter.appendChild(btnGrp);
+    taskFooter.classList.add('card-footer', 'text-center');
     btnGrp.classList.add('btn-group', 'd-md-none');
     editBtn.type = 'button';
     delBtn.type = 'button';
@@ -187,14 +163,16 @@ function createTask(taskData) {
     delBtn.addEventListener('click', () => {
         showModal(REQ_URL_DELETE, MODE_DELETE, taskData['id']);
     })
+    // fill task with data
+    updateTask(task, taskData);
     return task;
 }
 
 function crudColumn(columnId, columnData) {
     const boardView = document.getElementById('tasksContainer');
-    const column = document.getElementById('column_' + columnId)
+    let column = document.getElementById('column_' + columnId)
     if (!column) {
-        const column = document.createElement('div');
+        column = document.createElement('div');
         boardView.appendChild(column);
         column.id = 'column_' + columnId;
         column.classList.add('card', 'columnContainer', 'overflow-y-scroll');
@@ -211,8 +189,8 @@ function crudColumn(columnId, columnData) {
             if (!task) {
                 taskContainer.appendChild(createTask(taskData));
             } else {
-                task.remove();
-                taskContainer.appendChild(createTask(taskData));
+                updateTask(task, taskData);
+                sortTasks(taskContainer);
             }
         }
         const columnFooter = document.createElement('div');
@@ -233,8 +211,7 @@ function crudColumn(columnId, columnData) {
             if (!task) {
                 taskContainer.appendChild(createTask(taskData));
             } else {
-                task.remove();
-                taskContainer.appendChild(createTask(taskData));
+                updateTask(task, taskData);
                 sortTasks(taskContainer);
             }
         }
@@ -285,6 +262,41 @@ function updateTable() {
             })
         }
     })
+}
+
+function genModalForm_new() {
+    document.forms[MODAL_FORM_ID].addEventListener('submit', (event) => {
+        event.preventDefault();
+        // TODO do something here to show user that form is being submitted
+        fetch(event.target.action, {
+            method: 'POST',
+            body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+        }).then((response) => {
+            if (!response.ok) {
+                console.log(response)
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json(); // or response.text() or whatever the server sends
+        }).then((data) => {
+            if (data['success'] === true) {
+                console.log(data);
+                var task = document.getElementById('task_'+data['id']);
+                updateTask(
+                    task,
+                    data['taskData']
+                    );
+                $(MODAL_ID).modal('hide')
+            } else {
+                MODAL_FORMFIELDS_NAMES.forEach(formField => {
+                    document.getElementById(formField).classList.toggle('is-invalid', formField in data['errors'])
+                    document.getElementById(formField + '_invalid').innerText = data['errors'][formField]
+                })
+            }
+        }).catch((error) => {
+            // TODO handle error
+            console.log(error)
+        });
+    });
 }
 
 function genModalForm() {

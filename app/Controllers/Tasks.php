@@ -45,7 +45,8 @@ class Tasks extends BaseController
         if ($validation->run($data, 'tasksArray')) {
             $database = new Database();
             $id = $database->insertTask($data);
-            return $this->response->setJSON(['success' => true, 'id' => $id]);
+            $taskData = $database->getTask($id, joinTaskType: true);
+            return $this->response->setJSON(['success' => true, 'id' => $id, 'taskData' => $taskData]);
         } else {
             $errors = $validation->getErrors();
             return $this->response->setJSON(['success' => false, 'errors' => $errors]);
@@ -62,7 +63,8 @@ class Tasks extends BaseController
         if ($validation->run($data, 'tasksArray')) {
             $database = new Database();
             $success = $database->updateTask($data['id'], $data);
-            return $this->response->setJSON(['success' => $success, 'id' => $data['id']]);
+            $taskData = $database->getTask($data['id'], joinTaskType: true)[0];
+            return $this->response->setJSON(['success' => $success, 'id' => $data['id'], 'taskData' => $taskData]);
         } else {
             $errors = $validation->getErrors();
             return $this->response->setJSON(['success' => false, 'errors' => $errors]);
