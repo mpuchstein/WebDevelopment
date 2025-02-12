@@ -45,10 +45,32 @@ function updateTaskCards() {
     })
 }
 
+function tasksComparator(a, b) {
+    if (a.dataset.sortId < b.dataset.sortId)
+        return -1;
+    if (a.dataset.sortId > b.dataset.sortId)
+        return 1;
+    return 0;
+}
+
+function sortTasks(column) {
+    console.log(column)
+    const tasks = column.querySelectorAll("[data-sort-id]");
+    console.log(tasks)
+    const tasksArray = Array.from(tasks);
+    let sorted = tasksArray.sort(tasksComparator);
+    console.log(sorted)
+    sorted.forEach(e =>
+        column.appendChild(e)
+    );
+    console.log(column)
+}
+
 function createTask(taskData) {
     const task = document.createElement('div');
     task.id = 'task_' + taskData['id'];
-    task.classList.add('card', 'mb-2')
+    task.dataset.sortId = taskData['sortid'];
+    task.classList.add('card', 'mb-2');
     const taskHeader = document.createElement('div');
     task.appendChild(taskHeader);
     taskHeader.classList.add('card-header', 'd-flex', 'justify-content-between', 'align-items-center');
@@ -189,7 +211,8 @@ function crudColumn(columnId, columnData) {
             if (!task) {
                 taskContainer.appendChild(createTask(taskData));
             } else {
-                updateTask(task, taskData);
+                task.remove();
+                taskContainer.appendChild(createTask(taskData));
             }
         }
         const columnFooter = document.createElement('div');
@@ -202,15 +225,17 @@ function crudColumn(columnId, columnData) {
         columnFooter.addEventListener('click', () => {
             showModal(REQ_URL_NEW, MODE_NEW, -1);
         })
+        sortTasks(taskContainer);
     } else {
-       for (const taskData of columnData['tasks']) {
+        for (const taskData of columnData['tasks']) {
             const task = document.getElementById('task_' + taskData['id']);
-            const taskContainer = document.getElementById('column_' + columnId);
+            const taskContainer = document.getElementById('taskContainerColumn_' + columnId);
             if (!task) {
                 taskContainer.appendChild(createTask(taskData));
             } else {
-                taskContainer.removeChild(task);
+                task.remove();
                 taskContainer.appendChild(createTask(taskData));
+                sortTasks(taskContainer);
             }
         }
     }
