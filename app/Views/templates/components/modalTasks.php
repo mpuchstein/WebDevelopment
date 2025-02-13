@@ -8,7 +8,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="modalTasksForm" method="post">
+                <form id="modalTasksForm" data-mode="">
                     <input type="hidden" name="id" id="id">
                     <fieldset id="modalFormFields">
                         <div class="form-floating mb-3">

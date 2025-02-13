@@ -1,8 +1,20 @@
 const MODE_NEW = 'new'
 const MODE_EDIT = 'edit'
 const MODE_DELETE = 'delete'
+const MODE_QUERY = 'query'
 
-function tasksComparator(a, b) {
+function insertTaskIntoColumnSorted(taskContainer) {
+    const tasks = Array.from(taskContainer.querySelectorAll('[data-sort-id]'));
+    let sorted = tasks.sort(sortIdComperatorASC);
+    let sortid = 10;
+    sorted.forEach(e => {
+            e.dataset.sortId = String(sortid);
+            sortid += 10;
+        }
+    )
+}
+
+function sortIdComperatorASC(a, b) {
     if (a.dataset.sortId < b.dataset.sortId)
         return -1;
     if (a.dataset.sortId > b.dataset.sortId)
@@ -10,10 +22,17 @@ function tasksComparator(a, b) {
     return 0;
 }
 
+function sortIdComperatorDESC(a, b) {
+    if (a.dataset.sortId < b.dataset.sortId)
+        return 1;
+    if (a.dataset.sortId > b.dataset.sortId)
+        return -1;
+    return 0;
+}
+
 function sortTasks(taskContainer) {
-    const tasks = taskContainer.querySelectorAll("[data-sort-id]");
-    const tasksArray = Array.from(tasks);
-    let sorted = tasksArray.sort(tasksComparator);
+    const tasksArray = Array.from(taskContainer.querySelectorAll('[data-sort-id]'));
+    let sorted = tasksArray.sort(sortIdComperatorDESC);
     sorted.forEach(e =>
         taskContainer.appendChild(e)
     );
@@ -27,7 +46,8 @@ function removeTask(taskId) {
 }
 
 function updateTask(taskElem, taskData) {
-    taskElem.dataset.sortId = taskData['sortId'];
+    taskElem.dataset.taskId = taskData['id'];
+    taskElem.dataset.sortId = taskData['sortid'];
     const taskTitle = taskElem.querySelector('.card-header').querySelector('[title="Taskname"]');
     const reminder = taskElem.querySelector('[title="reminder"]');
     const reminderIcon = taskElem.querySelector('[title="Erinnerung"]');
@@ -102,10 +122,10 @@ function createTask(taskData) {
     editDrpBtn.innerText = 'Bearbeiten';
     delDrpBtn.innerHTML = 'Löschen';
     editDrpLi.addEventListener('click', () => {
-        showModal(REQ_URL_EDIT, MODE_EDIT, taskData['id']);
+        showModal_new(MODE_EDIT, taskData['id']);
     })
     delDrpLi.addEventListener('click', () => {
-        showModal(REQ_URL_DELETE, MODE_DELETE, taskData['id']);
+        showModal_new(MODE_DELETE, taskData['id']);
     })
     // generate task body
     const taskBody = document.createElement('div');
@@ -171,10 +191,10 @@ function createTask(taskData) {
     editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
     delBtn.innerHTML = '<i class="fa-solid fa-eraser"></i>';
     editBtn.addEventListener('click', () => {
-        showModal(REQ_URL_EDIT, MODE_EDIT, taskData['id']);
+        showModal(MODE_EDIT, taskData['id']);
     })
     delBtn.addEventListener('click', () => {
-        showModal(REQ_URL_DELETE, MODE_DELETE, taskData['id']);
+        showModal(MODE_DELETE, taskData['id']);
     })
     // fill task with data
     updateTask(task, taskData);
@@ -209,6 +229,7 @@ function createColumn(columnData) {
     taskContainer.id = 'tasksContainerColumn_' + columnData['columnId'];
     columnTitle.title = 'Spaltenname';
 
+
     column.classList.add('card', 'columnContainer', 'overflow-y-scroll');
     columnTitle.classList.add('card-header', 'card-title', 'text-center', 'fs-4');
     columnTitle.innerText = columnData['columnName'];
@@ -217,9 +238,11 @@ function createColumn(columnData) {
     columnFooter.classList.add('btn', 'btn-primary');
     columnFooter.innerHTML = '<i class="fa-solid fa-plus"></i>';
     columnFooter.addEventListener('click', () => {
-        showModal(REQ_URL_NEW, MODE_NEW, -1);
+        showModal_new(MODE_NEW, -1);
     })
     taskContainer.classList.add('card-body');
+    taskContainer.dataset.columnId = columnData['columnId'];
+    drake.containers.push(taskContainer);
     return column;
 }
 
@@ -235,7 +258,10 @@ function crudColumn(columnData) {
 function createTaskView() {
     const boardId = document.getElementById('boardSelector').value
     fetch(REQ_TASK_HEADER, {
-        body: JSON.stringify({boardId: boardId})
+        body: JSON.stringify({
+            boardId: boardId,
+            mode: MODE_QUERY
+        })
     }).then((response) => {
         return response.json()
     }).then((data) => {
@@ -282,15 +308,24 @@ function genModalForm_new() {
     document.forms[MODAL_FORM_ID].addEventListener('submit', (event) => {
         event.preventDefault();
         // TODO do something here to show user that form is being submitted
-        fetch(event.target.action, {
+        const formData = {};
+        new FormData(event.target).forEach((value, key) =>
+        {
+            formData[key] = value;
+        });
+        console.log(event.target);
+        fetch(REQ_TASK_HEADER, {
             method: 'POST',
-            body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+            body: JSON.stringify({
+                mode: event.target.dataset.mode,
+                formData: formData
+            })
         }).then((response) => {
             if (!response.ok) {
                 console.log(response)
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            return response.json(); // or response.text() or whatever the server sends
+            return response.json();
         }).then((data) => {
             if (data['success'] === true) {
                 if (data['mode'] === MODE_DELETE) {
@@ -309,7 +344,7 @@ function genModalForm_new() {
                     }
                     sortTasks(taskContainer);
                 }
-                $(MODAL_ID).modal('hide')
+                modalTask.hide();
             } else {
                 MODAL_FORMFIELDS_NAMES.forEach(formField => {
                     document.getElementById(formField).classList.toggle('is-invalid', formField in data['errors'])
@@ -351,6 +386,62 @@ function genModalForm() {
             console.log(error)
         });
     });
+}
+
+function showModal_new(mode, elemid) {
+    const modalHeadline = document.getElementById(MODAL_HEADLINE_ID)
+    const modalForm = document.getElementById(MODAL_FORM_ID)
+    const formButton = document.getElementById(MODAL_SUBMIT_ID)
+    const formFields = document.getElementById(MODAL_FORMFIELDS_ID)
+    formFields.disabled = false
+    MODAL_FORMFIELDS_NAMES.forEach(formField => {
+        document.getElementById(formField).classList.toggle('is-invalid', false)
+        document.getElementById(formField + '_invalid').innerText = ''
+    })
+    modalForm.reset()
+
+    modalForm.dataset.mode = mode;
+    switch (mode) {
+        case MODE_NEW:
+            modalHeadline.innerText = 'Neu'
+            formButton.className = 'btn btn-success'
+            formButton.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Speichern'
+            break
+        case MODE_EDIT:
+            modalHeadline.innerText = 'Bearbeiten'
+            formButton.className = 'btn btn-info'
+            formButton.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Editieren'
+            break;
+        case MODE_DELETE:
+            modalHeadline.innerText = 'Löschen'
+            formButton.className = 'btn btn-danger'
+            formButton.innerHTML = '<i class="fa-solid fa-eraser"></i> Löschen'
+            formFields.disabled = true
+            break;
+    }
+    if (elemid > 0) {
+        if (mode === MODE_NEW) {
+
+        } else {
+            fetch(REQ_TASK_HEADER, {
+                    body: JSON.stringify({
+                        taskId: elemid,
+                        mode: MODE_QUERY
+                    })
+                }
+            ).then((response) => {
+                return response.json()
+            }).then((data) => {
+                Object.entries(data).forEach(entry => {
+                    const inputField = document.getElementById(entry[0])
+                    if (inputField) {
+                        inputField.value = entry[1]
+                    }
+                })
+            })
+        }
+    }
+    modalTask.show();
 }
 
 function showModal(requrl, mode, elemid) {

@@ -3,17 +3,31 @@
 <script>
     const BOARDS_ID = <?= session('boardsid')?>
 
-    const REQ_URL_JSON = '<?=base_url('tasks/json')?>'
-    const REQ_URL_NEW = '<?=base_url('tasks/new')?>'
-    const REQ_URL_EDIT = '<?=base_url('tasks/edit')?>'
-    const REQ_URL_DELETE = '<?=base_url('tasks/delete')?>'
-
     const MODAL_ID = '#modal'
     const MODAL_FORM_ID = 'modalTasksForm'
     const MODAL_HEADLINE_ID = 'modalHeadline'
     const MODAL_SUBMIT_ID = 'formSubmit'
     const MODAL_FORMFIELDS_ID = 'modalFormFields'
     const MODAL_FORMFIELDS_NAMES = ['task', 'taskartenid', 'spaltenid', 'personenid', 'deadline', 'erinnerung', 'erinnerungsdatum', 'notizen', 'erledigt', 'geloescht']
+
+    const drake = dragula();
+    drake.on('drop', (el, target, source, sibling)=>{
+        console.log(el);
+        console.log(target);
+        console.log(source);
+        console.log(sibling);
+        if(sibling !== null) {
+            el.dataset.sortId = String(Number(sibling.dataset.sortId) + 1);
+        } else {
+            el.dataset.sortId = '1';
+        }
+        console.log(el);
+        console.log(target);
+        console.log(source);
+        console.log(sibling);
+        sortTasks(target);
+    })
+    const modalTask = new bootstrap.Modal(MODAL_ID);
 
     const REQ_TASK_HEADER = new Request(
         '<?=base_url('tasks/json')?>',
@@ -31,11 +45,9 @@
     })
 
     document.getElementById('btn_add').addEventListener('click', () => {
-        showModal(REQ_URL_NEW, MODE_NEW, -1)
+        showModal_new(MODE_NEW, -1)
     })
 
     createTaskView();
-    genModalForm_new()
-
-    dragula(document.querySelectorAll('.columnContainer'))
+    genModalForm_new();
 </script>
