@@ -19,6 +19,9 @@ class Tasks extends BaseController
         echo view('templates/nav', $navData);
         echo view('pages/tasks/index', $indexData);
         echo view('templates/footer');
+        echo view('templates/scriptimports');
+        echo view('templates/addins/tasks');
+        echo view('templates/siteend');
     }
     public function postNew()
     {
@@ -30,8 +33,8 @@ class Tasks extends BaseController
         if ($validation->run($data, 'tasksArray')) {
             $database = new Database();
             $id = $database->insertTask($data);
-            $taskData = $database->getTask($id, joinTaskType: true);
-            return $this->response->setJSON(['success' => true, 'id' => $id, 'taskData' => $taskData]);
+            $taskData = $database->getTask($id, joinTaskType: true, joinUser:true)[0];
+            return $this->response->setJSON(['success' => true, 'mode' => 'new', 'id' => $id, 'taskData' => $taskData]);
         } else {
             $errors = $validation->getErrors();
             return $this->response->setJSON(['success' => false, 'errors' => $errors]);
@@ -48,8 +51,8 @@ class Tasks extends BaseController
         if ($validation->run($data, 'tasksArray')) {
             $database = new Database();
             $success = $database->updateTask($data['id'], $data);
-            $taskData = $database->getTask($data['id'], joinTaskType: true)[0];
-            return $this->response->setJSON(['success' => $success, 'id' => $data['id'], 'taskData' => $taskData]);
+            $taskData = $database->getTask($data['id'], joinTaskType: true, joinUser: true)[0];
+            return $this->response->setJSON(['success' => $success, 'mode' => 'edit', 'id' => $data['id'], 'taskData' => $taskData]);
         } else {
             $errors = $validation->getErrors();
             return $this->response->setJSON(['success' => false, 'errors' => $errors]);
@@ -63,7 +66,7 @@ class Tasks extends BaseController
         if ($validation->run($data, 'taskDelete')) {
             $database = new Database();
             $database->deleteTask($data['id']);
-            return $this->response->setJSON(['success' => true, 'id' => $data['id']]);
+            return $this->response->setJSON(['success' => true, 'mode' => 'delete', 'id' => $data['id']]);
         } else {
             $errors = $validation->getErrors();
             return $this->response->setJSON(['success' => false, 'errors' => $errors]);
@@ -81,6 +84,7 @@ class Tasks extends BaseController
             $columnData = $database->getColumns(boardsId: $data['boardId']);
             foreach ($columnData as $column) {
                 $resultdata[$column['id']] = [
+                    'columnId' => $column['id'],
                     'columnName' => $column['spalte'],
                     'tasks' => $database->getTask(columnId: $column['id'], joinTaskType: true, joinUser: true),
                 ];

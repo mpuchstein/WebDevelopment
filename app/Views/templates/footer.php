@@ -12,6 +12,3 @@
         </div>
     </div>
 </footer>
-<!-- body and html are opened in nav/head and need to be closed here -->
-</body>
-</html>

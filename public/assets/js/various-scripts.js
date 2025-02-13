@@ -1,6 +1,7 @@
 const MODE_NEW = 'new'
 const MODE_EDIT = 'edit'
 const MODE_DELETE = 'delete'
+
 function tasksComparator(a, b) {
     if (a.dataset.sortId < b.dataset.sortId)
         return -1;
@@ -18,7 +19,14 @@ function sortTasks(taskContainer) {
     );
 }
 
-function updateTask(taskElem, taskData){
+function removeTask(taskId) {
+    const task = document.getElementById('task_' + taskId);
+    if (task) {
+        task.remove();
+    }
+}
+
+function updateTask(taskElem, taskData) {
     taskElem.dataset.sortId = taskData['sortId'];
     const taskTitle = taskElem.querySelector('.card-header').querySelector('[title="Taskname"]');
     const reminder = taskElem.querySelector('[title="reminder"]');
@@ -64,29 +72,29 @@ function createTask(taskData) {
     task.appendChild(taskHeader);
     taskHeader.appendChild(taskTitle);
     taskHeader.appendChild(taskTitleDropdown);
+    taskTitleDropdown.appendChild(taskTitleDrpBtn);
+    taskTitleDropdown.appendChild(taskTitleDrpMenu);
+    taskTitleDrpMenu.appendChild(editDrpLi);
     taskTitleDrpMenu.appendChild(delDrpLi);
+    editDrpLi.appendChild(editDrpBtn);
     delDrpLi.appendChild(delDrpBtn);
 
-    // set title so you can query for the element
+    // set task id and title so you can query for the elements
+    task.id = 'task_' + taskData['id'];
     taskTitle.title = 'Taskname';
 
-    task.id = 'task_' + taskData['id'];
     task.classList.add('card', 'mb-2');
     taskHeader.classList.add('card-header', 'd-flex', 'justify-content-between', 'align-items-center');
     taskTitle.classList.add('card-title', 'fs-4', 'col-md-10');
     taskTitle.innerHTML = taskData['icon'] + '<span class="ms-4">' + taskData['task'] + '</span>';
-    taskTitleDropdown.appendChild(taskTitleDrpBtn);
     taskTitleDropdown.classList.add('dropdown', 'my-auto', 'd-none', 'd-md-block');
     taskTitleDrpBtn.type = 'button';
     taskTitleDrpBtn.classList.add('btn', 'btn-sm', 'btn-outline-light', 'dropdown-toggle');
-    taskTitleDropdown.appendChild(taskTitleDrpMenu);
     taskTitleDrpMenu.classList.add('dropdown-menu');
     taskTitleDrpMenu.id = 'drpMen_' + taskData['id'];
     taskTitleDrpBtn.dataset.bsToggle = 'dropdown';
-    taskTitleDrpMenu.appendChild(editDrpLi);
     editDrpLi.className = 'dropdown-item';
     delDrpLi.className = 'dropdown-item';
-    editDrpLi.appendChild(editDrpBtn);
     editDrpBtn.role = 'button';
     delDrpBtn.role = 'button';
     editDrpBtn.dataset.bsTarget = MODAL_FORM_ID;
@@ -131,11 +139,11 @@ function createTask(taskData) {
     // set titles so you can query for the elements
     reminder.title = 'reminder';
     reminderIcon.title = 'Erinnerung';
-    reminderText.title='Erinnerungsdatum';
+    reminderText.title = 'Erinnerungsdatum';
     deadline.title = 'Deadline';
-    deadlineText.title='Deadlinedatum';
+    deadlineText.title = 'Deadlinedatum';
     userIcon.title = 'User';
-    userText.title='Username';
+    userText.title = 'Username';
 
     taskBody.classList.add('card-body');
     taskBodyList.classList.add('list-group', 'list-group-flush');
@@ -173,53 +181,55 @@ function createTask(taskData) {
     return task;
 }
 
-function crudColumn(columnId, columnData) {
-    const boardView = document.getElementById('tasksContainer');
-    let column = document.getElementById('column_' + columnId)
-    if (!column) {
-        column = document.createElement('div');
-        const columnTitle = document.createElement('div');
-        const taskContainer = document.createElement('div');
-        const columnFooter = document.createElement('div');
-        const colFootBtn = document.createElement('button');
-        columnFooter.appendChild(colFootBtn);
-        boardView.appendChild(column);
-        column.appendChild(columnTitle);
-        column.appendChild(taskContainer);
-        column.appendChild(columnFooter);
-        column.id = 'column_' + columnId;
-        taskContainer.id = 'taskContainerColumn_' + columnId;
-        columnFooter.classList.add('card-footer', 'text-center');
-        columnFooter.classList.add('btn', 'btn-primary');
-        columnFooter.innerHTML = '<i class="fa-solid fa-plus"></i>';
-        columnFooter.addEventListener('click', () => {
-            showModal(REQ_URL_NEW, MODE_NEW, -1);
-        })
-        column.classList.add('card', 'columnContainer', 'overflow-y-scroll');
-        columnTitle.classList.add('card-header', 'card-title', 'text-center', 'fs-4');
-        columnTitle.innerText = columnData['columnName'];
-        taskContainer.classList.add('card-body');
-        for (const taskData of columnData['tasks']) {
-            const task = document.getElementById('task_' + taskData['id']);
-            if (!task) {
-                taskContainer.appendChild(createTask(taskData));
-            } else {
-                updateTask(task, taskData);
-            }
-        }
-        sortTasks(taskContainer);
-    } else {
-        for (const taskData of columnData['tasks']) {
-            const task = document.getElementById('task_' + taskData['id']);
-            const taskContainer = document.getElementById('taskContainerColumn_' + columnId);
-            if (!task) {
-                taskContainer.appendChild(createTask(taskData));
-            } else {
-                updateTask(task, taskData);
-                sortTasks(taskContainer);
-            }
+function updateTasksOfContainer(taskContainer, taskDataArray) {
+    for (const taskData of taskDataArray) {
+        const task = document.getElementById('task_' + taskData['id']);
+        if (!task) {
+            taskContainer.appendChild(createTask(taskData));
+        } else {
+            updateTask(task, taskData);
+            taskContainer.appendChild(task);
         }
     }
+    sortTasks(taskContainer);
+}
+
+function createColumn(columnData) {
+    const column = document.createElement('div');
+    const columnTitle = document.createElement('div');
+    const taskContainer = document.createElement('div');
+    const columnFooter = document.createElement('div');
+    const colFootBtn = document.createElement('button');
+    column.appendChild(columnTitle);
+    column.appendChild(taskContainer);
+    column.appendChild(columnFooter);
+    columnFooter.appendChild(colFootBtn);
+    // set column id, task container id and columnTitle so you can query them easily
+    column.id = 'column_' + columnData['columnId'];
+    taskContainer.id = 'tasksContainerColumn_' + columnData['columnId'];
+    columnTitle.title = 'Spaltenname';
+
+    column.classList.add('card', 'columnContainer', 'overflow-y-scroll');
+    columnTitle.classList.add('card-header', 'card-title', 'text-center', 'fs-4');
+    columnTitle.innerText = columnData['columnName'];
+
+    columnFooter.classList.add('card-footer', 'text-center');
+    columnFooter.classList.add('btn', 'btn-primary');
+    columnFooter.innerHTML = '<i class="fa-solid fa-plus"></i>';
+    columnFooter.addEventListener('click', () => {
+        showModal(REQ_URL_NEW, MODE_NEW, -1);
+    })
+    taskContainer.classList.add('card-body');
+    return column;
+}
+
+function crudColumn(columnData) {
+    const boardView = document.getElementById('tasksContainer');
+    if (!document.getElementById('column_' + columnData['columnId'])) {
+        boardView.appendChild(createColumn(columnData));
+    }
+    const taskContainer = document.getElementById('tasksContainerColumn_' + columnData['columnId']);
+    updateTasksOfContainer(taskContainer, columnData['tasks']);
 }
 
 function createTaskView() {
@@ -230,7 +240,7 @@ function createTaskView() {
         return response.json()
     }).then((data) => {
         for (const columnId in data) {
-            crudColumn(columnId, data[columnId]);
+            crudColumn(data[columnId]);
         }
     });
 }
@@ -283,12 +293,22 @@ function genModalForm_new() {
             return response.json(); // or response.text() or whatever the server sends
         }).then((data) => {
             if (data['success'] === true) {
-                console.log(data);
-                var task = document.getElementById('task_'+data['id']);
-                updateTask(
-                    task,
-                    data['taskData']
-                    );
+                if (data['mode'] === MODE_DELETE) {
+                    removeTask(data['id']);
+                } else {
+                    const taskContainer = document.getElementById('tasksContainerColumn_' + data['taskData']['spaltenid']);
+                    if (data['mode'] === MODE_NEW) {
+                        taskContainer.appendChild(createTask(data['taskData']));
+                    } else {
+                        const task = document.getElementById('task_' + data['id']);
+                        updateTask(
+                            task,
+                            data['taskData']
+                        );
+                        taskContainer.appendChild(task);
+                    }
+                    sortTasks(taskContainer);
+                }
                 $(MODAL_ID).modal('hide')
             } else {
                 MODAL_FORMFIELDS_NAMES.forEach(formField => {
