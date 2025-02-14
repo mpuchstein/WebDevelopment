@@ -184,6 +184,13 @@ class Database extends Model
         return $builder->delete();
     }
 
+    public function getUsers(int $userId = null): array{
+        if(session() -> get('pLevel')>=2000){
+            return $this->getUsersAdmin($userId);
+        } else {
+            return $this->getUsersSecure($userId);
+        }
+    }
     public function getUsersSecure(int $userId = null): array
     {
         $builder = $this->db->table($this->userTable);

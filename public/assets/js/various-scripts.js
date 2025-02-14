@@ -31,6 +31,15 @@ const REQ_HEADER_COLUMNS = new Request(
         }
     }
 )
+const REQ_HEADER_USERS= new Request(
+    BASE_URL + 'users/json',
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+)
 
 function getReqHeader(type) {
     switch (type) {
@@ -40,6 +49,8 @@ function getReqHeader(type) {
             return REQ_HEADER_COLUMNS;
         case 'boards':
             return REQ_HEADER_BOARDS;
+        case'users':
+            return REQ_HEADER_USERS;
     }
 }
 
@@ -481,7 +492,7 @@ function genModalForm(type, modal) {
                         }
                         sortTasks(taskContainer);
                     }
-                } else if (type === 'boards' || type === 'columns') {
+                } else if (type === 'boards' || type === 'columns' || type === 'users') {
                     if (data['mode'] === MODE_DELETE) {
                         removeTableRow(data['id']);
                     } else {

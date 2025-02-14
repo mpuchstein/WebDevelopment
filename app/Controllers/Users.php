@@ -6,58 +6,61 @@ use App\Models\Database;
 
 class Users extends BaseController
 {
-    public function getIndex(){
+
+    public function getIndex()
+    {
+        $database = new Database();
         $navData = $this->getNavElements('users');
         echo view('templates/header');
         echo view('templates/nav', $navData);
-        echo view('templates/components/udBtn');
-        echo view('templates/components/modalUsers');
         echo view('dev/users/index');
         echo view('templates/footer');
+        echo view('templates/scriptimports');
+        echo view('dev/users/script');
+        echo view('templates/siteend');
     }
-
-    public function getJson(int $userId=null){
+    public function postJson()
+    {
+        $reqData = $this->request->getJSON(true);
         $database = new Database();
-        $users = $database->getUsersSecure($userId);
-        return $this->response->setJson($users);
-    }
-
-    public function postNew(){
-        $data = $this->request->getPost();
-        $validation = service('validation');
-        if($validation->run($data, 'usersInsertArray')){
-            $database = new Database();
-            $id = $database->insertUser($data);
-            return response()->setJSON(['success' => true, 'id' => $id,]);
+        if ($reqData['mode'] === 'query') {
+            $userId= $reqData['userId'] ?? null;
+            $user = $database->getUsers($userId);
+            return $this->response->setJSON($user);
         } else {
-            $errors = $validation->getErrors();
-            return response()->setJSON(['success' => false, 'errors' => $errors,]);
+            $validation = service('validation');
+            $formData = $reqData['formData'];
+            if ($reqData['mode'] == 'new') {
+                if ($validation->run($formData, 'usersInsertArray')) {
+                    $database = new Database();
+                    $id = $database->insertUser($formData);
+                    $rowData = $database->getUsers($id);
+                    return $this->response->setJSON(['success' => true, 'mode' => 'new', 'id' => $id, 'rowData' => $rowData]);
+                } else {
+                    $errors = $validation->getErrors();
+                    return response()->setJSON(['success' => false, 'errors' => $errors,]);
+                }
+            } else if ($reqData['mode'] == 'edit') {
+                if ($validation->run($formData, 'usersUpdateArray')) {
+                    $database = new Database();
+                    $database->updateUser($formData['id'], $formData);
+                    $rowData = $database->getUsers($formData['id']);
+                    return $this->response->setJSON(['success' => true, 'mode' => 'edit', 'id' => $formData['id'], 'rowData' => $rowData]);
+                } else {
+                    $errors = $validation->getErrors();
+                    return response()->setJSON(['success' => false, 'errors' => $errors,]);
+                }
+            } elseif ($reqData['mode'] == 'delete') {
+                if ($validation->run($formData, 'usersDeleteArray')) {
+                    $database = new Database();
+                    $database->deleteUser($formData['id']);
+                    return $this->response->setJSON(['success' => true, 'mode' => 'delete', 'id' => $formData['id']]);
+                } else {
+                    $errors = $validation->getErrors();
+                    return response()->setJSON(['success' => false, 'errors' => $errors,]);
+                }
+            }
         }
-    }
-    public function postEdit(){
-        $data = $this->request->getPost();
-        $database = new Database();
-        $validation = service('validation');
-        if($validation->run($data, 'usersUpdateArray')){
-            $database = new Database();
-            $success = $database->updateUser($data['id'], $data);
-            return response()->setJSON(['success' => $success, 'id' => $data['id'],]);
-        } else {
-            $errors = $validation->getErrors();
-            return response()->setJSON(['success' => false, 'errors' => $errors,]);
-        }
-    }
-
-    public function postDelete(){
-        $data = $this->request->getPost();
-        $validation = service('validation');
-        if($validation->run($data, 'usersDeleteArray')){
-            $database = new Database();
-            $success = $database->deleteUser($data['id']);
-            return response()->setJSON(['success' => $success, 'id' => $data['id'],]);
-        } else {
-            $errors = $validation->getErrors();
-            return response()->setJSON(['success' => false, 'errors' => $errors,]);
-        }
+        return $this->response->setJSON(['success' => false, 'error' => 'Missing parameters']);
     }
 }
