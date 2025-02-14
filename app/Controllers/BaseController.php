@@ -65,14 +65,14 @@ abstract class BaseController extends Controller
             $navElems['tasks'] = ['name' => 'Tasks', 'link' => base_url('tasks')];
             $navElems['boards'] = ['name' => 'Boards', 'link' => base_url('boards')];
             $navElems['columns'] = ['name' => 'Spalten', 'link' => base_url('columns')];
-            $menuElems['profile'] = ['name' => 'Profile', 'link' => base_url('users/profile')];
+            $menuElems['profile'] = ['name' => 'Profile', 'link' => base_url('#')];
             $menuElems['logout'] = ['name' => 'Logout', 'link' => base_url('logout')];
             if(session('pLevel') >= 2000){
                 $navElems['users'] = ['name' => 'Personen', 'link' => base_url('users')];
             }
         } else {
-            $navElems['register'] = ['name' => 'Register', 'link' => base_url('register')];
-            $menuElems['register'] = ['name' => 'Register', 'link' => base_url('register')];
+            $navElems['register'] = ['name' => 'Register', 'link' => base_url('#')];
+            $menuElems['register'] = ['name' => 'Register', 'link' => base_url('#')];
         }
         if($active != null && isset($navElems[$active])){
             $navElems[$active]['active'] = true;

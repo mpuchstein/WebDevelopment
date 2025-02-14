@@ -6,9 +6,9 @@
         </div>
         <!-- redirection to other pages -->
         <div class="col text-end me-3">
-            <a href="<?= base_url('') ?>">Impressum</a>
-            <a href="<?= base_url('') ?>">Datenschutz</a>
-            <a href="<?= base_url('') ?>">Kontakt</a>
+            <a href="#">Impressum</a>
+            <a href="#">Datenschutz</a>
+            <a href="#">Kontakt</a>
         </div>
     </div>
 </footer>
