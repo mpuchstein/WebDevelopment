@@ -3,46 +3,34 @@ body {
 }
 
 .bg-header { /* Farbe der Navigation wird festgelegt */
-    background-color: #131A4D !important;
+    background-color: #3F7884 !important;
 }
 .bg-footer { /* Farbe des Footers wird festgelegt */
-    background-color: #131A4D !important;
+    background-color: #3F7884 !important;
 }
-
-.bg-dark {
-    background-color: #050715 !important;
-}
-
-/*.bg-body {
-    background-color: #050715 !important;
-}*/
 
 .btn-primary {
-    background-color: #212D84 !important;
-    border-color: #212D84 !important;
+    background-color: #5893A2 !important;
+    border-color: #5893A2 !important;
 }
 
 .btn-info {
-    background-color: #212D84 !important;
-    border-color: #212D84 !important;
-    color: white !important;
+    background-color: #97D1C9 !important;
+    border-color: #97D1C9 !important;
 }
 
 .btn-danger {
     background-color: #B3005A !important;
+    border-color: #B3005A !important;
 }
 
 a {
     color: white !important;  /* Farbe des Links */
 }
 
-/*a:hover {
-    color: #212D84 !important;
+a:hover {
+    color: #97D1C9 !important;
 }
-
-a:active {
-    color: #212D84 !important;
-}*/
 
 .text-white { /* Färbt Text weiß */
     color: white;
@@ -54,8 +42,9 @@ a:active {
     max-height: 80vh;
 }
 
-.table-dark i:hover { /* Icons färben sich blau beim überfahren mit Cursor */
-    color: lightskyblue;
+.table-primary thead {
+    background-color: #97D1c9 !important;
+    color: black !important;
 }
 
 #crudModal > .modal-content {
