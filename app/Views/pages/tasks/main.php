@@ -23,5 +23,6 @@
     <div id="tasksContainer" class="mt-3 container-fluid flex-grow-1 align-self-stretch align-items-stretch
      overflow-x-scroll d-flex gap-3">
         <!-- tasks are going to be placed here -->
+        <div id="taskPlaceholder" hidden aria-hidden="true">Dieses Board hat keine Spalten</div>
     </div>
 </main>

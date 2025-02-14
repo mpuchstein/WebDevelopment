@@ -31,7 +31,7 @@ const REQ_HEADER_COLUMNS = new Request(
         }
     }
 );
-const REQ_HEADER_USERS= new Request(
+const REQ_HEADER_USERS = new Request(
     BASE_URL + 'users/json',
     {
         method: "POST",
@@ -383,8 +383,16 @@ function createTaskView() {
     }).then((response) => {
         return response.json();
     }).then((data) => {
-        for (const columnId in data) {
-            updateColumn(data[columnId]);
+        if (data['success']) {
+            for (const columnId in data['data']) {
+                updateColumn(data['data'][columnId]);
+            }
+        }else{
+            const taskPlaceholder = document.getElementById('taskPlaceholder');
+            if(taskPlaceholder){
+                taskPlaceholder.hidden = false;
+                taskPlaceholder.setAttribute('aria-hidden', 'false');
+            }
         }
     });
 }

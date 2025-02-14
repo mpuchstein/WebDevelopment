@@ -37,7 +37,11 @@ class Tasks extends BaseController
             } else {
                 $resData = $database->getTask(taskId: $taskId, joinTaskType: true, joinColumns: true, joinUser: true, sortColumn: true);
             }
-            return $this->response->setJSON($resData);
+            if(sizeof($resData) > 0) {
+                return $this->response->setJSON(['success' => true, 'data' => $resData]);
+            } else {
+                return $this->response->setJSON(['success' => false, 'data' => null]);
+            }
         } else if ($reqData['mode'] == 'move') {
             $taskId = $reqData['taskId'];
             $columnId = $reqData['columnId'];
