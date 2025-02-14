@@ -34,5 +34,5 @@
     })
 
     createTaskView();
-    genModalForm();
+    genModalForm('tasks', modalTask);
 </script>

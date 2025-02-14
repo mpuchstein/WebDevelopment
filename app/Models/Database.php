@@ -152,7 +152,7 @@ class Database extends Model
     {
         $builder = $this->db->table($this->boardsTable);
         $builder->select('*');
-        $builder->orderBy($this->boardsTable . '.' . 'board', 'ASC');
+        $builder->orderBy($this->boardsTable . '.' . $this->primaryKeyBoards, 'ASC');
         if ($boardId != null) {
             $builder->where($this->primaryKeyBoards, $boardId);
             return $builder->get()->getRowArray();
@@ -161,7 +161,7 @@ class Database extends Model
 
     }
 
-    public function insertBoard(array $data): bool
+    public function insertBoard(array $data): int
     {
         $builder = $this->db->table($this->boardsTable);
         $builder->insert($data);

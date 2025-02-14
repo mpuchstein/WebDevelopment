@@ -4,13 +4,70 @@ const MODE_DELETE = 'delete'
 const MODE_QUERY = 'query'
 const MODE_MOVE = 'move'
 
+const REQ_HEADER_TASKS = new Request(
+    BASE_URL + 'tasks/json',
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+)
+const REQ_HEADER_BOARDS = new Request(
+    BASE_URL + 'boards/json',
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+)
+const REQ_HEADER_COLUMNS = new Request(
+    BASE_URL + 'columns/json',
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+)
 
+function getReqHeader(type) {
+    switch (type) {
+        case 'tasks':
+            return REQ_HEADER_TASKS;
+        case 'columns':
+            return REQ_HEADER_COLUMNS;
+        case 'boards':
+            return REQ_HEADER_BOARDS;
+    }
+}
+
+function createQueryRequestBody(type, elemId) {
+    switch (type) {
+        case 'tasks':
+            return JSON.stringify({
+                taskId: elemId,
+                mode: MODE_QUERY
+            })
+        case 'boards':
+            return JSON.stringify({
+                boardId: elemId,
+                mode: MODE_QUERY
+            })
+        case 'users':
+            return JSON.stringify({
+                userId: elemId,
+                mode: MODE_QUERY
+            })
+    }
+}
 
 function moveTask(taskContainer, task, before) {
     const columnId = taskContainer.dataset.columnId;
     const taskId = task.dataset.taskId;
     const beforeId = before !== null ? before.dataset.taskId : null;
-    fetch(REQ_HEADER, {
+    fetch(REQ_HEADER_TASKS, {
         body: JSON.stringify({
             taskId: taskId,
             mode: MODE_MOVE,
@@ -82,32 +139,44 @@ function updateTask(taskElem, taskData) {
     const userText = taskElem.querySelector('[title="Username"]');
     taskTitle.innerHTML = taskData['icon'] + '<span class="ms-4">' + taskData['task'] + '</span>';
     userText.innerText = taskData['username'];
-    if (taskData['erinnerung'] === '1') {
-        reminderIcon.classList.toggle('fa-bell', true);
-        reminderIcon.classList.toggle('fa-bell-slash', false);
-        reminderText.innerText = taskData['erinnerungsdatum']
-        if (Date.parse(taskData['erinnerungsdatum']) - DATE_NOW < 24 * 3600 * 1000) {
-            reminder.classList.toggle('bg-success', true);
-            reminder.classList.toggle('bg-danger', false);
-        } else if (Date.parse(taskData['erinnerungsdatum']) - DATE_NOW < 0) {
-            reminder.classList.toggle('bg-success', false);
-            reminder.classList.toggle('bg-danger', true);
+    if (taskData['erledigt'] === '0') {
+        deadline.hidden = false;
+        taskElem.classList.toggle('bg-success-subtle', false);
+        reminder.classList.toggle('bg-success-subtle', false);
+        reminderIcon.classList.toggle('fa-check', false);
+        if (taskData['erinnerung'] === '1') {
+            reminderIcon.classList.toggle('fa-bell', true);
+            reminderIcon.classList.toggle('fa-bell-slash', false);
+            reminderText.innerText = taskData['erinnerungsdatum']
+            if (Date.parse(taskData['erinnerungsdatum']) - DATE_NOW < 24 * 3600 * 1000) {
+                reminder.classList.toggle('bg-success', true);
+                reminder.classList.toggle('bg-danger', false);
+            } else if (Date.parse(taskData['erinnerungsdatum']) - DATE_NOW < 0) {
+                reminder.classList.toggle('bg-success', false);
+                reminder.classList.toggle('bg-danger', true);
+            } else {
+                reminder.classList.toggle('bg-success', false);
+                reminder.classList.toggle('bg-danger', false);
+            }
         } else {
-            reminder.classList.toggle('bg-success', false);
-            reminder.classList.toggle('bg-danger', false);
+            reminderIcon.classList.toggle('fa-bell', false);
+            reminderIcon.classList.toggle('fa-bell-slash', true);
+            reminderText.innerText = 'Keine Erinnerung';
+        }
+        deadlineText.innerText = taskData['deadline'];
+        if (Date.parse(taskData['deadline']) - DATE_NOW < 0) {
+            deadline.classList.toggle('bg-danger-subtle', true);
+            deadline.classList.toggle('bg-danger', false);
+        } else if (Date.parse(taskData['deadline']) - DATE_NOW < 24 * 3600 * 1000) {
+            deadline.classList.toggle('bg-danger-subtle', false);
+            deadline.classList.toggle('bg-danger', true);
         }
     } else {
-        reminderIcon.classList.toggle('fa-bell', false);
-        reminderIcon.classList.toggle('fa-bell-slash', true);
-        reminderText.innerText = 'Keine Erinnerung';
-    }
-    deadlineText.innerText = taskData['deadline'];
-    if (Date.parse(taskData['deadline']) - DATE_NOW < 0) {
-        deadline.classList.toggle('bg-danger-subtle', true);
-        deadline.classList.toggle('bg-danger', false);
-    } else if (Date.parse(taskData['deadline']) - DATE_NOW < 24 * 3600 * 1000) {
-        deadline.classList.toggle('bg-danger-subtle', false);
-        deadline.classList.toggle('bg-danger', true);
+        deadline.hidden = true;
+        taskElem.classList.toggle('bg-success-subtle', true);
+        reminder.classList.toggle('bg-success-subtle', true);
+        reminderIcon.classList.toggle('fa-check', true);
+        reminderText.innerText = 'Erledigt';
     }
 }
 
@@ -278,7 +347,7 @@ function createColumn(columnData) {
     return column;
 }
 
-function crudColumn(columnData) {
+function updateColumn(columnData) {
     const boardView = document.getElementById('tasksContainer');
     if (!document.getElementById('column_' + columnData['columnId'])) {
         boardView.appendChild(createColumn(columnData));
@@ -290,62 +359,96 @@ function crudColumn(columnData) {
 
 function createTaskView() {
     const boardId = document.getElementById('boardSelector').value
-    fetch(REQ_HEADER, {
+    fetch(REQ_HEADER_TASKS, {
         body: JSON.stringify({
             boardId: boardId,
             mode: MODE_QUERY
         })
     }).then((response) => {
-        return response.json()
+        return response.json();
     }).then((data) => {
         for (const columnId in data) {
-            crudColumn(data[columnId]);
+            updateColumn(data[columnId]);
         }
     });
 }
 
-function updateTable() {
-    let tableRows = ''
-    const rowButtons = document.getElementById(TEMPLATE_UD_BTN).innerHTML.replaceAll('%FORM_ID%', MODAL_FORM_ID)
-    fetch(REQ_URL_JSON).then((response) => {
-        return response.json()
-    }).then((data) => {
-        for (const row of data) {
-            tableRows += '<tr>'
-            for (const tid of THEAD_IDS) {
-                tableRows += '<td>' + row[tid] + '</td>'
-            }
-            tableRows += '<td>'
-            tableRows += rowButtons.replaceAll('%ID%', row['id']);
-            tableRows += '</td>'
-            tableRows += '</tr>'
+
+function removeTableRow(rowId) {
+    const row = document.getElementById('tableRow_' + rowId);
+    if (row) {
+        row.remove();
+    }
+}
+
+function updateTableRow(rowElem, rowData) {
+    const rowFields = Array.from(rowElem.querySelectorAll('[data-table-bind]'))
+    rowFields.forEach(rf => {
+        rf.innerText = rowData[rf.dataset.tableBind];
+    });
+}
+
+function createTableRow(rowData, modal) {
+    const resRow = document.getElementById('templateRow').cloneNode(true);
+    const rowActions = Array.from(resRow.querySelectorAll('[data-table-action]'));
+    resRow.hidden = false;
+    resRow.setAttribute('aria-hidden', 'false');
+    resRow.id = 'tableRow_' + rowData['id'];
+    updateTableRow(resRow, rowData);
+    rowActions.forEach(ra => {
+        switch (ra.dataset.tableAction) {
+            case 'buttons':
+                const btnGrp = document.createElement('div');
+                const editBtn = document.createElement('button');
+                const delBtn = document.createElement('button');
+                ra.appendChild(btnGrp);
+                btnGrp.appendChild(editBtn);
+                btnGrp.appendChild(delBtn);
+                btnGrp.classList.add('btn-group', 'd-md-none');
+                editBtn.type = 'button';
+                delBtn.type = 'button';
+                editBtn.classList.add('btn', 'btn-sm', 'btn-info')
+                delBtn.classList.add('btn', 'btn-sm', 'btn-danger')
+                editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
+                delBtn.innerHTML = '<i class="fa-solid fa-eraser"></i>';
+                editBtn.addEventListener('click', () => {
+                    showModal(modal, MODE_EDIT, rowData['id']);
+                })
+                delBtn.addEventListener('click', () => {
+                    showModal(modal, MODE_DELETE, rowData['id']);
+                })
+                break;
         }
-        document.getElementById(TABLE_BODY_ID).innerHTML = tableRows
-        for (const row of data) {
-            const elemid = row['id']
-            const editid = 'edit_' + elemid
-            const delid = 'delete_' + elemid
-            const editBtn = document.getElementById(editid)
-            const delBtn = document.getElementById(delid)
-            editBtn.addEventListener('click', () => {
-                showModal(REQ_URL_EDIT, MODE_EDIT, elemid)
-            })
-            delBtn.addEventListener('click', () => {
-                showModal(REQ_URL_DELETE, MODE_DELETE, elemid)
-            })
+    });
+    return resRow;
+}
+
+function createTable(type, modal) {
+    const reqHeader = getReqHeader(type)
+    fetch(reqHeader, {
+        body: JSON.stringify({
+            mode: MODE_QUERY,
+        })
+    }).then((response) => {
+        return response.json();
+    }).then(data => {
+        const tableBody = document.getElementById(TABLE_BODY_ID);
+        for (const id in data) {
+            tableBody.appendChild(createTableRow(data[id], modal));
         }
     })
 }
 
-function genModalForm() {
+function genModalForm(type, modal) {
     document.forms[MODAL_FORM_ID].addEventListener('submit', (event) => {
         event.preventDefault();
         // TODO do something here to show user that form is being submitted
         const formData = {};
+        const reqHeader = getReqHeader(type);
         new FormData(event.target).forEach((value, key) => {
             formData[key] = value;
         });
-        fetch(REQ_HEADER, {
+        fetch(reqHeader, {
             method: 'POST',
             body: JSON.stringify({
                 mode: event.target.dataset.mode,
@@ -359,23 +462,39 @@ function genModalForm() {
             return response.json();
         }).then((data) => {
             if (data['success'] === true) {
-                if (data['mode'] === MODE_DELETE) {
-                    removeTask(data['id']);
-                } else {
-                    const taskContainer = document.getElementById('tasksContainerColumn_' + data['taskData']['spaltenid']);
-                    if (data['mode'] === MODE_NEW) {
-                        taskContainer.appendChild(createTask(data['taskData']));
+                if (type === 'tasks') {
+                    if (data['mode'] === MODE_DELETE) {
+                        removeTask(data['id']);
                     } else {
-                        const task = document.getElementById('task_' + data['id']);
-                        updateTask(
-                            task,
-                            data['taskData']
-                        );
-                        taskContainer.appendChild(task);
+                        const taskContainer = document.getElementById('tasksContainerColumn_' + data['taskData']['spaltenid']);
+                        if (data['mode'] === MODE_NEW) {
+                            taskContainer.appendChild(createTask(data['taskData']));
+                        } else {
+                            const task = document.getElementById('task_' + data['id']);
+                            updateTask(task, data['taskData']);
+                            taskContainer.appendChild(task);
+                        }
+                        sortTasks(taskContainer);
                     }
-                    sortTasks(taskContainer);
+                } else if (type === 'boards') {
+                    if (data['mode'] === MODE_DELETE) {
+                        removeTableRow(data['id']);
+                    } else {
+                        const rowContainer = document.getElementById(TABLE_BODY_ID);
+                        if (data['mode'] === MODE_NEW) {
+                            rowContainer.appendChild(createTableRow(data['rowData'], modal));
+                        } else {
+                            const row = document.getElementById('tableRow_' + data['id']);
+                            console.log(data);
+                            console.log('tableRow_' + data['id']);
+                            updateTableRow(
+                                row,
+                                data['rowData']
+                            );
+                        }
+                    }
                 }
-                modalTask.hide();
+                modal.hide();
             } else {
                 MODAL_FORMFIELDS_NAMES.forEach(formField => {
                     document.getElementById(formField).classList.toggle('is-invalid', formField in data['errors'])
@@ -388,8 +507,8 @@ function genModalForm() {
         });
     });
     MODAL_FORMFIELDS_NAMES.forEach(e => {
-        const checkbox= document.getElementById(e);
-        if(checkbox.dataset.inputControl) {
+        const checkbox = document.getElementById(e);
+        if (checkbox.dataset.inputControl) {
             const inputField = document.getElementById(checkbox.dataset.inputControl);
             checkbox.addEventListener('change', (event) => {
                 inputField.disabled = !event.target.checked;
@@ -399,11 +518,12 @@ function genModalForm() {
 }
 
 function showModal(modalEle, mode, elemid) {
-    const modalHeadline = document.getElementById(MODAL_HEADLINE_ID)
-    const modalForm = document.getElementById(MODAL_FORM_ID)
-    const formButton = document.getElementById(MODAL_SUBMIT_ID)
-    const formFields = document.getElementById(MODAL_FORMFIELDS_ID)
-    formFields.disabled = false
+    const modalHeadline = document.getElementById(MODAL_HEADLINE_ID);
+    const modalForm = document.getElementById(MODAL_FORM_ID);
+    const formButton = document.getElementById(MODAL_SUBMIT_ID);
+    const formFields = document.getElementById(MODAL_FORMFIELDS_ID);
+    document.getElementById('id').disabled = false;
+    formFields.disabled = false;
     MODAL_FORMFIELDS_NAMES.forEach(formField => {
         document.getElementById(formField).classList.toggle('is-invalid', false)
         document.getElementById(formField + '_invalid').innerText = ''
@@ -413,13 +533,14 @@ function showModal(modalEle, mode, elemid) {
     modalForm.dataset.mode = mode;
     switch (mode) {
         case MODE_NEW:
+            document.getElementById('id').disabled = true;
             modalHeadline.innerText = 'Neu'
             formButton.className = 'btn btn-success'
             formButton.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Speichern'
             MODAL_FORMFIELDS_NAMES.forEach(e => {
                 const checkbox = document.getElementById(e);
-                if(checkbox.dataset.inputControl) {
-                    const inputField= document.getElementById(checkbox.dataset.inputControl);
+                if (checkbox.dataset.inputControl) {
+                    const inputField = document.getElementById(checkbox.dataset.inputControl);
                     inputField.disabled = !checkbox.checked;
                 }
             });
@@ -440,12 +561,9 @@ function showModal(modalEle, mode, elemid) {
         if (mode === MODE_NEW) {
             document.getElementById('spaltenid').value = elemid;
         } else {
-            fetch(REQ_HEADER, {
-                    body: JSON.stringify({
-                        taskId: elemid,
-                        mode: MODE_QUERY
-                    })
-                }
+            const reqHeader = getReqHeader(modalForm.dataset.type);
+            const reqBody = createQueryRequestBody(modalForm.dataset.type, elemid)
+            fetch(reqHeader, {body: reqBody}
             ).then((response) => {
                 return response.json()
             }).then((data) => {
@@ -457,9 +575,9 @@ function showModal(modalEle, mode, elemid) {
                         } else {
                             inputField.value = entry[1];
                         }
-                        if(inputField.dataset.inputControl) {
+                        if (inputField.dataset.inputControl) {
                             console.log(inputField)
-                            const controlledField= document.getElementById(inputField.dataset.inputControl);
+                            const controlledField = document.getElementById(inputField.dataset.inputControl);
                             controlledField.disabled = !inputField.checked;
                         }
                     }
