@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="col-auto">
-            <button type="button" id="btn_add" class="btn btn-primary">
+            <button type="button" id="btn_add_task" class="btn btn-primary">
                 <i class="fa-solid fa-plus"></i>
             </button>
         </div>

@@ -2,7 +2,7 @@ const MODE_NEW = 'new'
 const MODE_EDIT = 'edit'
 const MODE_DELETE = 'delete'
 const MODE_QUERY = 'query'
-const MODE_MOVE= 'move'
+const MODE_MOVE = 'move'
 
 function moveTask(taskContainer, task, before) {
     const columnId = taskContainer.dataset.columnId;
@@ -22,16 +22,12 @@ function moveTask(taskContainer, task, before) {
         }
         return response.json();
     }).then((data) => {
-        if(data['success'] === true){
-            Object.entries(data['tasks']).forEach( entry  => {
-                document.getElementById('task_'+entry[1]['taskId']).dataset.sortId = entry[1]['sortid'];
-                console.log(entry);
-                console.log(
-                    document.getElementById('task_'+entry[1]['taskId']).dataset.sortId = entry[1]['sortid']
-                );
+        if (data['success'] === true) {
+            Object.entries(data['tasks']).forEach(entry => {
+                document.getElementById('task_' + entry[1]['taskId']).dataset.sortId = entry[1]['sortid'];
             });
         } else {
-            if(confirm('Drag and Drop fehlgeschlagen. Seite neuladen?')){
+            if (confirm('Drag and Drop fehlgeschlagen. Seite neuladen?')) {
                 window.location.reload();
             }
 
@@ -85,7 +81,8 @@ function updateTask(taskElem, taskData) {
     taskTitle.innerHTML = taskData['icon'] + '<span class="ms-4">' + taskData['task'] + '</span>';
     userText.innerText = taskData['username'];
     if (taskData['erinnerung'] === '1') {
-        reminderIcon.classList.add('fa-bell');
+        reminderIcon.classList.toggle('fa-bell', true);
+        reminderIcon.classList.toggle('fa-bell-slash', false);
         reminderText.innerText = taskData['erinnerungsdatum']
         if (Date.parse(taskData['erinnerungsdatum']) - DATE_NOW < 24 * 3600) {
             reminder.classList.toggle('bg-danger', true);
@@ -93,7 +90,8 @@ function updateTask(taskElem, taskData) {
             reminder.classList.toggle('bg-danger', false);
         }
     } else {
-        reminderIcon.classList.add('fa-bell-slash');
+        reminderIcon.classList.toggle('fa-bell', false);
+        reminderIcon.classList.toggle('fa-bell-slash', true);
         reminderText.innerText = 'Keine Erinnerung';
     }
     deadlineText.innerText = taskData['deadline'];
@@ -149,10 +147,10 @@ function createTask(taskData) {
     editDrpBtn.innerText = 'Bearbeiten';
     delDrpBtn.innerHTML = 'Löschen';
     editDrpLi.addEventListener('click', () => {
-        showModal_new(MODE_EDIT, taskData['id']);
+        showModal(modalTask, MODE_EDIT, taskData['id']);
     })
     delDrpLi.addEventListener('click', () => {
-        showModal_new(MODE_DELETE, taskData['id']);
+        showModal(modalTask, MODE_DELETE, taskData['id']);
     })
     // generate task body
     const taskBody = document.createElement('div');
@@ -213,15 +211,13 @@ function createTask(taskData) {
     delBtn.type = 'button';
     editBtn.classList.add('btn', 'btn-sm', 'btn-info')
     delBtn.classList.add('btn', 'btn-sm', 'btn-danger')
-    editBtn.dataset.bsTarget = MODAL_FORM_ID;
-    delBtn.dataset.bsTarget = MODAL_FORM_ID;
     editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
     delBtn.innerHTML = '<i class="fa-solid fa-eraser"></i>';
     editBtn.addEventListener('click', () => {
-        showModal_new(MODE_EDIT, taskData['id']);
+        showModal(modalTask, MODE_EDIT, taskData['id']);
     })
     delBtn.addEventListener('click', () => {
-        showModal_new(MODE_DELETE, taskData['id']);
+        showModal(modalTask, MODE_DELETE, taskData['id']);
     })
     // fill task with data
     updateTask(task, taskData);
@@ -265,7 +261,7 @@ function createColumn(columnData) {
     columnFooter.classList.add('btn', 'btn-primary');
     columnFooter.innerHTML = '<i class="fa-solid fa-plus"></i>';
     columnFooter.addEventListener('click', () => {
-        showModal_new(MODE_NEW, columnData['columnId']);
+        showModal(modalTask, MODE_NEW, columnData['columnId']);
     })
     taskContainer.classList.add('card-body');
     taskContainer.dataset.columnId = columnData['columnId'];
@@ -332,7 +328,7 @@ function updateTable() {
     })
 }
 
-function genModalForm_new() {
+function genModalForm() {
     document.forms[MODAL_FORM_ID].addEventListener('submit', (event) => {
         event.preventDefault();
         // TODO do something here to show user that form is being submitted
@@ -340,7 +336,6 @@ function genModalForm_new() {
         new FormData(event.target).forEach((value, key) => {
             formData[key] = value;
         });
-        console.log(event.target);
         fetch(REQ_TASK_HEADER, {
             method: 'POST',
             body: JSON.stringify({
@@ -383,43 +378,18 @@ function genModalForm_new() {
             console.log(error);
         });
     });
-    document.getElementById('erinnerung').addEventListener('change', (event) => {
-            document.getElementById('erinnerungsdatum').disabled = !event.target.checked;
+    MODAL_FORMFIELDS_NAMES.forEach(e => {
+        const checkbox= document.getElementById(e);
+        if(checkbox.dataset.inputControl) {
+            const inputField = document.getElementById(checkbox.dataset.inputControl);
+            checkbox.addEventListener('change', (event) => {
+                inputField.disabled = !event.target.checked;
+            });
         }
-    )
+    })
 }
 
-function genModalForm() {
-    document.forms[MODAL_FORM_ID].addEventListener('submit', (event) => {
-        event.preventDefault();
-        // TODO do something here to show user that form is being submitted
-        fetch(event.target.action, {
-            method: 'POST',
-            body: new URLSearchParams(new FormData(event.target)) // event.target is the form
-        }).then((response) => {
-            if (!response.ok) {
-                console.log(response)
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json(); // or response.text() or whatever the server sends
-        }).then((data) => {
-            if (data['success'] === true) {
-                updateSite()
-                $(MODAL_ID).modal('hide')
-            } else {
-                MODAL_FORMFIELDS_NAMES.forEach(formField => {
-                    document.getElementById(formField).classList.toggle('is-invalid', formField in data['errors'])
-                    document.getElementById(formField + '_invalid').innerText = data['errors'][formField]
-                })
-            }
-        }).catch((error) => {
-            // TODO handle error
-            console.log(error)
-        });
-    });
-}
-
-function showModal_new(mode, elemid) {
+function showModal(modalEle, mode, elemid) {
     const modalHeadline = document.getElementById(MODAL_HEADLINE_ID)
     const modalForm = document.getElementById(MODAL_FORM_ID)
     const formButton = document.getElementById(MODAL_SUBMIT_ID)
@@ -437,6 +407,13 @@ function showModal_new(mode, elemid) {
             modalHeadline.innerText = 'Neu'
             formButton.className = 'btn btn-success'
             formButton.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Speichern'
+            MODAL_FORMFIELDS_NAMES.forEach(e => {
+                const checkbox = document.getElementById(e);
+                if(checkbox.dataset.inputControl) {
+                    const inputField= document.getElementById(checkbox.dataset.inputControl);
+                    inputField.disabled = !checkbox.checked;
+                }
+            });
             break
         case MODE_EDIT:
             modalHeadline.innerText = 'Bearbeiten'
@@ -468,62 +445,20 @@ function showModal_new(mode, elemid) {
                     if (inputField) {
                         if (inputField.type === 'checkbox') {
                             inputField.checked = entry[1] === '1';
-                        } else
+                        } else {
                             inputField.value = entry[1];
+                        }
+                        if(inputField.dataset.inputControl) {
+                            console.log(inputField)
+                            const controlledField= document.getElementById(inputField.dataset.inputControl);
+                            controlledField.disabled = !inputField.checked;
+                        }
                     }
                 })
             })
         }
     }
-    document.getElementById('erinnerungsdatum').disabled = !document.getElementById('erinnerung').checked;
-    modalTask.show();
-}
-
-function showModal(requrl, mode, elemid) {
-    const modalHeadline = document.getElementById(MODAL_HEADLINE_ID)
-    const modalForm = document.getElementById(MODAL_FORM_ID)
-    const formButton = document.getElementById(MODAL_SUBMIT_ID)
-    const formFields = document.getElementById(MODAL_FORMFIELDS_ID)
-    formFields.disabled = false
-    MODAL_FORMFIELDS_NAMES.forEach(formField => {
-        document.getElementById(formField).classList.toggle('is-invalid', false)
-        document.getElementById(formField + '_invalid').innerText = ''
-    })
-    modalForm.reset()
-    modalForm.action = requrl
-
-    switch (mode) {
-        case MODE_NEW:
-            modalHeadline.innerText = 'Neu'
-            formButton.className = 'btn btn-success'
-            formButton.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Speichern'
-            break
-        case MODE_EDIT:
-            modalHeadline.innerText = 'Bearbeiten'
-            formButton.className = 'btn btn-info'
-            formButton.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Editieren'
-            break;
-        case MODE_DELETE:
-            modalHeadline.innerText = 'Löschen'
-            formButton.className = 'btn btn-danger'
-            formButton.innerHTML = '<i class="fa-solid fa-eraser"></i> Löschen'
-            formFields.disabled = true
-            break;
-    }
-    if (elemid > 0) {
-        fetch(REQ_URL_JSON + '/' + elemid).then((response) => {
-            return response.json()
-        }).then((data) => {
-            Object.entries(data).forEach(entry => {
-                const inputField = document.getElementById(entry[0])
-                if (inputField) {
-                    inputField.value = entry[1]
-                }
-            })
-        })
-    }
-
-    $(MODAL_ID).modal('show');
+    modalEle.show();
 }
 
 function setBoard(url, id) {

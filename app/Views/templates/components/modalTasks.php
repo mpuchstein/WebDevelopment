@@ -49,7 +49,8 @@
                             <div id="deadline_invalid" class="invalid-feedback"></div>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" name="erinnerung" id="erinnerung" class="form-check-input">
+                            <input type="checkbox" name="erinnerung" id="erinnerung" class="form-check-input"
+                            data-input-control="erinnerungsdatum">
                             <label for="erinnerung" class="form-check-label">Erinnerung</label>
                             <div id="erinnerung_invalid" class="invalid-feedback"></div>
                         </div>

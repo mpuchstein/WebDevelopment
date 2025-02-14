@@ -17,61 +17,11 @@ class Tasks extends BaseController
         $indexData['boardsId'] = session('boardsid');
         echo view('templates/header');
         echo view('templates/nav', $navData);
-        echo view('pages/tasks/index', $indexData);
+        echo view('pages/tasks/main', $indexData);
         echo view('templates/footer');
         echo view('templates/scriptimports');
-        echo view('templates/addins/tasks');
+        echo view('pages/tasks/script');
         echo view('templates/siteend');
-    }
-
-    public function postNew()
-    {
-        $data = $this->request->getPost();
-        $data['erinnerung'] = isset($data['erinnerung']) ? '1' : '0';
-        $data['erledigt'] = isset($data['erledigt']) ? '1' : '0';
-        $data['geloescht'] = isset($data['geloescht']) ? '1' : '0';
-        $validation = service('validation');
-        if ($validation->run($data, 'tasksArray')) {
-            $database = new Database();
-            $id = $database->insertTask($data);
-            $taskData = $database->getTask($id, joinTaskType: true, joinUser: true)[0];
-            return $this->response->setJSON(['success' => true, 'mode' => 'new', 'id' => $id, 'taskData' => $taskData]);
-        } else {
-            $errors = $validation->getErrors();
-            return $this->response->setJSON(['success' => false, 'errors' => $errors]);
-        }
-    }
-
-    public function postEdit()
-    {
-        $reqData = $this->request->getPost();
-        $reqData['erinnerung'] = isset($reqData['erinnerung']) ? '1' : '0';
-        $reqData['erledigt'] = isset($reqData['erledigt']) ? '1' : '0';
-        $reqData['geloescht'] = isset($reqData['geloescht']) ? '1' : '0';
-        $validation = service('validation');
-        if ($validation->run($reqData, 'tasksArray')) {
-            $database = new Database();
-            $success = $database->updateTask($reqData['id'], $reqData);
-            $taskData = $database->getTask($reqData['id'], joinTaskType: true, joinUser: true)[0];
-            return $this->response->setJSON(['success' => $success, 'mode' => 'edit', 'id' => $reqData['id'], 'taskData' => $taskData]);
-        } else {
-            $errors = $validation->getErrors();
-            return $this->response->setJSON(['success' => false, 'errors' => $errors]);
-        }
-    }
-
-    public function postDelete()
-    {
-        $reqData = $this->request->getPost();
-        $validation = service('validation');
-        if ($validation->run($reqData, 'taskDelete')) {
-            $database = new Database();
-            $database->deleteTask($reqData['id']);
-            return $this->response->setJSON(['success' => true, 'mode' => 'delete', 'id' => $reqData['id']]);
-        } else {
-            $errors = $validation->getErrors();
-            return $this->response->setJSON(['success' => false, 'errors' => $errors]);
-        }
     }
 
     public function postJson()
@@ -83,20 +33,9 @@ class Tasks extends BaseController
             $resData = [];
             $taskId = isset($reqData['taskId']) ? intval($reqData['taskId']) : null;
             if (isset($reqData['boardId'])) {
-                $columnData = $database->getColumns(boardsId: $reqData['boardId']);
-                foreach ($columnData as $column) {
-                    $resData[$column['id']] = [
-                        'columnId' => $column['id'],
-                        'columnName' => $column['spalte'],
-                        'tasks' => $database->getTask(taskId: $taskId, columnId: $column['id'], joinTaskType: true, joinUser: true),
-                    ];
-                }
+                $resData = $database -> getTaskOfBoard($reqData['boardId'], $taskId);
             } else {
-                if ($taskId == null) {
-                    $resData = $database->getTask(taskId: $taskId, joinTaskType: true, joinColumns: true, joinUser: true, sortColumn: true);
-                } else {
-                    $resData = $database->getTask(taskId: $taskId, joinTaskType: true, joinColumns: true, joinUser: true, sortColumn: true)[0];
-                }
+                $resData = $database->getTask(taskId: $taskId, joinTaskType: true, joinColumns: true, joinUser: true, sortColumn: true);
             }
             return $this->response->setJSON($resData);
         } else if ($reqData['mode'] == 'move') {
@@ -114,7 +53,7 @@ class Tasks extends BaseController
             if ($reqData['mode'] == 'new') {
                 if ($validation->run($formData, 'tasksArray')) {
                     $id = $database->insertTask($formData);
-                    $taskData = $database->getTask($id, joinTaskType: true, joinUser: true)[0];
+                    $taskData = $database->getTask($id, joinTaskType: true, joinUser: true);
                     return $this->response->setJSON(['success' => true, 'mode' => 'new', 'id' => $id, 'taskData' => $taskData]);
                 } else {
                     $errors = $validation->getErrors();
@@ -123,7 +62,7 @@ class Tasks extends BaseController
             } elseif ($reqData['mode'] == 'edit') {
                 if ($validation->run($formData, 'tasksArray')) {
                     $success = $database->updateTask($formData['id'], $formData);
-                    $taskData = $database->getTask($formData['id'], joinTaskType: true, joinUser: true)[0];
+                    $taskData = $database->getTask($formData['id'], joinTaskType: true, joinUser: true);
                     return $this->response->setJSON(['success' => $success, 'mode' => 'edit', 'id' => $formData['id'], 'taskData' => $taskData]);
                 } else {
                     $errors = $validation->getErrors();

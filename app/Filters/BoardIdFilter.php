@@ -17,8 +17,6 @@ class BoardIdFilter implements FilterInterface
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        $bid = session('boardsid');
-        session() -> set('boardsid', $this->checkBoardId($bid));
     }
 
     private function checkBoardId($boardsId) {

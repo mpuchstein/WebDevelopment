@@ -54,6 +54,10 @@ class Database extends Model
 
     protected array $allowedFieldsUser = [
         'username' => null,
+    ];
+
+    protected array $allowedFieldsUserAdmin = [
+        'username' => null,
         'plevel' => null,
         'defboard' => null,
         'vorname' => null,
@@ -121,31 +125,6 @@ class Database extends Model
         return $builder->delete();
     }
 
-    public function getColumns(int $columnId = null, int $boardsId = null, bool $joinBoards = false): array
-    {
-        $builder = $this->db->table($this->columnsTable);
-        $builder->select($this->columnsTable . '.*');
-        $builder->orderBy($this->columnsTable . '.' . 'sortid', 'ASC');
-        if ($columnId != null) {
-            $builder->where($this->columnsTable . '.' . $this->primaryKeyColumns, $columnId);
-        }
-        if ($boardsId != null) {
-            $builder->where($this->columnsTable . '.' . $this->foreignKeyColumns[$this->boardsTable], $boardsId);
-        }
-        if ($joinBoards) {
-            foreach ($this->allowedFieldsBoards as $key => $value) {
-                $builder->select($key);
-            }
-            $builder->join($this->boardsTable,
-                $this->columnsTable . '.' . $this->foreignKeyColumns[$this->boardsTable]
-                . '='
-                . $this->boardsTable . '.' . $this->primaryKeyBoards,
-                'left'
-            );
-        }
-        return $builder->get()->getResultArray();
-    }
-
     public function insertColumn(array $data): bool
     {
         $builder = $this->db->table($this->columnsTable);
@@ -153,14 +132,14 @@ class Database extends Model
         return $this->db->insertID();
     }
 
-//  CRUD functions for columns
-
     public function updateColumn(int $columnId, array $data): bool
     {
         $builder = $this->db->table($this->columnsTable);
         $builder->where($this->primaryKeyColumns, $columnId);
         return $builder->update($data);
     }
+
+//  CRUD functions for columns
 
     public function deleteColumn(int $columnId): bool
     {
@@ -189,14 +168,14 @@ class Database extends Model
         return $this->db->insertID();
     }
 
-//  CRUD functions for boards
-
     public function updateBoard(int $boardId, array $data): bool
     {
         $builder = $this->db->table($this->boardsTable);
         $builder->where($this->primaryKeyBoards, $boardId);
         return $builder->update($data);
     }
+
+//  CRUD functions for boards
 
     public function deleteBoard(int $boardId): bool
     {
@@ -208,7 +187,24 @@ class Database extends Model
     public function getUsersSecure(int $userId = null): array
     {
         $builder = $this->db->table($this->userTable);
-        $builder->select('id, username, plevel, defboard, vorname, name, email');
+        $builder->select($this->userTable . '.' . $this->primaryKeyUser);
+        foreach ($this->allowedFieldsUser as $key => $value) {
+            $builder->select($this->userTable . '.' . $key);
+        }
+        if ($userId != null) {
+            $builder->where($this->primaryKeyUser, $userId);
+            return $builder->get()->getRowArray();
+        }
+        return $builder->get()->getResultArray();
+    }
+
+    public function getUsersAdmin(int $userId = null): array
+    {
+        $builder = $this->db->table($this->userTable);
+        $builder->select($this->userTable . '.' . $this->primaryKeyUser);
+        foreach ($this->allowedFieldsUserAdmin as $key => $value) {
+            $builder->select($this->userTable . '.' . $key);
+        }
         if ($userId != null) {
             $builder->where($this->primaryKeyUser, $userId);
             return $builder->get()->getRowArray();
@@ -261,6 +257,99 @@ class Database extends Model
         $builder = $this->db->table($this->userTable);
         $builder->where($this->primaryKeyUser, $userId);
         return $builder->delete();
+    }
+
+    public function getTaskOfBoard(int $boardId, int $taskId = null): array
+    {
+        $columnData = $this->getColumns(boardsId: $boardId);
+        foreach ($columnData as $column) {
+            $resData[$column['id']] = [
+                'columnId' => $column['id'],
+                'columnName' => $column['spalte'],
+                'tasks' => $this->getTask(taskId: $taskId, columnId: $column['id'], joinTaskType: true, joinUser: true),
+            ];
+        }
+        return $resData;
+    }
+
+    public function getColumns(int $columnId = null, int $boardsId = null, bool $joinBoards = false): array
+    {
+        $builder = $this->db->table($this->columnsTable);
+        $builder->select($this->columnsTable . '.*');
+        $builder->orderBy($this->columnsTable . '.' . 'sortid', 'ASC');
+        if ($columnId != null) {
+            $builder->where($this->columnsTable . '.' . $this->primaryKeyColumns, $columnId);
+        }
+        if ($boardsId != null) {
+            $builder->where($this->columnsTable . '.' . $this->foreignKeyColumns[$this->boardsTable], $boardsId);
+        }
+        if ($joinBoards) {
+            foreach ($this->allowedFieldsBoards as $key => $value) {
+                $builder->select($key);
+            }
+            $builder->join($this->boardsTable,
+                $this->columnsTable . '.' . $this->foreignKeyColumns[$this->boardsTable]
+                . '='
+                . $this->boardsTable . '.' . $this->primaryKeyBoards,
+                'left'
+            );
+        }
+        return $builder->get()->getResultArray();
+    }
+
+    public function getTask(int  $taskId = null, int $columnId = null, int $userId = null,
+                            bool $joinTaskType = false, bool $joinColumns = false, bool $joinUser = false,
+                            bool $sortColumn = false): array
+    {
+        $builder = $this->db->table($this->tasksTable);
+        $builder->select($this->tasksTable . '.*');
+        $builder->orderBy($this->tasksTable . '.' . 'sortid', 'ASC');
+        if ($taskId != null) {
+            $builder->where($this->tasksTable . '.' . $this->primaryKeyTasks, $taskId);
+        }
+        if ($columnId != null) {
+            $builder->where($this->tasksTable . '.' . $this->foreignKeyTasks[$this->columnsTable], $columnId);
+        }
+        if ($userId != null) {
+            $builder->where($this->tasksTable . '.' . $this->foreignKeyTasks[$this->userTable], $userId);
+        }
+        //join tasks with tasktypes where taskartenid = taskarten.id
+        if ($joinTaskType) {
+            foreach ($this->allowedFieldsTaskTypes as $key => $value) {
+                $builder->select($this->taskTypesTable . '.' . $key);
+            }
+            $builder->join($this->taskTypesTable,
+                $this->foreignKeyTasks[$this->taskTypesTable]
+                . '='
+                . $this->taskTypesTable . '.' . $this->primaryKeyTaskTypes,
+                'left');
+        }
+        if ($joinColumns) {
+            foreach ($this->allowedFieldsColumns as $key => $value) {
+                $builder->select($this->columnsTable . '.' . $key);
+            }
+            $builder->join($this->columnsTable,
+                $this->foreignKeyTasks[$this->columnsTable]
+                . '='
+                . $this->columnsTable . '.' . $this->primaryKeyColumns);
+        }
+        if ($joinUser) {
+            foreach ($this->allowedFieldsUser as $key => $value) {
+                $builder->select($this->userTable . '.' . $key);
+            }
+            $builder->join($this->userTable,
+                $this->foreignKeyTasks[$this->userTable]
+                . '='
+                . $this->userTable . '.' . $this->primaryKeyUser);
+
+        }
+        if ($sortColumn) {
+            $builder->orderBy($this->tasksTable . '.' . $this->foreignKeyTasks[$this->columnsTable]);
+        }
+        if ($taskId == null)
+            return $builder->get()->getResultArray();
+        else
+            return $builder->get()->getRowArray();
     }
 
     public function moveTaskBefore($taskId, $columnId, $beforeId): array
@@ -338,58 +427,6 @@ class Database extends Model
         }
         $this->updateTask($taskId, ['spaltenid' => $columnId, 'sortid' => $tmpSortid]);
         return [$taskId => ['taskId' => $taskId, 'sortid' => $tmpSortid]];
-    }
-
-    public function getTask(int  $taskId = null, int $columnId = null, int $userId = null,
-                            bool $joinTaskType = false, bool $joinColumns = false, bool $joinUser = false,
-                            bool $sortColumn = false): array
-    {
-        $builder = $this->db->table($this->tasksTable);
-        $builder->select($this->tasksTable . '.*');
-        $builder->orderBy($this->tasksTable . '.' . 'sortid', 'ASC');
-        if ($taskId != null) {
-            $builder->where($this->tasksTable . '.' . $this->primaryKeyTasks, $taskId);
-        }
-        if ($columnId != null) {
-            $builder->where($this->tasksTable . '.' . $this->foreignKeyTasks[$this->columnsTable], $columnId);
-        }
-        if ($userId != null) {
-            $builder->where($this->tasksTable . '.' . $this->foreignKeyTasks[$this->userTable], $userId);
-        }
-        //join tasks with tasktypes where taskartenid = taskarten.id
-        if ($joinTaskType) {
-            foreach ($this->allowedFieldsTaskTypes as $key => $value) {
-                $builder->select($this->taskTypesTable . '.' . $key);
-            }
-            $builder->join($this->taskTypesTable,
-                $this->foreignKeyTasks[$this->taskTypesTable]
-                . '='
-                . $this->taskTypesTable . '.' . $this->primaryKeyTaskTypes,
-                'left');
-        }
-        if ($joinColumns) {
-            foreach ($this->allowedFieldsColumns as $key => $value) {
-                $builder->select($this->columnsTable . '.' . $key);
-            }
-            $builder->join($this->columnsTable,
-                $this->foreignKeyTasks[$this->columnsTable]
-                . '='
-                . $this->columnsTable . '.' . $this->primaryKeyColumns);
-        }
-        if ($joinUser) {
-            foreach ($this->allowedFieldsUser as $key => $value) {
-                $builder->select($this->userTable . '.' . $key);
-            }
-            $builder->join($this->userTable,
-                $this->foreignKeyTasks[$this->userTable]
-                . '='
-                . $this->userTable . '.' . $this->primaryKeyUser);
-
-        }
-        if ($sortColumn) {
-            $builder->orderBy($this->tasksTable . '.' . $this->foreignKeyTasks[$this->columnsTable]);
-        }
-        return $builder->get()->getResultArray();
     }
 
     public function updateTask(int $taskId, array $data): bool

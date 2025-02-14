@@ -8,7 +8,8 @@
     const MODAL_HEADLINE_ID = 'modalHeadline'
     const MODAL_SUBMIT_ID = 'formSubmit'
     const MODAL_FORMFIELDS_ID = 'modalFormFields'
-    const MODAL_FORMFIELDS_NAMES = ['task', 'taskartenid', 'spaltenid', 'personenid', 'deadline', 'erinnerung', 'erinnerungsdatum', 'notizen', 'erledigt', 'geloescht']
+    const MODAL_FORMFIELDS_NAMES = ['task', 'taskartenid', 'spaltenid', 'personenid', 'deadline', 'erinnerung',
+        'erinnerungsdatum', 'notizen', 'erledigt', 'geloescht']
 
     const drake = dragula();
     drake.on('drop', (el, target, source, sibling)=>{
@@ -32,10 +33,10 @@
         setBoard('<?=esc(base_url('boards'))?>', document.getElementById('boardSelector').value)
     })
 
-    document.getElementById('btn_add').addEventListener('click', () => {
-        showModal_new(MODE_NEW, -1)
+    document.getElementById('btn_add_task').addEventListener('click', () => {
+        showModal(modalTask, MODE_NEW, -1)
     })
 
     createTaskView();
-    genModalForm_new();
+    genModalForm();
 </script>
