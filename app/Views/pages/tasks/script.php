@@ -3,13 +3,13 @@
 <script>
     const BOARDS_ID = <?= session('boardsid')?>
 
-    const MODAL_ID = '#modalTasks'
-    const MODAL_FORM_ID = 'modalTasksForm'
-    const MODAL_HEADLINE_ID = 'modalTasksHeadline'
-    const MODAL_SUBMIT_ID = 'formTasksSubmit'
-    const MODAL_FORMFIELDS_ID = 'modalTasksFormFields'
+    const MODAL_ID = '#modalTasks';
+    const MODAL_FORM_ID = 'modalTasksForm';
+    const MODAL_HEADLINE_ID = 'modalTasksHeadline';
+    const MODAL_SUBMIT_ID = 'formTasksSubmit';
+    const MODAL_FORMFIELDS_ID = 'modalTasksFormFields';
     const MODAL_FORMFIELDS_NAMES = ['task', 'taskartenid', 'spaltenid', 'personenid', 'deadline', 'erinnerung',
-        'erinnerungsdatum', 'notizen', 'erledigt', 'geloescht']
+        'erinnerungsdatum', 'notizen', 'erledigt', 'geloescht'];
 
     const drake = dragula();
     drake.on('drop', (el, target, source, sibling)=>{
@@ -26,11 +26,11 @@
         }
     )
     document.getElementById('boardSelector').addEventListener('change', () => {
-        setBoard('<?=esc(base_url('boards'))?>', document.getElementById('boardSelector').value)
+        setBoard('<?=esc(base_url('boards'))?>', document.getElementById('boardSelector').value);
     })
 
     document.getElementById('btn_add_task').addEventListener('click', () => {
-        showModal(modalTask, MODE_NEW, -1)
+        showModal(modalTask, MODE_NEW, -1);
     })
 
     createTaskView();
