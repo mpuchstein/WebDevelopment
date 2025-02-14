@@ -102,7 +102,7 @@ class Database extends Model
         return $builder->get()->getResultArray();
     }
 
-    public function insertTaskType(array $data):int
+    public function insertTaskType(array $data): int
     {
         $builder = $this->db->table($this->taskTypesTable);
         $builder->insert($data);
@@ -184,18 +184,20 @@ class Database extends Model
         return $builder->delete();
     }
 
-    public function getUsers(int $userId = null): array{
-        if(session() -> get('pLevel')>=2000){
+    public function getUsers(int $userId = null): array
+    {
+        if (session()->get('pLevel') >= 2000) {
             return $this->getUsersAdmin($userId);
         } else {
             return $this->getUsersSecure($userId);
         }
     }
-    public function getUsersSecure(int $userId = null): array
+
+    public function getUsersAdmin(int $userId = null): array
     {
         $builder = $this->db->table($this->userTable);
         $builder->select($this->userTable . '.' . $this->primaryKeyUser);
-        foreach ($this->allowedFieldsUser as $key => $value) {
+        foreach ($this->allowedFieldsUserAdmin as $key => $value) {
             $builder->select($this->userTable . '.' . $key);
         }
         if ($userId != null) {
@@ -205,11 +207,11 @@ class Database extends Model
         return $builder->get()->getResultArray();
     }
 
-    public function getUsersAdmin(int $userId = null): array
+    public function getUsersSecure(int $userId = null): array
     {
         $builder = $this->db->table($this->userTable);
         $builder->select($this->userTable . '.' . $this->primaryKeyUser);
-        foreach ($this->allowedFieldsUserAdmin as $key => $value) {
+        foreach ($this->allowedFieldsUser as $key => $value) {
             $builder->select($this->userTable . '.' . $key);
         }
         if ($userId != null) {
@@ -269,14 +271,16 @@ class Database extends Model
     public function getTaskOfBoard(int $boardId, int $taskId = null): array
     {
         $columnData = $this->getColumns(boardsId: $boardId);
-        foreach ($columnData as $column) {
-            $resData[$column['id']] = [
-                'columnId' => $column['id'],
-                'columnName' => $column['spalte'],
-                'tasks' => $this->getTask(taskId: $taskId, columnId: $column['id'], joinTaskType: true, joinUser: true),
-            ];
+        if (sizeof($columnData) > 0) {
+            foreach ($columnData as $column) {
+                $resData[$column['id']] = [
+                    'columnId' => $column['id'],
+                    'columnName' => $column['spalte'],
+                    'tasks' => $this->getTask(taskId: $taskId, columnId: $column['id'], joinTaskType: true, joinUser: true),
+                ];
+            }
         }
-        return $resData;
+        return $resData ?? [];
     }
 
     public function getColumns(int $columnId = null, int $boardsId = null, bool $joinBoards = false): array
@@ -301,7 +305,7 @@ class Database extends Model
                 'left'
             );
         }
-        if(isset($columnId)){
+        if (isset($columnId)) {
             return $builder->get()->getRowArray();
         } else {
             return $builder->get()->getResultArray();
