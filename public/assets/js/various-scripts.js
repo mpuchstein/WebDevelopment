@@ -383,15 +383,14 @@ function createTaskView() {
     }).then((response) => {
         return response.json();
     }).then((data) => {
-        if (data['success']) {
-            for (const columnId in data['data']) {
-                updateColumn(data['data'][columnId]);
-            }
-        }else{
+        if (data['success'] === false) {
             const taskPlaceholder = document.getElementById('taskPlaceholder');
-            if(taskPlaceholder){
+            if (taskPlaceholder) {
                 taskPlaceholder.hidden = false;
-                taskPlaceholder.setAttribute('aria-hidden', 'false');
+            }
+        } else {
+            for (const columnId in data) {
+                updateColumn(data[columnId]);
             }
         }
     });
