@@ -10,6 +10,7 @@
             <div class="modal-body">
                 <form id="modalTasksForm" data-mode="" data-type="tasks">
                     <input type="hidden" name="id" id="id">
+                    <div id="id_invalid" class="invalid-feedback text-center"></div>
                     <fieldset id="modalTasksFormFields">
                         <div class="form-floating mb-3">
                             <input type="text" name="task" id="task" class="form-control">

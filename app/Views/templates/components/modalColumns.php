@@ -10,6 +10,7 @@
             <div class="modal-body">
                 <form id="modalColumnsForm" method="post" data-mode="" data-type="columns">
                     <input type="hidden" name="id" id="id">
+                    <div id="id_invalid" class="invalid-feedback text-center"></div>
                     <fieldset id="modalColumnsFormFields">
                         <div class="form-floating mb-3">
                             <input type="text" name="spalte" id="spalte" class="form-control"

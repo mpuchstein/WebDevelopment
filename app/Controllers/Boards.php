@@ -63,7 +63,7 @@ class Boards extends BaseController
                     return response()->setJSON(['success' => false, 'errors' => $errors,]);
                 }
             } elseif ($reqData['mode'] == 'delete') {
-                if ($validation->run($formData, 'boardsId')) {
+                if ($validation->run($formData, 'boardsDelete')) {
                     $database = new Database();
                     $database->deleteBoard($formData['id']);
                     return $this->response->setJSON(['success' => true, 'mode' => 'delete', 'id' => $formData['id']]);

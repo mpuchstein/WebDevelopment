@@ -171,10 +171,11 @@ class Validation extends BaseConfig
     //rules for validating a delete action on columns
     public array $columnDelete = [
         'id' => [
-            'rules' => 'required|is_not_unique[spalten.id]',
+            'rules' => 'required|is_not_unique[spalten.id]|is_unique[tasks.spaltenid]',
             'errors' => [
                 'required' => 'ID ist erforderlich, um eine Spalte zu löschen.',
                 'is_not_unique' => 'Diese ID existiert nicht. Kann also auch nicht gelöscht werden.',
+                'is_unique' => 'Es gibt noch Tasks in dieser Spalte!',
             ]
         ]
     ];
@@ -256,10 +257,11 @@ class Validation extends BaseConfig
     ];
     public array $usersDeleteArray = [
         'id' => [
-            'rules' => 'required|is_not_unique[personen.id]',
+            'rules' => 'required|is_not_unique[personen.id]|is_unique[tasks.personenid]',
             'errors' => [
                 'required' => 'ID ist erforderlich, um eine Person zu löschen.',
                 'is_not_unique' => 'Diese Person existiert nicht.',
+                'is_unique' => 'Es gibt noch Tasks zu dieser Person.',
             ]
         ]
     ];
@@ -270,6 +272,17 @@ class Validation extends BaseConfig
             'errors' => [
                 'required' => 'Board ID ist erforderlich.',
                 'is_not_unique' => 'Dieses Board existiert nicht.',
+            ]
+        ]
+    ];
+
+     public array $boardsDelete = [
+        'id' => [
+            'rules' => 'required|is_not_unique[boards.id]|is_unique[spalten.boardsid]',
+            'errors' => [
+                'required' => 'Board ID ist erforderlich.',
+                'is_not_unique' => 'Dieses Board existiert nicht.',
+                'is_unique' => 'Dieses Board hat noch Spalten.',
             ]
         ]
     ];

@@ -54,7 +54,7 @@ a:active {
 .columnContainer {
     max-width: 23rem;
     min-width: 19rem;
-    max-height: 80vh;
+    max-height: 70vh;
 }
 
 .table-primary thead {

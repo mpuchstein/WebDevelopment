@@ -10,6 +10,7 @@
             <div class="modal-body">
                 <form id="usersForm" method="post" data-mode="" data-type="users">
                     <input type="hidden" name="id" id="id">
+                    <div id="id_invalid" class="invalid-feedback text-center"></div>
                     <fieldset id="modalUsersFormFields">
                         <div class="form-floating mb-3">
                             <input type="text" name="username" id="username" class="form-control">

@@ -512,9 +512,11 @@ function genModalForm(type, modal) {
                 }
                 modal.hide();
             } else {
+                document.getElementById('id').classList.toggle('is-invalid', 'id' in data['errors']);
+                document.getElementById('id_invalid').innerText = data['errors']['id'];
                 MODAL_FORMFIELDS_NAMES.forEach(formField => {
-                    document.getElementById(formField).classList.toggle('is-invalid', formField in data['errors'])
-                    document.getElementById(formField + '_invalid').innerText = data['errors'][formField]
+                    document.getElementById(formField).classList.toggle('is-invalid', formField in data['errors']);
+                    document.getElementById(formField + '_invalid').innerText = data['errors'][formField];
                 })
             }
         }).catch((error) => {
