@@ -92,9 +92,19 @@ class Tasks extends BaseController
                     ];
                 }
             } else {
-                $resData = $database->getTask(taskId: $taskId, joinTaskType: true, joinColumns: true, joinUser: true, sortColumn: true);
+                if ($taskId == null) {
+                    $resData = $database->getTask(taskId: $taskId, joinTaskType: true, joinColumns: true, joinUser: true, sortColumn: true);
+                } else {
+                    $resData = $database->getTask(taskId: $taskId, joinTaskType: true, joinColumns: true, joinUser: true, sortColumn: true)[0];
+                }
             }
             return $this->response->setJSON($resData);
+        } else if ($reqData['mode'] == 'move') {
+            $taskId = $reqData['taskId'];
+            $columnId = $reqData['columnId'];
+            $beforeId = $reqData['beforeId'];
+            $resData = $database->moveTaskBefore($taskId, $columnId, $beforeId);
+            return $this->response->setJSON(['success' => true, 'mode' => 'move', 'tasks' => $resData]);
         } else {
             $validation = service('validation');
             $formData = $reqData['formData'];
@@ -129,16 +139,6 @@ class Tasks extends BaseController
                 }
             }
         }
-    }
-
-    public function getJson($id = null)
-    {
-        $database = new Database();
-        $task = $database->getTask($id, joinTaskType: true, joinColumns: true, joinUser: true, sortColumn: true);
-        if ($id == null) {
-            return $this->response->setJSON($task);
-        } else {
-            return $this->response->setJSON($task[0]);
-        }
+        return $this->response->setJSON(['success' => false, 'error' => 'Missing parameters']);
     }
 }

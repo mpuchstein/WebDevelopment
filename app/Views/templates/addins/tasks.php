@@ -12,21 +12,9 @@
 
     const drake = dragula();
     drake.on('drop', (el, target, source, sibling)=>{
-        console.log(el);
-        console.log(target);
-        console.log(source);
-        console.log(sibling);
-        if(sibling !== null) {
-            el.dataset.sortId = String(Number(sibling.dataset.sortId) + 1);
-        } else {
-            el.dataset.sortId = '1';
-        }
-        console.log(el);
-        console.log(target);
-        console.log(source);
-        console.log(sibling);
-        sortTasks(target);
+        moveTask(target, el, sibling);
     })
+
     const modalTask = new bootstrap.Modal(MODAL_ID);
 
     const REQ_TASK_HEADER = new Request(

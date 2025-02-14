@@ -2,16 +2,43 @@ const MODE_NEW = 'new'
 const MODE_EDIT = 'edit'
 const MODE_DELETE = 'delete'
 const MODE_QUERY = 'query'
+const MODE_MOVE= 'move'
 
-function insertTaskIntoColumnSorted(taskContainer) {
-    const tasks = Array.from(taskContainer.querySelectorAll('[data-sort-id]'));
-    let sorted = tasks.sort(sortIdComperatorASC);
-    let sortid = 10;
-    sorted.forEach(e => {
-            e.dataset.sortId = String(sortid);
-            sortid += 10;
+function moveTask(taskContainer, task, before) {
+    const columnId = taskContainer.dataset.columnId;
+    const taskId = task.dataset.taskId;
+    const beforeId = before !== null ? before.dataset.taskId : null;
+    fetch(REQ_TASK_HEADER, {
+        body: JSON.stringify({
+            taskId: taskId,
+            mode: MODE_MOVE,
+            columnId: columnId,
+            beforeId: beforeId
+        })
+    }).then((response) => {
+        if (!response.ok) {
+            console.log(response)
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
-    )
+        return response.json();
+    }).then((data) => {
+        if(data['success'] === true){
+            Object.entries(data['tasks']).forEach( entry  => {
+                document.getElementById('task_'+entry[1]['taskId']).dataset.sortId = entry[1]['sortid'];
+                console.log(entry);
+                console.log(
+                    document.getElementById('task_'+entry[1]['taskId']).dataset.sortId = entry[1]['sortid']
+                );
+            });
+        } else {
+            if(confirm('Drag and Drop fehlgeschlagen. Seite neuladen?')){
+                window.location.reload();
+            }
+
+        }
+    }).catch((error) => {
+        console.log(error);
+    });
 }
 
 function sortIdComperatorASC(a, b) {
@@ -191,10 +218,10 @@ function createTask(taskData) {
     editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
     delBtn.innerHTML = '<i class="fa-solid fa-eraser"></i>';
     editBtn.addEventListener('click', () => {
-        showModal(MODE_EDIT, taskData['id']);
+        showModal_new(MODE_EDIT, taskData['id']);
     })
     delBtn.addEventListener('click', () => {
-        showModal(MODE_DELETE, taskData['id']);
+        showModal_new(MODE_DELETE, taskData['id']);
     })
     // fill task with data
     updateTask(task, taskData);
@@ -238,7 +265,7 @@ function createColumn(columnData) {
     columnFooter.classList.add('btn', 'btn-primary');
     columnFooter.innerHTML = '<i class="fa-solid fa-plus"></i>';
     columnFooter.addEventListener('click', () => {
-        showModal_new(MODE_NEW, -1);
+        showModal_new(MODE_NEW, columnData['columnId']);
     })
     taskContainer.classList.add('card-body');
     taskContainer.dataset.columnId = columnData['columnId'];
@@ -253,6 +280,7 @@ function crudColumn(columnData) {
     }
     const taskContainer = document.getElementById('tasksContainerColumn_' + columnData['columnId']);
     updateTasksOfContainer(taskContainer, columnData['tasks']);
+    sortTasks(taskContainer);
 }
 
 function createTaskView() {
@@ -309,8 +337,7 @@ function genModalForm_new() {
         event.preventDefault();
         // TODO do something here to show user that form is being submitted
         const formData = {};
-        new FormData(event.target).forEach((value, key) =>
-        {
+        new FormData(event.target).forEach((value, key) => {
             formData[key] = value;
         });
         console.log(event.target);
@@ -353,9 +380,13 @@ function genModalForm_new() {
             }
         }).catch((error) => {
             // TODO handle error
-            console.log(error)
+            console.log(error);
         });
     });
+    document.getElementById('erinnerung').addEventListener('change', (event) => {
+            document.getElementById('erinnerungsdatum').disabled = !event.target.checked;
+        }
+    )
 }
 
 function genModalForm() {
@@ -421,7 +452,7 @@ function showModal_new(mode, elemid) {
     }
     if (elemid > 0) {
         if (mode === MODE_NEW) {
-
+            document.getElementById('spaltenid').value = elemid;
         } else {
             fetch(REQ_TASK_HEADER, {
                     body: JSON.stringify({
@@ -435,12 +466,16 @@ function showModal_new(mode, elemid) {
                 Object.entries(data).forEach(entry => {
                     const inputField = document.getElementById(entry[0])
                     if (inputField) {
-                        inputField.value = entry[1]
+                        if (inputField.type === 'checkbox') {
+                            inputField.checked = entry[1] === '1';
+                        } else
+                            inputField.value = entry[1];
                     }
                 })
             })
         }
     }
+    document.getElementById('erinnerungsdatum').disabled = !document.getElementById('erinnerung').checked;
     modalTask.show();
 }
 
