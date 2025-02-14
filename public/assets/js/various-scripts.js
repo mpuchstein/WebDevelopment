@@ -55,6 +55,11 @@ function createQueryRequestBody(type, elemId) {
                 boardId: elemId,
                 mode: MODE_QUERY
             })
+        case 'columns':
+            return JSON.stringify({
+                columnId: elemId,
+                mode: MODE_QUERY
+            })
         case 'users':
             return JSON.stringify({
                 userId: elemId,
@@ -404,7 +409,7 @@ function createTableRow(rowData, modal) {
                 ra.appendChild(btnGrp);
                 btnGrp.appendChild(editBtn);
                 btnGrp.appendChild(delBtn);
-                btnGrp.classList.add('btn-group', 'd-md-none');
+                btnGrp.classList.add('btn-group');
                 editBtn.type = 'button';
                 delBtn.type = 'button';
                 editBtn.classList.add('btn', 'btn-sm', 'btn-info')
@@ -476,7 +481,7 @@ function genModalForm(type, modal) {
                         }
                         sortTasks(taskContainer);
                     }
-                } else if (type === 'boards') {
+                } else if (type === 'boards' || type === 'columns') {
                     if (data['mode'] === MODE_DELETE) {
                         removeTableRow(data['id']);
                     } else {

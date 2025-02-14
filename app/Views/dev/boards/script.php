@@ -10,15 +10,7 @@
     const MODAL_FORMFIELDS_NAMES = ['board']
 
     const modalBoard = new bootstrap.Modal(MODAL_ID);
-    const REQ_HEADER = new Request(
-        '<?=base_url('boards/json')?>',
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }
-    )
+
     document.getElementById('btn_add_board').addEventListener('click', () => {
         showModal(modalBoard, MODE_NEW, -1)
     })

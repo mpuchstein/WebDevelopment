@@ -1,16 +1,16 @@
-<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="formHeadline" aria-hidden="true">
+<div class="modal fade" id="modalColumns" tabindex="-1" aria-labelledby="formHeadline" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modalHeadline" class="modal-title">
+                <h2 id="modalColumnsHeadline" class="modal-title">
                     Placeholder
                 </h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="modalColumnsForm" method="post">
+                <form id="modalColumnsForm" method="post" data-mode="" data-type="columns">
                     <input type="hidden" name="id" id="id">
-                    <fieldset id="modalFormFields">
+                    <fieldset id="modalColumnsFormFields">
                         <div class="form-floating mb-3">
                             <input type="text" name="spalte" id="spalte" class="form-control"
                                    placeholder="Spaltenbezeichnung">
@@ -43,7 +43,7 @@
                     </fieldset>
                     <div class="row mt-1 me-3 mb-3 align-content-end justify-content-end">
                         <div class="col-auto">
-                            <button type="submit" id="formSubmit" class="btn">
+                            <button type="submit" id="formColumnsSubmit" class="btn">
                                 Placeholder
                             </button>
                         </div>

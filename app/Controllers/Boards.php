@@ -75,11 +75,4 @@ class Boards extends BaseController
         }
         return $this->response->setJSON(['success' => false, 'error' => 'Missing parameters']);
     }
-
-
-    public function postDelete()
-    {
-        $data = $this->request->getPost();
-        $validation = service('validation');
-    }
 }

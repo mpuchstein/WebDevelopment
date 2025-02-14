@@ -294,7 +294,11 @@ class Database extends Model
                 'left'
             );
         }
-        return $builder->get()->getResultArray();
+        if(isset($columnId)){
+            return $builder->get()->getRowArray();
+        } else {
+            return $builder->get()->getResultArray();
+        }
     }
 
     public function getTask(int  $taskId = null, int $columnId = null, int $userId = null,

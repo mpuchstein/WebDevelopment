@@ -10,65 +10,56 @@ class Columns extends BaseController
     {
         $database = new Database();
         $navData = $this->getNavElements('columns');
-        $formData['boards'] = $database->getBoards();
+        $indexData['boards'] = $database->getBoards();
         echo view('templates/header');
         echo view('templates/nav', $navData);
-        echo view('templates/components/modalColumns', $formData);
-        echo view('templates/components/udBtn');
-        echo view('dev/columns/index');
+        echo view('dev/columns/index', $indexData);
         echo view('templates/footer');
+        echo view('templates/scriptimports');
+        echo view('dev/columns/script');
+        echo view('templates/siteend');
     }
 
-    public function getJson($id = null)
+    public function postJson()
     {
+        $reqData = $this->request->getJSON(true);
         $database = new Database();
-        $task = $database->getColumns(columnId: $id, joinBoards: true);
-        if ($id == null) {
-            return $this->response->setJSON($task);
+        if ($reqData['mode'] === 'query') {
+            $columnId = $reqData['columnId'] ?? null;
+            $column = $database->getColumns($columnId, joinBoards: true);
+            return $this->response->setJSON($column);
         } else {
-            return $this->response->setJSON($task[0]);
-        }
-    }
-
-    public function postNew()
-    {
-        $data = $this->request->getPost();
-        $validation = service('validation');
-        if ($validation->run($data, 'columnArray')) {
+            $validation = service('validation');
             $database = new Database();
-            $id = $database->insertColumn($data);
-            return response()->setJSON(['success' => true, 'id' => $id,]);
-        } else {
-            $errors = $validation->getErrors();
-            return response()->setJSON(['success' => false, 'errors' => $errors,]);
+            $formData = $reqData['formData'];
+            if ($reqData['mode'] == 'new') {
+                if ($validation->run($formData, 'columnArray')) {
+                    $id = $database->insertColumn($formData);
+                    $rowData = $database->getColumns($id, joinBoards: true);
+                    return $this->response->setJSON(['success' => true, 'mode' => 'new', 'id' => $id, 'rowData' => $rowData]);
+                } else {
+                    $errors = $validation->getErrors();
+                    return response()->setJSON(['success' => false, 'errors' => $errors,]);
+                }
+            } else if ($reqData['mode'] == 'edit') {
+                if ($validation->run($formData, 'columnArray')) {
+                    $database->updateColumn($formData['id'], $formData);
+                    $rowData = $database->getColumns($formData['id'], joinBoards: true);
+                    return $this->response->setJSON(['success' => true, 'mode' => 'edit', 'id' => $formData['id'], 'rowData' => $rowData]);
+                } else {
+                    $errors = $validation->getErrors();
+                    return response()->setJSON(['success' => false, 'errors' => $errors,]);
+                }
+            } elseif ($reqData['mode'] == 'delete') {
+                if ($validation->run($formData, 'columnDelete')) {
+                    $database->deleteColumn($formData['id']);
+                    return $this->response->setJSON(['success' => true, 'mode' => 'delete', 'id' => $formData['id']]);
+                } else {
+                    $errors = $validation->getErrors();
+                    return response()->setJSON(['success' => false, 'errors' => $errors,]);
+                }
+            }
         }
-    }
-
-    public function postEdit()
-    {
-        $data = $this->request->getPost();
-        $validation = service('validation');
-        if ($validation->run($data, 'columnArray')) {
-            $database = new Database();
-            $database->updateColumn($data['id'], $data);
-            return response()->setJSON(['success' => true, 'id' => $data['id'],]);
-        } else {
-            $errors = $validation->getErrors();
-            return response()->setJSON(['success' => false, 'errors' => $errors,]);
-        }
-    }
-
-    public function postDelete()
-    {
-        $data = $this->request->getPost();
-        $validation = service('validation');
-        if ($validation->run($data, 'columnDelete')) {
-            $database = new Database();
-            $database->deleteColumn($data['id']);
-            return response()->setJSON(['success' => true, 'id' => $data['id'],]);
-        } else {
-            $errors = $validation->getErrors();
-            return response()->setJSON(['success' => false, 'errors' => $errors,]);
-        }
+        return $this->response->setJSON(['success' => false, 'error' => 'Missing parameters']);
     }
 }
