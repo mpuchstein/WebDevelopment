@@ -102,7 +102,7 @@ class Database extends Model
         return $builder->get()->getResultArray();
     }
 
-    public function insertTaskType(array $data): bool
+    public function insertTaskType(array $data):int
     {
         $builder = $this->db->table($this->taskTypesTable);
         $builder->insert($data);
@@ -125,7 +125,7 @@ class Database extends Model
         return $builder->delete();
     }
 
-    public function insertColumn(array $data): bool
+    public function insertColumn(array $data): int
     {
         $builder = $this->db->table($this->columnsTable);
         $builder->insert($data);
@@ -238,7 +238,7 @@ class Database extends Model
         return password_verify($secret, $secretHash);
     }
 
-    public function insertUser(array $data): bool
+    public function insertUser(array $data): int
     {
         $builder = $this->db->table($this->userTable);
         $builder->insert($data);
