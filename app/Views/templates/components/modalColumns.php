@@ -19,8 +19,7 @@
                         </div>
                         <div class="form-floating mb-3">
                             <textarea name="spaltenbeschreibung" id="spaltenbeschreibung" class="form-control"
-                                      placeholder="Spaltenbeschreibung">
-                            </textarea>
+                                      placeholder="Spaltenbeschreibung"></textarea>
                             <label for="spaltenbeschreibung" class="">Spaltenbeschreibung</label>
                             <div id="spaltenbeschreibung_invalid" class="invalid-feedback"></div>
                         </div>
