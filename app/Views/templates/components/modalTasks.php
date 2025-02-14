@@ -1,8 +1,8 @@
-<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="formHeadline" aria-hidden="true">
+<div class="modal fade" id="modalTasks" tabindex="-1" aria-labelledby="formHeadline" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modalHeadline" class="modal-title">
+                <h2 id="modalTasksHeadline" class="modal-title">
                     Placeholder
                 </h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <form id="modalTasksForm" data-mode="">
                     <input type="hidden" name="id" id="id">
-                    <fieldset id="modalFormFields">
+                    <fieldset id="modalTasksFormFields">
                         <div class="form-floating mb-3">
                             <input type="text" name="task" id="task" class="form-control">
                             <label for="task">Bezeichnung</label>
@@ -79,7 +79,7 @@
             </fieldset>
             <div class="row mt-1 me-3 mb-3 align-content-end justify-content-end">
                 <div class="col-auto">
-                    <button type="submit" id="formSubmit" class="btn">
+                    <button type="submit" id="formTasksSubmit" class="btn">
                         Placeholder
                     </button>
                 </div>

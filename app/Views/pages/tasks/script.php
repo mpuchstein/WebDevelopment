@@ -3,11 +3,11 @@
 <script>
     const BOARDS_ID = <?= session('boardsid')?>
 
-    const MODAL_ID = '#modal'
+    const MODAL_ID = '#modalTasks'
     const MODAL_FORM_ID = 'modalTasksForm'
-    const MODAL_HEADLINE_ID = 'modalHeadline'
-    const MODAL_SUBMIT_ID = 'formSubmit'
-    const MODAL_FORMFIELDS_ID = 'modalFormFields'
+    const MODAL_HEADLINE_ID = 'modalTasksHeadline'
+    const MODAL_SUBMIT_ID = 'formTasksSubmit'
+    const MODAL_FORMFIELDS_ID = 'modalTasksFormFields'
     const MODAL_FORMFIELDS_NAMES = ['task', 'taskartenid', 'spaltenid', 'personenid', 'deadline', 'erinnerung',
         'erinnerungsdatum', 'notizen', 'erledigt', 'geloescht']
 
@@ -15,10 +15,8 @@
     drake.on('drop', (el, target, source, sibling)=>{
         moveTask(target, el, sibling);
     })
-
     const modalTask = new bootstrap.Modal(MODAL_ID);
-
-    const REQ_TASK_HEADER = new Request(
+    const REQ_HEADER = new Request(
         '<?=base_url('tasks/json')?>',
         {
             method: "POST",
@@ -27,9 +25,7 @@
             }
         }
     )
-
     document.getElementById('boardSelector').addEventListener('change', () => {
-        console.log(document.getElementById('boardSelector').value)
         setBoard('<?=esc(base_url('boards'))?>', document.getElementById('boardSelector').value)
     })
 

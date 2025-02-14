@@ -13,7 +13,6 @@ class Boards extends BaseController
         $navData = $this->getNavElements('boards');
         echo view('templates/header');
         echo view('templates/nav', $navData);
-        echo view('templates/components/udBtn');
         echo view('templates/components/modalBoards');
         echo view('dev/boards/index');
         echo view('templates/footer');

@@ -4,11 +4,13 @@ const MODE_DELETE = 'delete'
 const MODE_QUERY = 'query'
 const MODE_MOVE = 'move'
 
+
+
 function moveTask(taskContainer, task, before) {
     const columnId = taskContainer.dataset.columnId;
     const taskId = task.dataset.taskId;
     const beforeId = before !== null ? before.dataset.taskId : null;
-    fetch(REQ_TASK_HEADER, {
+    fetch(REQ_HEADER, {
         body: JSON.stringify({
             taskId: taskId,
             mode: MODE_MOVE,
@@ -84,9 +86,14 @@ function updateTask(taskElem, taskData) {
         reminderIcon.classList.toggle('fa-bell', true);
         reminderIcon.classList.toggle('fa-bell-slash', false);
         reminderText.innerText = taskData['erinnerungsdatum']
-        if (Date.parse(taskData['erinnerungsdatum']) - DATE_NOW < 24 * 3600) {
+        if (Date.parse(taskData['erinnerungsdatum']) - DATE_NOW < 24 * 3600 * 1000) {
+            reminder.classList.toggle('bg-success', true);
+            reminder.classList.toggle('bg-danger', false);
+        } else if (Date.parse(taskData['erinnerungsdatum']) - DATE_NOW < 0) {
+            reminder.classList.toggle('bg-success', false);
             reminder.classList.toggle('bg-danger', true);
         } else {
+            reminder.classList.toggle('bg-success', false);
             reminder.classList.toggle('bg-danger', false);
         }
     } else {
@@ -96,9 +103,11 @@ function updateTask(taskElem, taskData) {
     }
     deadlineText.innerText = taskData['deadline'];
     if (Date.parse(taskData['deadline']) - DATE_NOW < 0) {
-        deadline.classList.add('bg-danger-subtle');
-    } else if (Date.parse(taskData['deadline']) - DATE_NOW < 24 * 3600) {
-        deadline.classList.add('bg-danger');
+        deadline.classList.toggle('bg-danger-subtle', true);
+        deadline.classList.toggle('bg-danger', false);
+    } else if (Date.parse(taskData['deadline']) - DATE_NOW < 24 * 3600 * 1000) {
+        deadline.classList.toggle('bg-danger-subtle', false);
+        deadline.classList.toggle('bg-danger', true);
     }
 }
 
@@ -281,7 +290,7 @@ function crudColumn(columnData) {
 
 function createTaskView() {
     const boardId = document.getElementById('boardSelector').value
-    fetch(REQ_TASK_HEADER, {
+    fetch(REQ_HEADER, {
         body: JSON.stringify({
             boardId: boardId,
             mode: MODE_QUERY
@@ -336,7 +345,7 @@ function genModalForm() {
         new FormData(event.target).forEach((value, key) => {
             formData[key] = value;
         });
-        fetch(REQ_TASK_HEADER, {
+        fetch(REQ_HEADER, {
             method: 'POST',
             body: JSON.stringify({
                 mode: event.target.dataset.mode,
@@ -431,7 +440,7 @@ function showModal(modalEle, mode, elemid) {
         if (mode === MODE_NEW) {
             document.getElementById('spaltenid').value = elemid;
         } else {
-            fetch(REQ_TASK_HEADER, {
+            fetch(REQ_HEADER, {
                     body: JSON.stringify({
                         taskId: elemid,
                         mode: MODE_QUERY
