@@ -1,8 +1,8 @@
-const MODE_NEW = 'new'
-const MODE_EDIT = 'edit'
-const MODE_DELETE = 'delete'
-const MODE_QUERY = 'query'
-const MODE_MOVE = 'move'
+const MODE_NEW = 'new';
+const MODE_EDIT = 'edit';
+const MODE_DELETE = 'delete';
+const MODE_QUERY = 'query';
+const MODE_MOVE = 'move';
 
 const REQ_HEADER_TASKS = new Request(
     BASE_URL + 'tasks/json',
@@ -12,7 +12,7 @@ const REQ_HEADER_TASKS = new Request(
             "Content-Type": "application/json"
         }
     }
-)
+);
 const REQ_HEADER_BOARDS = new Request(
     BASE_URL + 'boards/json',
     {
@@ -21,7 +21,7 @@ const REQ_HEADER_BOARDS = new Request(
             "Content-Type": "application/json"
         }
     }
-)
+);
 const REQ_HEADER_COLUMNS = new Request(
     BASE_URL + 'columns/json',
     {
@@ -30,7 +30,7 @@ const REQ_HEADER_COLUMNS = new Request(
             "Content-Type": "application/json"
         }
     }
-)
+);
 const REQ_HEADER_USERS= new Request(
     BASE_URL + 'users/json',
     {
@@ -39,7 +39,7 @@ const REQ_HEADER_USERS= new Request(
             "Content-Type": "application/json"
         }
     }
-)
+);
 
 function getReqHeader(type) {
     switch (type) {
@@ -60,22 +60,22 @@ function createQueryRequestBody(type, elemId) {
             return JSON.stringify({
                 taskId: elemId,
                 mode: MODE_QUERY
-            })
+            });
         case 'boards':
             return JSON.stringify({
                 boardId: elemId,
                 mode: MODE_QUERY
-            })
+            });
         case 'columns':
             return JSON.stringify({
                 columnId: elemId,
                 mode: MODE_QUERY
-            })
+            });
         case 'users':
             return JSON.stringify({
                 userId: elemId,
                 mode: MODE_QUERY
-            })
+            });
     }
 }
 
@@ -163,7 +163,7 @@ function updateTask(taskElem, taskData) {
         if (taskData['erinnerung'] === '1') {
             reminderIcon.classList.toggle('fa-bell', true);
             reminderIcon.classList.toggle('fa-bell-slash', false);
-            reminderText.innerText = taskData['erinnerungsdatum']
+            reminderText.innerText = taskData['erinnerungsdatum'];
             if (Date.parse(taskData['erinnerungsdatum']) - DATE_NOW < 24 * 3600 * 1000) {
                 reminder.classList.toggle('bg-success', true);
                 reminder.classList.toggle('bg-danger', false);
@@ -440,7 +440,7 @@ function createTableRow(rowData, modal) {
 }
 
 function createTable(type, modal) {
-    const reqHeader = getReqHeader(type)
+    const reqHeader = getReqHeader(type);
     fetch(reqHeader, {
         body: JSON.stringify({
             mode: MODE_QUERY,
@@ -544,15 +544,15 @@ function showModal(modalEle, mode, elemid) {
         document.getElementById(formField).classList.toggle('is-invalid', false)
         document.getElementById(formField + '_invalid').innerText = ''
     })
-    modalForm.reset()
+    modalForm.reset();
 
     modalForm.dataset.mode = mode;
     switch (mode) {
         case MODE_NEW:
             document.getElementById('id').disabled = true;
-            modalHeadline.innerText = 'Neu'
-            formButton.className = 'btn btn-success'
-            formButton.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Speichern'
+            modalHeadline.innerText = 'Neu';
+            formButton.className = 'btn btn-success';
+            formButton.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Speichern';
             MODAL_FORMFIELDS_NAMES.forEach(e => {
                 const checkbox = document.getElementById(e);
                 if (checkbox.dataset.inputControl) {
@@ -560,17 +560,17 @@ function showModal(modalEle, mode, elemid) {
                     inputField.disabled = !checkbox.checked;
                 }
             });
-            break
+            break;
         case MODE_EDIT:
-            modalHeadline.innerText = 'Bearbeiten'
-            formButton.className = 'btn btn-info'
-            formButton.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Editieren'
+            modalHeadline.innerText = 'Bearbeiten';
+            formButton.className = 'btn btn-info';
+            formButton.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Editieren';
             break;
         case MODE_DELETE:
-            modalHeadline.innerText = 'Löschen'
-            formButton.className = 'btn btn-danger'
-            formButton.innerHTML = '<i class="fa-solid fa-eraser"></i> Löschen'
-            formFields.disabled = true
+            modalHeadline.innerText = 'Löschen';
+            formButton.className = 'btn btn-danger';
+            formButton.innerHTML = '<i class="fa-solid fa-eraser"></i> Löschen';
+            formFields.disabled = true;
             break;
     }
     if (elemid > 0) {
@@ -578,13 +578,13 @@ function showModal(modalEle, mode, elemid) {
             document.getElementById('spaltenid').value = elemid;
         } else {
             const reqHeader = getReqHeader(modalForm.dataset.type);
-            const reqBody = createQueryRequestBody(modalForm.dataset.type, elemid)
+            const reqBody = createQueryRequestBody(modalForm.dataset.type, elemid);
             fetch(reqHeader, {body: reqBody}
             ).then((response) => {
-                return response.json()
+                return response.json();
             }).then((data) => {
                 Object.entries(data).forEach(entry => {
-                    const inputField = document.getElementById(entry[0])
+                    const inputField = document.getElementById(entry[0]);
                     if (inputField) {
                         if (inputField.type === 'checkbox') {
                             inputField.checked = entry[1] === '1';
@@ -592,7 +592,7 @@ function showModal(modalEle, mode, elemid) {
                             inputField.value = entry[1];
                         }
                         if (inputField.dataset.inputControl) {
-                            console.log(inputField)
+                            console.log(inputField);
                             const controlledField = document.getElementById(inputField.dataset.inputControl);
                             controlledField.disabled = !inputField.checked;
                         }
@@ -613,8 +613,8 @@ function setBoard(url, id) {
         return response.json()
     }).then((data) => {
         if (data['success'] !== true) {
-            console.log('Board does not exist')
+            console.log('Board does not exist');
         }
-        location.reload()
+        location.reload();
     })
 }
