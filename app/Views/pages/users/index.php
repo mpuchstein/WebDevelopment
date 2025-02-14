@@ -12,7 +12,7 @@
         <table class="table table-striped table-borderless">
             <!-- table head -->
             <thead>
-            <tr class="table-primary">
+            <tr class="table-info">
                 <th>#</th>
                 <th>Nutzername</th>
                 <th>Privilegien</th>

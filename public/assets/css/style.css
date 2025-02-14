@@ -5,6 +5,11 @@ body {
 .bg-header { /* Farbe der Navigation wird festgelegt */
     background-color: #3F7884 !important;
 }
+
+.nav-pills .nav-link.active {
+    background-color: #213f45 !important;
+}
+
 .bg-footer { /* Farbe des Footers wird festgelegt */
     background-color: #3F7884 !important;
 }
@@ -19,9 +24,16 @@ body {
     border-color: #97D1C9 !important;
 }
 
+.btn-success {
+    background-color: #2b7865 !important;
+    border-color: #2b7865 !important;
+}
+
 .btn-danger {
     background-color: #B3005A !important;
     border-color: #B3005A !important;
+    background-color: #812029 !important;
+    border-color: #812029 !important;
 }
 
 a {
@@ -31,6 +43,11 @@ a {
 a:hover {
     color: #97D1C9 !important;
 }
+
+a:active {
+    color: #7CEEDF !important;
+}
+
 
 .text-white { /* Färbt Text weiß */
     color: white;
