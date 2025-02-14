@@ -39,14 +39,14 @@
                             <div class="form-floating mb-3">
                                 <input type="text"
                                        class="form-control<?= isset($errors['username']) ? ' is-invalid' : '' ?>"
-                                       id="username" name="username" autocomplete="username"/>
+                                       id="username" name="username" autocomplete="username" value="<?=esc($username)?>">
                                 <label for="username">Nutzername:</label>
                                 <?= isset($errors['username']) ? '<div class="invalid-feedback">' . $errors['username'] . '</div>' : '' ?>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="password"
                                        class="form-control <?= isset($errors['password']) ? ' is-invalid' : '' ?>"
-                                       id="password" name="password" autocomplete="current-password"/>
+                                       id="password" name="password" autocomplete="current-password">
                                 <label for="password">Passwort:</label>
                                 <?= isset($errors['password']) ? '<div class="invalid-feedback">' . $errors['password'] . '</div>' : '' ?>
                             </div>

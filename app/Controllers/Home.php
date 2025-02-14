@@ -43,10 +43,10 @@ class Home extends BaseController
             $errorData['password'] = $data['password'];
 
         }
-        $navData['navElems'] = $this->getNavElements();
+        $navData = $this->getNavElements('home');
         echo view('templates/header');
         echo view('templates/nav', $navData);
-        echo view('dev/login/index', $errorData);
+        echo view('pages/login/index', $errorData);
         echo view('templates/footer');
     }
 }
