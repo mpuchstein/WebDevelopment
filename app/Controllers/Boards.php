@@ -12,10 +12,10 @@ class Boards extends BaseController
         $navData = $this->getNavElements('boards');
         echo view('templates/header');
         echo view('templates/nav', $navData);
-        echo view('dev/boards/index');
+        echo view('pages/boards/index');
         echo view('templates/footer');
         echo view('templates/scriptimports');
-        echo view('dev/boards/script');
+        echo view('pages/boards/script');
         echo view('templates/siteend');
     }
 

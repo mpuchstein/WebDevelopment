@@ -11,7 +11,7 @@ class Home extends BaseController
         $navData = $this->getNavElements('home');
         echo view('templates/header');
         echo view('templates/nav', $navData);
-        echo view('dev/login/index');
+        echo view('pages/login/index');
         echo view('templates/footer');
     }
     public function postIndex()

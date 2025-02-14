@@ -13,10 +13,10 @@ class Users extends BaseController
         $navData = $this->getNavElements('users');
         echo view('templates/header');
         echo view('templates/nav', $navData);
-        echo view('dev/users/index');
+        echo view('pages/users/index');
         echo view('templates/footer');
         echo view('templates/scriptimports');
-        echo view('dev/users/script');
+        echo view('pages/users/script');
         echo view('templates/siteend');
     }
     public function postJson()

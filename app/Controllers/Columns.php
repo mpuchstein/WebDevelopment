@@ -13,10 +13,10 @@ class Columns extends BaseController
         $indexData['boards'] = $database->getBoards();
         echo view('templates/header');
         echo view('templates/nav', $navData);
-        echo view('dev/columns/index', $indexData);
+        echo view('pages/columns/index', $indexData);
         echo view('templates/footer');
         echo view('templates/scriptimports');
-        echo view('dev/columns/script');
+        echo view('pages/columns/script');
         echo view('templates/siteend');
     }
 
